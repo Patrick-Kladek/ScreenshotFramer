@@ -15,20 +15,16 @@ struct LayoutableObject: Codable {
     var title: String
     var frame: CGRect
     var file: String
-    var root: Bool = false
+    var isRoot: Bool = false
 
 
     // MARK: - Lifecycle
 
-    init(title: String, frame: CGRect, file: String, root: Bool = false) {
+    init(title: String = "Layer", frame: CGRect = .zero, file: String = "iPhone X", isRoot: Bool = false) {
         self.title = title
         self.frame = frame
         self.file = file
-        self.root = root
-    }
-
-    init() {
-        self.init(title: "Layer", frame: CGRect(x: 0, y: 0, width: 100, height: 100), file: "iPhone X")
+        self.isRoot = isRoot
     }
 
     // MARK: - Encoding/Decoding
@@ -38,7 +34,7 @@ struct LayoutableObject: Codable {
 
         self.title = try container.decode(String.self, forKey: .title)
         self.file = try container.decode(String.self, forKey: .file)
-        self.root = try container.decode(Bool.self, forKey: .root)
+        self.isRoot = try container.decode(Bool.self, forKey: .root)
 
         let frameString = try container.decode(String.self, forKey: .frame)
         self.frame = NSRectFromString(frameString)
@@ -49,7 +45,7 @@ struct LayoutableObject: Codable {
 
         try container.encode(self.title, forKey: .title)
         try container.encode(self.file, forKey: .file)
-        try container.encode(self.root, forKey: .root)
+        try container.encode(self.isRoot, forKey: .root)
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)

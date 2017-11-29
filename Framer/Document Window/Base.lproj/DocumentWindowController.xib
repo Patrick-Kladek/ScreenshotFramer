@@ -33,7 +33,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="150"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" viewBased="YES" id="TIb-up-3sV">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" viewBased="YES" id="TIb-up-3sV">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -104,7 +104,7 @@
                                     <font key="font" metaFont="system"/>
                                     <segments>
                                         <segment image="NSAddTemplate" width="32"/>
-                                        <segment image="NSRemoveTemplate" width="32" tag="1"/>
+                                        <segment image="NSRemoveTemplate" width="32" enabled="NO" tag="1"/>
                                     </segments>
                                 </segmentedCell>
                                 <connections>

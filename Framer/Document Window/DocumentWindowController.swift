@@ -77,4 +77,8 @@ extension DocumentWindowController: NSTableViewDelegate, NSTableViewDataSource {
 
         return view
     }
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        self.segmentedControl.setEnabled(self.tableView.selectedRow != 0, forSegment: 1)
+    }
 }

@@ -17,17 +17,22 @@ protocol DocumentDelegate: class {
 class Document: NSDocument {
 
     private(set) weak var delegate: DocumentDelegate?
-    private(set) var layers: [LayoutableObject] = [] {
-        didSet {
-            self.delegate?.document(self, didUpdateLayers: self.layers)
+    private(set) var layerStateHistory = LayerStateHistory()
+
+    var layers: [LayoutableObject] {
+        get {
+            return self.layerStateHistory.lastLayerState.layers
         }
     }
 
     // MARK: - Lifecycle
 
     override init() {
-        let root = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "../background/01", root: true)
-        self.layers.append(root)
+        let root = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "../background/01", isRoot: true)
+
+        super.init()
+
+        self.addLayer(root)
     }
 
     // MARK: - Override
@@ -45,24 +50,29 @@ class Document: NSDocument {
     // MARK: - Read/Write
 
     func addLayer(_ layer: LayoutableObject) {
-        self.layers.append(layer)
+        let newLayerState = self.layerStateHistory.lastLayerState.addingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
+        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
 
     func remove(_ layer: LayoutableObject) {
-        if let index = self.layers.index(of: layer) {
-            self.layers.remove(at: index)
-        }
+        let newLayerState = self.layerStateHistory.lastLayerState.removingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
+        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
 
     override func data(ofType typeName: String) throws -> Data {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        return try encoder.encode(self.layers)
+        return try encoder.encode(self.layerStateHistory.lastLayerState.layers)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
         let decoder = JSONDecoder()
-        self.layers = try decoder.decode([LayoutableObject].self, from: data)
+        let layers = try decoder.decode([LayoutableObject].self, from: data)
+
+        let newLayerState = self.layerStateHistory.lastLayerState.addingLayers(layers)
+        self.layerStateHistory.append(newLayerState)
     }
 }
 
