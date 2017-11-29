@@ -27,6 +27,9 @@ struct LayoutableObject: Codable {
         self.root = root
     }
 
+    init() {
+        self.init(title: "Layer", frame: CGRect(x: 0, y: 0, width: 100, height: 100), file: "iPhone X")
+    }
 
     // MARK: - Encoding/Decoding
 
@@ -50,6 +53,13 @@ struct LayoutableObject: Codable {
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)
+    }
+}
+
+extension LayoutableObject: Equatable {
+
+    static func ==(lhs: LayoutableObject, rhs: LayoutableObject) -> Bool {
+        return lhs.title == rhs.title && lhs.frame == rhs.frame
     }
 }
 
