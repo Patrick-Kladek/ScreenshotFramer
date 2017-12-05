@@ -26,7 +26,7 @@
 		CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerStateHistory.swift; sourceTree = "<group>"; };
 		CD26F83F1FCEFAC700449B4A /* InspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorViewController.swift; sourceTree = "<group>"; };
 		CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorViewController.xib; sourceTree = "<group>"; };
-		CD5EE03C1FCD557200AD2ED7 /* Framer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Framer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5EE03C1FCD557200AD2ED7 /* FrameMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5EE0411FCD557200AD2ED7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		CD5EE0441FCD557200AD2ED7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DocumentWindowController.xib; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 		CD5EE03D1FCD557200AD2ED7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CD5EE03C1FCD557200AD2ED7 /* Framer.app */,
+				CD5EE03C1FCD557200AD2ED7 /* FrameMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,9 +122,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CD5EE03B1FCD557200AD2ED7 /* Framer */ = {
+		CD5EE03B1FCD557200AD2ED7 /* FrameMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "Framer" */;
+			buildConfigurationList = CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "FrameMe" */;
 			buildPhases = (
 				CD5EE0381FCD557200AD2ED7 /* Sources */,
 				CD5EE0391FCD557200AD2ED7 /* Frameworks */,
@@ -134,9 +134,9 @@
 			);
 			dependencies = (
 			);
-			name = Framer;
+			name = FrameMe;
 			productName = Framer;
-			productReference = CD5EE03C1FCD557200AD2ED7 /* Framer.app */;
+			productReference = CD5EE03C1FCD557200AD2ED7 /* FrameMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -155,7 +155,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CD5EE0371FCD557200AD2ED7 /* Build configuration list for PBXProject "Framer" */;
+			buildConfigurationList = CD5EE0371FCD557200AD2ED7 /* Build configuration list for PBXProject "FrameMe" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -168,7 +168,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CD5EE03B1FCD557200AD2ED7 /* Framer */,
+				CD5EE03B1FCD557200AD2ED7 /* FrameMe */,
 			);
 		};
 /* End PBXProject section */
@@ -366,7 +366,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CD5EE0371FCD557200AD2ED7 /* Build configuration list for PBXProject "Framer" */ = {
+		CD5EE0371FCD557200AD2ED7 /* Build configuration list for PBXProject "FrameMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5EE04D1FCD557200AD2ED7 /* Debug */,
@@ -375,7 +375,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "Framer" */ = {
+		CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "FrameMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5EE0501FCD557200AD2ED7 /* Debug */,
