@@ -32,4 +32,14 @@ struct LayerState {
         layers.remove(at: index)
         return LayerState(title: "Remove Layer", layers: layers)
     }
+
+    func updating(frame: CGRect, layer index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+        guard layers[index].frame != frame else { return nil }
+
+        layers[index].frame = frame
+        return LayerState(title: "Update Frame", layers: layers)
+    }
 }

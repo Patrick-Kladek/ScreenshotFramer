@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CD26F83B1FCEE01800449B4A /* LayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83A1FCEE01800449B4A /* LayerState.swift */; };
 		CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
+		CD26F8411FCEFAC700449B4A /* InspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83F1FCEFAC700449B4A /* InspectorViewController.swift */; };
+		CD26F8421FCEFAC700449B4A /* InspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */; };
 		CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */; };
 		CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0411FCD557200AD2ED7 /* Document.swift */; };
 		CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */; };
@@ -22,6 +24,8 @@
 /* Begin PBXFileReference section */
 		CD26F83A1FCEE01800449B4A /* LayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerState.swift; sourceTree = "<group>"; };
 		CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerStateHistory.swift; sourceTree = "<group>"; };
+		CD26F83F1FCEFAC700449B4A /* InspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorViewController.swift; sourceTree = "<group>"; };
+		CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorViewController.xib; sourceTree = "<group>"; };
 		CD5EE03C1FCD557200AD2ED7 /* Framer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Framer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5EE0411FCD557200AD2ED7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -46,6 +50,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD26F83E1FCEFAA100449B4A /* Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				CD26F83F1FCEFAC700449B4A /* InspectorViewController.swift */,
+				CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */,
+			);
+			path = Inspector;
+			sourceTree = "<group>";
+		};
 		CD5EE0331FCD557200AD2ED7 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +93,7 @@
 			children = (
 				CD5EE0521FCD55E000AD2ED7 /* DocumentWindowController.swift */,
 				CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */,
+				CD26F83E1FCEFAA100449B4A /* Inspector */,
 			);
 			path = "Document Window";
 			sourceTree = "<group>";
@@ -166,6 +180,7 @@
 			files = (
 				CD5EE0471FCD557200AD2ED7 /* Assets.xcassets in Resources */,
 				CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */,
+				CD26F8421FCEFAC700449B4A /* InspectorViewController.xib in Resources */,
 				CD5EE04A1FCD557200AD2ED7 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +198,7 @@
 				CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */,
 				CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */,
 				CD5EE0531FCD55E000AD2ED7 /* DocumentWindowController.swift in Sources */,
+				CD26F8411FCEFAC700449B4A /* InspectorViewController.swift in Sources */,
 				CD26F83B1FCEE01800449B4A /* LayerState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

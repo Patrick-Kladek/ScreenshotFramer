@@ -15,17 +15,31 @@ final class DocumentWindowController: NSWindowController {
 
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var segmentedControl: NSSegmentedControl!
+    @IBOutlet weak var inspectorPlaceholder: NSView!
 
 
     // MARK: - Properties
 
     var framerDocument: Document { return self.document as! Document }
-
+    var inspectorViewController: InspectorViewController?
 
     // MARK: - Overrides
 
     override var windowNibName: NSNib.Name? {
         return NSNib.Name(rawValue: String(describing: type(of: self)))
+    }
+
+    override func windowDidLoad() {
+        let inspector = InspectorViewController(layerStateHistory: self.framerDocument.layerStateHistory, selectedRow: 0)
+        self.contentViewController?.addChildViewController(inspector)
+        self.inspectorPlaceholder.addSubview(inspector.view)
+        NSLayoutConstraint.activate([
+            self.inspectorPlaceholder.topAnchor.constraint(equalTo: inspector.view.topAnchor, constant: 0),
+            self.inspectorPlaceholder.leadingAnchor.constraint(equalTo: inspector.view.leadingAnchor, constant: 0),
+            self.inspectorPlaceholder.trailingAnchor.constraint(equalTo: inspector.view.trailingAnchor, constant: 0)
+        ])
+
+        self.inspectorViewController = inspector
     }
 
 
@@ -79,6 +93,8 @@ extension DocumentWindowController: NSTableViewDelegate, NSTableViewDataSource {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        self.segmentedControl.setEnabled(self.tableView.selectedRow != 0, forSegment: 1)
+        let selectedRow = self.tableView.selectedRow
+        self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
+        self.inspectorViewController?.selectedRow = selectedRow
     }
 }
