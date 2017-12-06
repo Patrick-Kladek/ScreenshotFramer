@@ -28,6 +28,7 @@
 		CDFF69A51FD834AE00E652EE /* DebugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFF69A31FD834AE00E652EE /* DebugWindowController.swift */; };
 		CDFF69A61FD834AE00E652EE /* DebugWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDFF69A41FD834AE00E652EE /* DebugWindowController.xib */; };
 		CDFF69A81FD8387D00E652EE /* DetailTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFF69A71FD8387D00E652EE /* DetailTableCellView.swift */; };
+		CDFF69AA1FD849E300E652EE /* CenterClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFF69A91FD849E300E652EE /* CenterClipView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		CDFF69A31FD834AE00E652EE /* DebugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugWindowController.swift; sourceTree = "<group>"; };
 		CDFF69A41FD834AE00E652EE /* DebugWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugWindowController.xib; sourceTree = "<group>"; };
 		CDFF69A71FD8387D00E652EE /* DetailTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableCellView.swift; sourceTree = "<group>"; };
+		CDFF69A91FD849E300E652EE /* CenterClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterClipView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				CD5EE0541FCD9A1000AD2ED7 /* pkView.swift */,
+				CDFF69A91FD849E300E652EE /* CenterClipView.swift */,
 				CD5EE0481FCD557200AD2ED7 /* MainMenu.xib */,
 				CD5EE04B1FCD557200AD2ED7 /* Info.plist */,
 				CD5EE04C1FCD557200AD2ED7 /* Framer.entitlements */,
@@ -298,6 +301,7 @@
 				CD5EE0551FCD9A1000AD2ED7 /* pkView.swift in Sources */,
 				CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */,
 				CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */,
+				CDFF69AA1FD849E300E652EE /* CenterClipView.swift in Sources */,
 				CD5EE0531FCD55E000AD2ED7 /* DocumentWindowController.swift in Sources */,
 				CD26F8411FCEFAC700449B4A /* InspectorViewController.swift in Sources */,
 				CD26F83B1FCEE01800449B4A /* LayerState.swift in Sources */,

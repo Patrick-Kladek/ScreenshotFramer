@@ -53,7 +53,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="yRy-HQ-6af">
-                                                            <rect key="frame" x="0.0" y="6" width="224" height="17"/>
+                                                            <rect key="frame" x="0.0" y="6" width="218" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ke7-NO-bgm">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -61,7 +61,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fjr-81-ICO">
-                                                            <rect key="frame" x="232" y="6" width="96" height="17"/>
+                                                            <rect key="frame" x="226" y="6" width="96" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="50" id="5oN-wO-myz"/>
                                                             </constraints>
@@ -76,7 +76,7 @@
                                                         <constraint firstAttribute="bottom" secondItem="yRy-HQ-6af" secondAttribute="bottom" constant="6" id="1wi-c9-0GR"/>
                                                         <constraint firstItem="yRy-HQ-6af" firstAttribute="top" secondItem="0vX-y2-ZdT" secondAttribute="top" constant="6" id="ACk-pO-twO"/>
                                                         <constraint firstItem="yRy-HQ-6af" firstAttribute="leading" secondItem="0vX-y2-ZdT" secondAttribute="leading" constant="2" id="bjV-Rq-1LJ"/>
-                                                        <constraint firstAttribute="trailing" secondItem="fjr-81-ICO" secondAttribute="trailing" constant="2" id="cV3-4i-c4F"/>
+                                                        <constraint firstAttribute="trailing" secondItem="fjr-81-ICO" secondAttribute="trailing" constant="8" id="cV3-4i-c4F"/>
                                                         <constraint firstItem="fjr-81-ICO" firstAttribute="leading" secondItem="yRy-HQ-6af" secondAttribute="trailing" constant="12" id="rXT-ng-AEO"/>
                                                         <constraint firstItem="fjr-81-ICO" firstAttribute="baseline" secondItem="yRy-HQ-6af" secondAttribute="baseline" id="zw3-w8-JcN"/>
                                                     </constraints>

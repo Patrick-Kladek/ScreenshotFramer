@@ -63,6 +63,8 @@ final class ContentViewController: NSViewController {
 
         inspector.updateUI()
         self.inspectorViewController = inspector
+
+        self.reloadLayout()
     }
 
     override func viewDidAppear() {
@@ -139,6 +141,8 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func tableViewSelectionDidChange(_ notification: Notification) {
         self.updateEnabledStateOfControls()
+
+        self.inspectorViewController?.updateUI()
     }
 }
 
@@ -149,6 +153,7 @@ extension ContentViewController: DocumentDelegate {
 
     func document(_ document: Document, didUpdateLayers layers: [LayoutableObject]) {
         self.tableView.reloadData()
+        self.reloadLayout()
         self.updateEnabledStateOfControls()
     }
 }
@@ -164,5 +169,26 @@ private extension ContentViewController {
         let selectedRow = self.tableView.selectedRow
         self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
         self.inspectorViewController?.selectedRow = selectedRow
+    }
+
+    func reloadLayout() {
+        self.scrollView.documentView = self.layouthierarchy()
+    }
+
+    func layouthierarchy() -> NSView? {
+        let layoutableObjects = self.layerStateHistory.currentLayerState.layers
+        guard layoutableObjects.count > 0 else { return nil }
+
+        let firstLayoutableObject = layoutableObjects[0]
+        let rootView = pkView(frame: firstLayoutableObject.frame)
+        rootView.backgroundColor = NSColor.red
+
+        for object in layoutableObjects where object != layoutableObjects[0] {
+            let view = pkView(frame: object.frame)
+            view.backgroundColor = NSColor.blue
+            rootView.addSubview(view)
+        }
+
+        return rootView
     }
 }
