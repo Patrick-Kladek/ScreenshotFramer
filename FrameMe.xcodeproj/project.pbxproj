@@ -11,6 +11,8 @@
 		CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
 		CD26F8411FCEFAC700449B4A /* InspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83F1FCEFAC700449B4A /* InspectorViewController.swift */; };
 		CD26F8421FCEFAC700449B4A /* InspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */; };
+		CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */; };
+		CD2EC1CC1FD7F10800C17756 /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */; };
 		CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */; };
 		CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0411FCD557200AD2ED7 /* Document.swift */; };
 		CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */; };
@@ -26,6 +28,8 @@
 		CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerStateHistory.swift; sourceTree = "<group>"; };
 		CD26F83F1FCEFAC700449B4A /* InspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorViewController.swift; sourceTree = "<group>"; };
 		CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorViewController.xib; sourceTree = "<group>"; };
+		CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
 		CD5EE03C1FCD557200AD2ED7 /* FrameMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5EE0411FCD557200AD2ED7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -57,6 +61,15 @@
 				CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */,
 			);
 			path = Inspector;
+			sourceTree = "<group>";
+		};
+		CD2EC1C81FD7F0EB00C17756 /* Content View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */,
+				CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */,
+			);
+			path = "Content View Controller";
 			sourceTree = "<group>";
 		};
 		CD5EE0331FCD557200AD2ED7 = {
@@ -93,6 +106,7 @@
 			children = (
 				CD5EE0521FCD55E000AD2ED7 /* DocumentWindowController.swift */,
 				CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */,
+				CD2EC1C81FD7F0EB00C17756 /* Content View Controller */,
 				CD26F83E1FCEFAA100449B4A /* Inspector */,
 			);
 			path = "Document Window";
@@ -178,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD2EC1CC1FD7F10800C17756 /* ContentViewController.xib in Resources */,
 				CD5EE0471FCD557200AD2ED7 /* Assets.xcassets in Resources */,
 				CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */,
 				CD26F8421FCEFAC700449B4A /* InspectorViewController.xib in Resources */,
@@ -192,6 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */,
 				CD5EE05A1FCDA30600AD2ED7 /* LayoutableObject.swift in Sources */,
 				CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */,
 				CD5EE0551FCD9A1000AD2ED7 /* pkView.swift in Sources */,

@@ -49,23 +49,18 @@ class InspectorViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Update Methods
 
     func updateUI() {
         let layoutableObject = self.layerStateHistory.lastLayerState.layers[self.selectedRow]
+
+        self.textFieldX.isEnabled = layoutableObject.isRoot == false
+        self.textFieldY.isEnabled = layoutableObject.isRoot == false
 
         self.textFieldX.doubleValue = Double(layoutableObject.frame.origin.x)
         self.textFieldY.doubleValue = Double(layoutableObject.frame.origin.y)
         self.textFieldWidth.doubleValue = Double(layoutableObject.frame.size.width)
         self.textFieldHeight.doubleValue = Double(layoutableObject.frame.size.height)
-    }
-
-    @IBAction func stepperPressed(sender: NSStepper) {
-        self.textFieldX.doubleValue = self.stepperX.doubleValue
-        self.textFieldY.doubleValue = self.stepperY.doubleValue
-        self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
-        self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
-
-        self.syncModel(sender: self.textFieldX)
     }
 
     func syncModel(sender: NSTextField) {
@@ -84,6 +79,17 @@ class InspectorViewController: NSViewController {
             self.layerStateHistory.append(newLayerState)
             self.updateUI()
         }
+    }
+
+    // MARK: - Actions
+
+    @IBAction func stepperPressed(sender: NSStepper) {
+        self.textFieldX.doubleValue = self.stepperX.doubleValue
+        self.textFieldY.doubleValue = self.stepperY.doubleValue
+        self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
+        self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
+
+        self.syncModel(sender: self.textFieldX)
     }
 
     @IBAction func textFieldChanged(sender: NSTextField) {

@@ -9,13 +9,20 @@
 import Foundation
 
 
+protocol LayerStateHistoryDelegate {
+    func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState)
+}
+
+
 final class LayerStateHistory {
 
+    private(set) var currentStackPosition: Int = 0
     private(set) var layerStates: [LayerState] = []
+    var delegate: LayerStateHistoryDelegate?
     var lastLayerState: LayerState {
         get {
-            if let lastState = self.layerStates.last {
-                return lastState
+            if self.layerStates.count != 0 && self.currentStackPosition <= self.layerStates.count {
+                return self.layerStates[self.currentStackPosition]
             }
 
             let firstLayerState = LayerState(title: "First Operation", layers: [])
@@ -24,17 +31,48 @@ final class LayerStateHistory {
         }
     }
 
+
+    // MARK: - Actions
+
     func append(_ layerState: LayerState) {
+        if self.currentStackPosition < self.layerStates.count - 1 {
+            self.layerStates.removeLast(self.currentStackPosition)
+        }
+
+        self.currentStackPosition += 1
         self.layerStates.append(layerState)
+        self.notifyLayerStateDidChange()
     }
 
     // MARK: - Undo / Redo
 
-    func undo() {
+    @discardableResult func undo() -> Bool {
+        guard self.canUndo else { return false }
 
+        self.currentStackPosition -= 1
+        self.notifyLayerStateDidChange()
+        return true
     }
 
-    func redo() {
+    @discardableResult func redo() -> Bool {
+        guard self.canRedo else { return false }
 
+        self.currentStackPosition += 1
+        self.notifyLayerStateDidChange()
+        return true
+    }
+
+    var canRedo: Bool {
+        return self.currentStackPosition < self.layerStates.count
+    }
+
+    var canUndo: Bool {
+        return self.layerStates.count > 0 && self.currentStackPosition > 0
+    }
+
+    // MARK: - Private
+
+    private func notifyLayerStateDidChange() {
+        self.delegate?.layerStateHistory(self, didUpdateHistory: self.lastLayerState)
     }
 }

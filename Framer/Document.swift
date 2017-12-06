@@ -16,8 +16,8 @@ protocol DocumentDelegate: class {
 
 class Document: NSDocument {
 
-    private(set) weak var delegate: DocumentDelegate?
     private(set) var layerStateHistory = LayerStateHistory()
+    weak var delegate: DocumentDelegate?
 
     var layers: [LayoutableObject] {
         get {
@@ -25,15 +25,19 @@ class Document: NSDocument {
         }
     }
 
+
     // MARK: - Lifecycle
 
     override init() {
-        let root = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "../background/01", isRoot: true)
-
         super.init()
 
+        self.layerStateHistory.delegate = self
+        self.hasUndoManager = false
+
+        let root = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "../background/01", isRoot: true)
         self.addLayer(root)
     }
+
 
     // MARK: - Override
 
@@ -43,23 +47,26 @@ class Document: NSDocument {
 
     override func makeWindowControllers() {
         let windowController = DocumentWindowController()
-        self.delegate = windowController
         self.addWindowController(windowController)
     }
 
-    // MARK: - Read/Write
+
+    // MARK: - Model
 
     func addLayer(_ layer: LayoutableObject) {
         let newLayerState = self.layerStateHistory.lastLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
-        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
+//        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
 
     func remove(_ layer: LayoutableObject) {
         let newLayerState = self.layerStateHistory.lastLayerState.removingLayer(layer)
         self.layerStateHistory.append(newLayerState)
-        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
+//        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
+
+
+    // MARK: - Read/Write
 
     override func data(ofType typeName: String) throws -> Data {
         let encoder = JSONEncoder()
@@ -76,3 +83,9 @@ class Document: NSDocument {
     }
 }
 
+extension Document: LayerStateHistoryDelegate {
+
+    func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState) {
+        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
+    }
+}
