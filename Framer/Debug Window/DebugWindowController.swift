@@ -52,8 +52,8 @@ extension DebugWindowController: NSTableViewDelegate, NSTableViewDataSource {
         let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "layerStateCell"), owner: self) as? DetailTableCellView
         let state = self.layerStateHistory.layerStates[row]
 
-        view?.textField?.stringValue = state.title
-        view?.detailTextField.stringValue = "\(state.layers.count) Layer"
+        view?.setLayerState(state)
+        view?.setBackgroundColor(row == self.layerStateHistory.currentStackPosition ? NSColor.lightGray : NSColor.clear)
 
         return view
     }

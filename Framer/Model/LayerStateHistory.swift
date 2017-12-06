@@ -39,7 +39,8 @@ final class LayerStateHistory {
 
     func append(_ layerState: LayerState) {
         if self.currentStackPosition > 0 && self.currentStackPosition < self.layerStates.count - 1 {
-            self.layerStates.removeLast(self.currentStackPosition)
+            let diff = self.layerStates.count - self.currentStackPosition - 1
+            self.layerStates.removeLast(diff)
         }
 
         self.currentStackPosition += 1
@@ -66,7 +67,7 @@ final class LayerStateHistory {
     }
 
     var canRedo: Bool {
-        return self.currentStackPosition < self.layerStates.count
+        return self.currentStackPosition + 1 < self.layerStates.count
     }
 
     var canUndo: Bool {
