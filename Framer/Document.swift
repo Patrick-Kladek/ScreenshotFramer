@@ -14,14 +14,14 @@ protocol DocumentDelegate: class {
 }
 
 
-class Document: NSDocument {
+final class Document: NSDocument {
 
     private(set) var layerStateHistory = LayerStateHistory()
     weak var delegate: DocumentDelegate?
 
     var layers: [LayoutableObject] {
         get {
-            return self.layerStateHistory.lastLayerState.layers
+            return self.layerStateHistory.currentLayerState.layers
         }
     }
 
@@ -48,19 +48,23 @@ class Document: NSDocument {
     override func makeWindowControllers() {
         let windowController = DocumentWindowController()
         self.addWindowController(windowController)
+
+        let debugWindowController = DebugWindowController(layerStateHistory: self.layerStateHistory)
+        self.addWindowController(debugWindowController)
+        debugWindowController.window?.orderFront(self)
     }
 
 
     // MARK: - Model
 
     func addLayer(_ layer: LayoutableObject) {
-        let newLayerState = self.layerStateHistory.lastLayerState.addingLayer(layer)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
 //        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
 
     func remove(_ layer: LayoutableObject) {
-        let newLayerState = self.layerStateHistory.lastLayerState.removingLayer(layer)
+        let newLayerState = self.layerStateHistory.currentLayerState.removingLayer(layer)
         self.layerStateHistory.append(newLayerState)
 //        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
@@ -71,14 +75,14 @@ class Document: NSDocument {
     override func data(ofType typeName: String) throws -> Data {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        return try encoder.encode(self.layerStateHistory.lastLayerState.layers)
+        return try encoder.encode(self.layerStateHistory.currentLayerState.layers)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
         let decoder = JSONDecoder()
         let layers = try decoder.decode([LayoutableObject].self, from: data)
 
-        let newLayerState = self.layerStateHistory.lastLayerState.addingLayers(layers)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayers(layers)
         self.layerStateHistory.append(newLayerState)
     }
 }
@@ -86,6 +90,6 @@ class Document: NSDocument {
 extension Document: LayerStateHistoryDelegate {
 
     func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState) {
-        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
+        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.currentLayerState.layers)
     }
 }

@@ -8,12 +8,12 @@
 
 import Cocoa
 
-class ContentViewController: NSViewController {
+final class ContentViewController: NSViewController {
 
     // MARK: - Properties
 
     var layerStateHistory: LayerStateHistory { return self.document.layerStateHistory }
-    var lastLayerState: LayerState { return self.layerStateHistory.lastLayerState}
+    var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState}
     var windowController: DocumentWindowController? { return self.view.window?.windowController as? DocumentWindowController }
     var inspectorViewController: InspectorViewController?
     var document: Document
@@ -77,8 +77,10 @@ class ContentViewController: NSViewController {
         guard sender == self.segmentedControl else { return }
 
         if sender.indexOfSelectedItem == 0 {
+            sender.setEnabled(false, forSegment: 0)
             self.addLayoutableObject()
         } else {
+            sender.setEnabled(false, forSegment: 1)
             self.removeLayoutableObject()
         }
     }
@@ -136,9 +138,7 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let selectedRow = self.tableView.selectedRow
-        self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
-        self.inspectorViewController?.selectedRow = selectedRow
+        self.updateEnabledStateOfControls()
     }
 }
 
@@ -149,5 +149,20 @@ extension ContentViewController: DocumentDelegate {
 
     func document(_ document: Document, didUpdateLayers layers: [LayoutableObject]) {
         self.tableView.reloadData()
+        self.updateEnabledStateOfControls()
+    }
+}
+
+
+// MARK: - Private
+private extension ContentViewController {
+
+    func updateEnabledStateOfControls() {
+        self.segmentedControl.setEnabled(true, forSegment: 0)
+        self.segmentedControl.setEnabled(true, forSegment: 1)
+
+        let selectedRow = self.tableView.selectedRow
+        self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
+        self.inspectorViewController?.selectedRow = selectedRow
     }
 }

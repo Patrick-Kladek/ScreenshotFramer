@@ -16,26 +16,29 @@ protocol LayerStateHistoryDelegate {
 
 final class LayerStateHistory {
 
-    private(set) var currentStackPosition: Int = 0
+    private(set) var currentStackPosition: Int = -1
     private(set) var layerStates: [LayerState] = []
     var delegate: LayerStateHistoryDelegate?
-    var lastLayerState: LayerState {
-        get {
-            if self.layerStates.count != 0 && self.currentStackPosition <= self.layerStates.count {
-                return self.layerStates[self.currentStackPosition]
-            }
 
-            let firstLayerState = LayerState(title: "First Operation", layers: [])
-            self.layerStates.append(firstLayerState)
-            return firstLayerState
+    /**
+     *  returns the current LayerState based on undo (currentStackPosition)
+     *  Warning: Ensure that at least one object is availible
+     */
+    var currentLayerState: LayerState {
+        get {
+            return self.layerStates[self.currentStackPosition]
         }
     }
 
+    init() {
+        let initialState = LayerState(title: "Initial Operation", layers: [])
+        self.append(initialState)
+    }
 
     // MARK: - Actions
 
     func append(_ layerState: LayerState) {
-        if self.currentStackPosition < self.layerStates.count - 1 {
+        if self.currentStackPosition > 0 && self.currentStackPosition < self.layerStates.count - 1 {
             self.layerStates.removeLast(self.currentStackPosition)
         }
 
@@ -73,6 +76,12 @@ final class LayerStateHistory {
     // MARK: - Private
 
     private func notifyLayerStateDidChange() {
-        self.delegate?.layerStateHistory(self, didUpdateHistory: self.lastLayerState)
+        self.delegate?.layerStateHistory(self, didUpdateHistory: self.currentLayerState)
+
+        NotificationCenter.default.post(name: Constants.LayerStateHistoryDidChangeConstant, object: self)
     }
+}
+
+struct Constants {
+    static let LayerStateHistoryDidChangeConstant = NSNotification.Name(rawValue: "LayerStateHistoryDidChange")
 }

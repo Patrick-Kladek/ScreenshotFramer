@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class InspectorViewController: NSViewController {
+final class InspectorViewController: NSViewController {
 
     // MARK: - Properties
     private let layerStateHistory: LayerStateHistory
@@ -52,7 +52,9 @@ class InspectorViewController: NSViewController {
     // MARK: - Update Methods
 
     func updateUI() {
-        let layoutableObject = self.layerStateHistory.lastLayerState.layers[self.selectedRow]
+        guard self.selectedRow > 0 else { return }
+
+        let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
 
         self.textFieldX.isEnabled = layoutableObject.isRoot == false
         self.textFieldY.isEnabled = layoutableObject.isRoot == false
@@ -73,7 +75,7 @@ class InspectorViewController: NSViewController {
                                width: self.textFieldWidth.doubleValue,
                                height: self.textFieldHeight.doubleValue)
 
-            let lastLayerState = self.layerStateHistory.lastLayerState
+            let lastLayerState = self.layerStateHistory.currentLayerState
             guard let newLayerState = lastLayerState.updating(frame: frame, layer: self.selectedRow) else { return }
 
             self.layerStateHistory.append(newLayerState)
