@@ -69,6 +69,8 @@ final class InspectorViewController: NSViewController {
         self.stepperWidth.doubleValue = self.textFieldWidth.doubleValue
         self.textFieldHeight.doubleValue = Double(layoutableObject.frame.size.height)
         self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
+
+        self.textFieldFile.stringValue = layoutableObject.title
     }
 
     func updateFrame() {

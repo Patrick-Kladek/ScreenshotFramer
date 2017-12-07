@@ -80,21 +80,23 @@ final class Document: NSDocument {
     override func data(ofType typeName: String) throws -> Data {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        return try encoder.encode(self.layerStateHistory.currentLayerState.layers)
+        
+        return try encoder.encode(self.layerStateHistory.layerStates)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
         let decoder = JSONDecoder()
-        let layers = try decoder.decode([LayoutableObject].self, from: data)
 
-        let newLayerState = self.layerStateHistory.currentLayerState.addingLayers(layers)
-        self.layerStateHistory.append(newLayerState)
+        let layers = try decoder.decode([LayerState].self, from: data)
+        self.layerStateHistory = LayerStateHistory(layerStates: layers, delegate: self)
+        self.updateChangeCount(.changeCleared)
     }
 }
 
 extension Document: LayerStateHistoryDelegate {
 
     func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState) {
+        self.updateChangeCount(.changeDone)
         self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.currentLayerState.layers)
     }
 }

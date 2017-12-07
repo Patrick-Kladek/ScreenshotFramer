@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct LayerState {
+struct LayerState: Codable {
     let title: String
     let layers: [LayoutableObject]
 
@@ -56,4 +56,3 @@ struct LayerState {
         return "\(Int(rect.origin.x)) \(Int(rect.origin.y)) | \(Int(rect.size.width)) \(Int(rect.size.height))"
     }
 }
-
