@@ -18,6 +18,8 @@ final class DocumentWindowController: NSWindowController {
     }
 
     override func windowDidLoad() {
+        self.shouldCloseDocument = true
+
         let contentViewController = ContentViewController(document: self.document as! Document)
         let document = self.document as! Document
         document.delegate = contentViewController

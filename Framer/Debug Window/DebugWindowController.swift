@@ -40,6 +40,11 @@ final class DebugWindowController: NSWindowController {
     func updateFromNotification(_ notification: Notification) {
         self.tableView.reloadData()
     }
+
+    override var document: AnyObject? {
+        get { return nil }
+        set {}
+    }
 }
 
 extension DebugWindowController: NSTableViewDelegate, NSTableViewDataSource {

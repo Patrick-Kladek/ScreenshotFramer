@@ -18,12 +18,7 @@ final class Document: NSDocument {
 
     private(set) var layerStateHistory = LayerStateHistory()
     weak var delegate: DocumentDelegate?
-
-    var layers: [LayoutableObject] {
-        get {
-            return self.layerStateHistory.currentLayerState.layers
-        }
-    }
+    lazy var timeTravelWindowController = DebugWindowController(layerStateHistory: self.layerStateHistory)
 
 
     // MARK: - Lifecycle
@@ -37,7 +32,7 @@ final class Document: NSDocument {
         let root = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "../background/01", isRoot: true)
         self.addLayer(root)
     }
-
+    
 
     // MARK: - Override
 
@@ -49,24 +44,34 @@ final class Document: NSDocument {
         let windowController = DocumentWindowController()
         self.addWindowController(windowController)
 
-        let debugWindowController = DebugWindowController(layerStateHistory: self.layerStateHistory)
-        self.addWindowController(debugWindowController)
-        debugWindowController.window?.orderFront(self)
+        self.addWindowController(self.timeTravelWindowController)
+        self.showTimeTravelWindow(nil)
     }
 
+    // Responder Chain
+
+    @IBAction func showTimeTravelWindow(_ sender: AnyObject?) {
+        self.timeTravelWindowController.window?.orderFront(self)
+    }
+
+    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(showTimeTravelWindow) {
+            return self.timeTravelWindowController.window?.isVisible == false
+        }
+
+        return super.validateMenuItem(menuItem)
+    }
 
     // MARK: - Model
 
     func addLayer(_ layer: LayoutableObject) {
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
-//        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
 
     func remove(_ layer: LayoutableObject) {
         let newLayerState = self.layerStateHistory.currentLayerState.removingLayer(layer)
         self.layerStateHistory.append(newLayerState)
-//        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.lastLayerState.layers)
     }
 
 

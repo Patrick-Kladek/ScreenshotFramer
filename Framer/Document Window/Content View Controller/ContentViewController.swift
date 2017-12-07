@@ -96,7 +96,7 @@ final class ContentViewController: NSViewController {
         let row = self.tableView.selectedRow
         if row < 0 { return }
 
-        let object = self.document.layers[row]
+        let object = self.lastLayerState.layers[row]
         self.document.remove(object)
     }
 
@@ -127,11 +127,11 @@ final class ContentViewController: NSViewController {
 extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.document.layers.count
+        return self.lastLayerState.layers.count
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let layer = self.document.layers[row]
+        let layer = self.lastLayerState.layers[row]
         let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "layerCell"), owner: nil) as? NSTableCellView
 
         view?.textField?.stringValue = layer.title
@@ -152,9 +152,7 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
 extension ContentViewController: DocumentDelegate {
 
     func document(_ document: Document, didUpdateLayers layers: [LayoutableObject]) {
-        self.tableView.reloadData()
         self.reloadLayout()
-        self.updateEnabledStateOfControls()
     }
 }
 
@@ -172,7 +170,15 @@ private extension ContentViewController {
     }
 
     func reloadLayout() {
+        self.reloadTableViewKeepingSelection()
         self.scrollView.documentView = self.layouthierarchy()
+        self.updateEnabledStateOfControls()
+    }
+
+    func reloadTableViewKeepingSelection() {
+        let selectedRowIndexes = self.tableView.selectedRowIndexes
+        self.tableView.reloadData()
+        self.tableView.selectRowIndexes(selectedRowIndexes, byExtendingSelection: false)
     }
 
     func layouthierarchy() -> NSView? {

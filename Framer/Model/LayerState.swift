@@ -33,13 +33,27 @@ struct LayerState {
         return LayerState(title: "Remove Layer", layers: layers)
     }
 
-    func updating(frame: CGRect, layer index: Int) -> LayerState? {
+    func updating(frame: CGRect, index: Int) -> LayerState? {
         var layers = self.layers
 
         guard index < layers.count else { return nil }
         guard layers[index].frame != frame else { return nil }
 
         layers[index].frame = frame
-        return LayerState(title: "Update Frame", layers: layers)
+        return LayerState(title: "Update Frame \(title(of: frame))", layers: layers)
+    }
+
+    func updating(title: String, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].title = title
+        return LayerState(title: "Updating Title", layers: layers)
+    }
+
+    private func title(of rect: CGRect) -> String {
+        return "\(Int(rect.origin.x)) \(Int(rect.origin.y)) | \(Int(rect.size.width)) \(Int(rect.size.height))"
     }
 }
+
