@@ -70,7 +70,7 @@ final class InspectorViewController: NSViewController {
         self.textFieldHeight.doubleValue = Double(layoutableObject.frame.size.height)
         self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
 
-        self.textFieldFile.stringValue = layoutableObject.title
+        self.textFieldFile.stringValue = layoutableObject.file
     }
 
     func updateFrame() {
@@ -83,10 +83,10 @@ final class InspectorViewController: NSViewController {
         operation.apply()
     }
 
-    func updateTitle() {
-        let title = self.textFieldFile.stringValue
+    func updateFile() {
+        let file = self.textFieldFile.stringValue
 
-        let operation = UpdateTitleOperation(layerStateHistory: self.layerStateHistory, title: title, indexOfLayer: self.selectedRow)
+        let operation = UpdateFileOperation(layerStateHistory: self.layerStateHistory, file: file, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 
@@ -103,7 +103,7 @@ final class InspectorViewController: NSViewController {
 
     @IBAction func textFieldChanged(sender: NSTextField) {
         if sender == self.textFieldFile {
-            self.updateTitle()
+            self.updateFile()
         } else {
             self.updateFrame()
         }

@@ -52,6 +52,15 @@ struct LayerState: Codable {
         return LayerState(title: "Updating Title", layers: layers)
     }
 
+    func updating(file: String, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].file = file
+        return LayerState(title: "Updating File", layers: layers)
+    }
+
     private func title(of rect: CGRect) -> String {
         return "\(Int(rect.origin.x)) \(Int(rect.origin.y)) | \(Int(rect.size.width)) \(Int(rect.size.height))"
     }

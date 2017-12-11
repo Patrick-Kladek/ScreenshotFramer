@@ -183,15 +183,35 @@ private extension ContentViewController {
         guard layoutableObjects.count > 0 else { return nil }
 
         let firstLayoutableObject = layoutableObjects[0]
-        let rootView = pkView(frame: firstLayoutableObject.frame)
-        rootView.backgroundColor = NSColor.red
+        let rootView: NSView
+
+        if let absoluteURL = self.imageURL(for: firstLayoutableObject) {
+            rootView = RenderedView(frame: firstLayoutableObject.frame, url: absoluteURL)
+        } else {
+            rootView = pkView(frame: firstLayoutableObject.frame)
+            (rootView as! pkView).backgroundColor = NSColor.red
+        }
 
         for object in layoutableObjects where object != layoutableObjects[0] {
-            let view = pkView(frame: object.frame)
-            view.backgroundColor = NSColor.blue
+            let view: NSView
+
+            if let absoluteURL = self.imageURL(for: object) {
+                view = RenderedView(frame: object.frame, url: absoluteURL)
+            } else {
+                view = pkView(frame: object.frame)
+                (view as! pkView).backgroundColor = NSColor.blue
+            }
+            
             rootView.addSubview(view)
         }
 
         return rootView
+    }
+
+    func imageURL(for object: LayoutableObject) -> URL? {
+        let documentUrl = self.document.fileURL
+        let folderURL = documentUrl?.deletingLastPathComponent()
+        let absoluteURL = folderURL?.appendingPathComponent(object.file)
+        return absoluteURL
     }
 }

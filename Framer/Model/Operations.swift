@@ -14,6 +14,7 @@ protocol OperationProtocol {
     func apply()
 }
 
+
 final class UpdateFrameOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -35,26 +36,27 @@ final class UpdateFrameOperation: OperationProtocol {
 }
 
 
-final class UpdateTitleOperation: OperationProtocol {
+final class UpdateFileOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
     let indexOfLayer: Int
-    let title: String
+    let file: String
 
 
-    init(layerStateHistory: LayerStateHistory, title: String, indexOfLayer: Int) {
+    init(layerStateHistory: LayerStateHistory, file: String, indexOfLayer: Int) {
         self.layerStateHistory = layerStateHistory
-        self.title = title
+        self.file = file
         self.indexOfLayer = indexOfLayer
     }
 
     func apply() {
         let lastLayerState = self.layerStateHistory.currentLayerState
-        guard let newLayerState = lastLayerState.updating(title: self.title, index: self.indexOfLayer) else { return }
+        guard let newLayerState = lastLayerState.updating(file: self.file, index: self.indexOfLayer) else { return }
 
         self.layerStateHistory.append(newLayerState)
     }
 }
+
 
 final class AddLayerOperation: OperationProtocol {
 
@@ -70,6 +72,7 @@ final class AddLayerOperation: OperationProtocol {
         self.layerStateHistory.append(newLayerState)
     }
 }
+
 
 final class RemoveLayerOperation: OperationProtocol {
 

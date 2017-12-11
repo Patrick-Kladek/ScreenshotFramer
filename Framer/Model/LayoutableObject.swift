@@ -20,7 +20,7 @@ struct LayoutableObject: Codable {
 
     // MARK: - Lifecycle
 
-    init(title: String = "Layer", frame: CGRect = .zero, file: String = "iPhone X", isRoot: Bool = false) {
+    init(title: String = "Layer", frame: CGRect = .zero, file: String = "", isRoot: Bool = false) {
         self.title = title
         self.frame = frame
         self.file = file

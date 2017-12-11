@@ -29,7 +29,7 @@ final class Document: NSDocument {
         self.layerStateHistory.delegate = self
         self.hasUndoManager = false
 
-        let layer = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "./Background/01.png", isRoot: true)
+        let layer = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "backgrounds/1.jpg", isRoot: true)
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }

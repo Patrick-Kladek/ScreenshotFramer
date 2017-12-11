@@ -14,6 +14,7 @@
 		CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */; };
 		CD2EC1CC1FD7F10800C17756 /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */; };
 		CD50EF4D1FDE883200FB0F2F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4C1FDE883200FB0F2F /* Operations.swift */; };
+		CD50EF4F1FDE95D200FB0F2F /* RenderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4E1FDE95D200FB0F2F /* RenderedView.swift */; };
 		CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */; };
 		CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0411FCD557200AD2ED7 /* Document.swift */; };
 		CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */; };
@@ -50,6 +51,7 @@
 		CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
 		CD50EF4C1FDE883200FB0F2F /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
+		CD50EF4E1FDE95D200FB0F2F /* RenderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderedView.swift; sourceTree = "<group>"; };
 		CD5EE03C1FCD557200AD2ED7 /* FrameMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5EE0411FCD557200AD2ED7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		CD5EE0571FCDA20400AD2ED7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CD50EF4E1FDE95D200FB0F2F /* RenderedView.swift */,
 				CD5EE0541FCD9A1000AD2ED7 /* pkView.swift */,
 				CDFF69A91FD849E300E652EE /* CenterClipView.swift */,
 				CD5EE0481FCD557200AD2ED7 /* MainMenu.xib */,
@@ -242,6 +245,11 @@
 					CD5EE03B1FCD557200AD2ED7 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					CDFF69941FD827B800E652EE = {
 						CreatedOnToolsVersion = 9.2;
@@ -300,6 +308,7 @@
 				CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */,
 				CDFF69A51FD834AE00E652EE /* DebugWindowController.swift in Sources */,
 				CD5EE05A1FCDA30600AD2ED7 /* LayoutableObject.swift in Sources */,
+				CD50EF4F1FDE95D200FB0F2F /* RenderedView.swift in Sources */,
 				CD50EF4D1FDE883200FB0F2F /* Operations.swift in Sources */,
 				CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */,
 				CD5EE0551FCD9A1000AD2ED7 /* pkView.swift in Sources */,
@@ -464,7 +473,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Framer/Supporting Files/Framer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UG25H62DPY;
@@ -480,7 +488,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Framer/Supporting Files/Framer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UG25H62DPY;
