@@ -29,8 +29,9 @@ final class Document: NSDocument {
         self.layerStateHistory.delegate = self
         self.hasUndoManager = false
 
-        let root = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "../background/01", isRoot: true)
-        self.addLayer(root)
+        let layer = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "./Background/01.png", isRoot: true)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
     }
     
 
@@ -61,19 +62,6 @@ final class Document: NSDocument {
 
         return super.validateMenuItem(menuItem)
     }
-
-    // MARK: - Model
-
-    func addLayer(_ layer: LayoutableObject) {
-        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
-        self.layerStateHistory.append(newLayerState)
-    }
-
-    func remove(_ layer: LayoutableObject) {
-        let newLayerState = self.layerStateHistory.currentLayerState.removingLayer(layer)
-        self.layerStateHistory.append(newLayerState)
-    }
-
 
     // MARK: - Read/Write
 

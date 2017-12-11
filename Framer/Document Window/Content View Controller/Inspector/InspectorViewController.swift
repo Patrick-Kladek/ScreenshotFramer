@@ -74,24 +74,20 @@ final class InspectorViewController: NSViewController {
     }
 
     func updateFrame() {
-            let frame = CGRect(x: self.textFieldX.doubleValue,
-                               y: self.textFieldY.doubleValue,
-                               width: self.textFieldWidth.doubleValue,
-                               height: self.textFieldHeight.doubleValue)
+        let frame = CGRect(x: self.textFieldX.doubleValue,
+                           y: self.textFieldY.doubleValue,
+                           width: self.textFieldWidth.doubleValue,
+                           height: self.textFieldHeight.doubleValue)
 
-            let lastLayerState = self.layerStateHistory.currentLayerState
-            guard let newLayerState = lastLayerState.updating(frame: frame, index: self.selectedRow) else { return }
-
-            self.layerStateHistory.append(newLayerState)
+        let operation = UpdateFrameOperation(layerStateHistory: self.layerStateHistory, frame: frame, indexOfLayer: self.selectedRow)
+        operation.apply()
     }
 
     func updateTitle() {
         let title = self.textFieldFile.stringValue
 
-        let lastLayerState = self.layerStateHistory.currentLayerState
-        guard let newLayerState = lastLayerState.updating(title: title, index: self.selectedRow) else { return }
-
-        self.layerStateHistory.append(newLayerState)
+        let operation = UpdateTitleOperation(layerStateHistory: self.layerStateHistory, title: title, indexOfLayer: self.selectedRow)
+        operation.apply()
     }
 
     // MARK: - Actions

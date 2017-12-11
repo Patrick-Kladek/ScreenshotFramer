@@ -88,16 +88,13 @@ final class ContentViewController: NSViewController {
     }
 
     func addLayoutableObject() {
-        let object = LayoutableObject()
-        self.document.addLayer(object)
+        let operation = AddLayerOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
     }
 
     func removeLayoutableObject() {
-        let row = self.tableView.selectedRow
-        if row < 0 { return }
-
-        let object = self.lastLayerState.layers[row]
-        self.document.remove(object)
+        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
+        operation.apply()
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
