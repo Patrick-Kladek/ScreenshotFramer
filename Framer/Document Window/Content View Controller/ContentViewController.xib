@@ -120,7 +120,7 @@
                                     </scroller>
                                 </scrollView>
                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hmg-Jg-ukQ">
-                                    <rect key="frame" x="6" y="289" width="70" height="24"/>
+                                    <rect key="frame" x="6" y="289" width="71" height="24"/>
                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="AOr-rf-cYo">
                                         <font key="font" metaFont="system"/>
                                         <segments>
@@ -129,7 +129,7 @@
                                         </segments>
                                     </segmentedCell>
                                     <connections>
-                                        <action selector="segmentClickedWithSender:" target="-2" id="KwW-fM-mEX"/>
+                                        <action selector="segmentClickedWithSender:" target="-2" id="nLH-wh-opP"/>
                                     </connections>
                                 </segmentedControl>
                                 <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slX-x1-2Hr">

@@ -57,23 +57,6 @@ final class UpdateFileOperation: OperationProtocol {
     }
 }
 
-
-final class AddLayerOperation: OperationProtocol {
-
-    let layerStateHistory: LayerStateHistory
-
-    init(layerStateHistory: LayerStateHistory) {
-        self.layerStateHistory = layerStateHistory
-    }
-
-    func apply() {
-        let layer = LayoutableObject()
-        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
-        self.layerStateHistory.append(newLayerState)
-    }
-}
-
-
 final class RemoveLayerOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -90,6 +73,49 @@ final class RemoveLayerOperation: OperationProtocol {
 
         let layer = layers[self.indexOfLayer]
         let newLayerState = self.layerStateHistory.currentLayerState.removingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
+class AddLayerOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+
+    init(layerStateHistory: LayerStateHistory) {
+        self.layerStateHistory = layerStateHistory
+    }
+
+    func apply() {
+        let layer = LayoutableObject()
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+final class AddTextOperation: AddLayerOperation {
+
+    override func apply() {
+        let layer = LayoutableObject(title: "Text", frame: .zero, file: "", isRoot: false)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+final class AddContentOperation: AddLayerOperation {
+
+    override func apply() {
+        let layer = LayoutableObject(title: "Content", frame: .zero, file: "", isRoot: false)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+final class AddDeviceOperation: AddLayerOperation {
+
+    override func apply() {
+        let layer = LayoutableObject(title: "Device", frame: .zero, file: "", isRoot: false)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
 }

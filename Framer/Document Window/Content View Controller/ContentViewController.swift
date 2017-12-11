@@ -63,6 +63,7 @@ final class ContentViewController: NSViewController {
 
         inspector.updateUI()
         self.inspectorViewController = inspector
+        self.addMenuToSegmentedControl()
 
         self.reloadLayout()
     }
@@ -80,15 +81,28 @@ final class ContentViewController: NSViewController {
 
         if sender.indexOfSelectedItem == 0 {
             sender.setEnabled(false, forSegment: 0)
-            self.addLayoutableObject()
+            self.showMenu(for: sender)
         } else {
             sender.setEnabled(false, forSegment: 1)
             self.removeLayoutableObject()
         }
     }
 
-    func addLayoutableObject() {
-        let operation = AddLayerOperation(layerStateHistory: self.layerStateHistory)
+    @objc
+    func addContent() {
+        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+    }
+
+    @objc
+    func addDevice() {
+        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+    }
+
+    @objc
+    func addText() {
+        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
     }
 
@@ -98,15 +112,24 @@ final class ContentViewController: NSViewController {
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(undo(_:)) {
+        guard let action = menuItem.action else { return false }
+
+        switch action {
+        case #selector(ContentViewController.undo):
             return self.layerStateHistory.canUndo
-        }
-
-        if menuItem.action == #selector(redo(_:)) {
+        case #selector(ContentViewController.redo):
             return self.layerStateHistory.canRedo
-        }
 
-        return super.validateMenuItem(menuItem)
+        case #selector(ContentViewController.addContent):
+            return true
+        case #selector(ContentViewController.addDevice):
+            return true
+        case #selector(ContentViewController.addText):
+            return true
+
+        default:
+            return super.validateMenuItem(menuItem)
+        }
     }
 
     @IBAction func undo(_ sender: AnyObject?) {
@@ -213,5 +236,22 @@ private extension ContentViewController {
         let folderURL = documentUrl?.deletingLastPathComponent()
         let absoluteURL = folderURL?.appendingPathComponent(object.file)
         return absoluteURL
+    }
+
+    func addMenuToSegmentedControl() {
+        let menu = NSMenu(title: "Add")
+        menu.addItem(withTitle: "Add Content", action: #selector(addContent), keyEquivalent: "")
+        menu.addItem(withTitle: "Add Device", action: #selector(addDevice), keyEquivalent: "")
+        menu.addItem(withTitle: "Add Text", action: #selector(addText), keyEquivalent: "")
+
+        self.segmentedControl.setMenu(menu, forSegment: 0)
+        self.segmentedControl.setShowsMenuIndicator(true, forSegment: 0)
+    }
+
+    func showMenu(for segmentedControl: NSSegmentedControl) {
+        let menu = segmentedControl.menu(forSegment: 0)!
+        var menuLocation = segmentedControl.bounds.origin
+        menuLocation.y += segmentedControl.bounds.size.height + 5.0
+        menu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
     }
 }
