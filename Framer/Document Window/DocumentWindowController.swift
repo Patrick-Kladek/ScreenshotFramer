@@ -9,7 +9,7 @@
 import Cocoa
 
 
-final class DocumentWindowController: NSWindowController {    
+final class DocumentWindowController: NSWindowController, NSWindowDelegate {
 
     // MARK: - Overrides
 

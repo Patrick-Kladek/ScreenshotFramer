@@ -16,7 +16,7 @@ struct LayerState: Codable {
     func addingLayer(_ layer: LayoutableObject) -> LayerState {
         var layers = self.layers
         layers.append(layer)
-        return LayerState(title: "Add Layer", layers: layers)
+        return LayerState(title: "Add \(layer.title)", layers: layers)
     }
 
     func addingLayers(_ layers: [LayoutableObject]) -> LayerState {
@@ -30,7 +30,7 @@ struct LayerState: Codable {
         guard let index = layers.index(of: layer) else { return self }
 
         layers.remove(at: index)
-        return LayerState(title: "Remove Layer", layers: layers)
+        return LayerState(title: "Remove \(layer.title)", layers: layers)
     }
 
     func updating(frame: CGRect, index: Int) -> LayerState? {

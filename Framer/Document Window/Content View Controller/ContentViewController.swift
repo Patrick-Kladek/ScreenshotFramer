@@ -71,6 +71,10 @@ final class ContentViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         self.becomeFirstResponder()
+
+        if self.document.fileURL == nil {
+            self.document.save(self)
+        }
     }
 
 
@@ -208,7 +212,7 @@ private extension ContentViewController {
         let firstLayoutableObject = layoutableObjects[0]
         let rootView: NSView
 
-        if let absoluteURL = self.imageURL(for: firstLayoutableObject) {
+        if let absoluteURL = self.absoluteURL(for: firstLayoutableObject) {
             rootView = RenderedView(frame: firstLayoutableObject.frame, url: absoluteURL)
         } else {
             rootView = pkView(frame: firstLayoutableObject.frame)
@@ -218,7 +222,7 @@ private extension ContentViewController {
         for object in layoutableObjects where object != layoutableObjects[0] {
             let view: NSView
 
-            if let absoluteURL = self.imageURL(for: object) {
+            if let absoluteURL = self.absoluteURL(for: object) {
                 view = RenderedView(frame: object.frame, url: absoluteURL)
             } else {
                 view = pkView(frame: object.frame)
@@ -231,9 +235,11 @@ private extension ContentViewController {
         return rootView
     }
 
-    func imageURL(for object: LayoutableObject) -> URL? {
+    func absoluteURL(for object: LayoutableObject) -> URL? {
         let documentUrl = self.document.fileURL
         let folderURL = documentUrl?.deletingLastPathComponent()
+        guard object.file.count > 0 else { return nil }
+
         let absoluteURL = folderURL?.appendingPathComponent(object.file)
         return absoluteURL
     }

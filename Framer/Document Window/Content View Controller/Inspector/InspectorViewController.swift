@@ -36,6 +36,8 @@ final class InspectorViewController: NSViewController {
     @IBOutlet weak var textFieldHeight: NSTextField!
     @IBOutlet weak var stepperHeight: NSStepper!
 
+    @IBOutlet weak var textFieldFont: NSTextField!
+
 
     // MARK: - Lifecycle
 
@@ -71,6 +73,10 @@ final class InspectorViewController: NSViewController {
         self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
 
         self.textFieldFile.stringValue = layoutableObject.file
+
+        if let font = layoutableObject.font {
+            self.textFieldFont.stringValue = font
+        }
     }
 
     func updateFrame() {
@@ -80,13 +86,6 @@ final class InspectorViewController: NSViewController {
                            height: self.textFieldHeight.doubleValue)
 
         let operation = UpdateFrameOperation(layerStateHistory: self.layerStateHistory, frame: frame, indexOfLayer: self.selectedRow)
-        operation.apply()
-    }
-
-    func updateFile() {
-        let file = self.textFieldFile.stringValue
-
-        let operation = UpdateFileOperation(layerStateHistory: self.layerStateHistory, file: file, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 
@@ -103,8 +102,10 @@ final class InspectorViewController: NSViewController {
 
     @IBAction func textFieldChanged(sender: NSTextField) {
         if sender == self.textFieldFile {
-            self.updateFile()
-        } else {
+            let file = self.textFieldFile.stringValue
+            let operation = UpdateFileOperation(layerStateHistory: self.layerStateHistory, file: file, indexOfLayer: self.selectedRow)
+            operation.apply()
+        }  else {
             self.updateFrame()
         }
     }

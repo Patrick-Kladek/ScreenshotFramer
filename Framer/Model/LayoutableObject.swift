@@ -16,6 +16,7 @@ struct LayoutableObject: Codable {
     var frame: CGRect
     var file: String
     var isRoot: Bool = false
+    var font: String?
 
 
     // MARK: - Lifecycle
@@ -38,6 +39,8 @@ struct LayoutableObject: Codable {
 
         let frameString = try container.decode(String.self, forKey: .frame)
         self.frame = NSRectFromString(frameString)
+
+        self.font = try? container.decode(String.self, forKey: .font)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -49,6 +52,8 @@ struct LayoutableObject: Codable {
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)
+
+        try container.encode(self.font, forKey: .font)
     }
 }
 
@@ -66,5 +71,6 @@ private extension LayoutableObject {
         case frame = "frame"
         case file = "file"
         case root = "isRoot"
+        case font = "font"
     }
 }
