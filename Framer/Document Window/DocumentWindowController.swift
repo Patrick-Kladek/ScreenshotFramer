@@ -21,8 +21,6 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate {
         self.shouldCloseDocument = true
 
         let contentViewController = ContentViewController(document: self.document as! Document)
-        let document = self.document as! Document
-        document.delegate = contentViewController
         self.contentViewController = contentViewController
     }
 }

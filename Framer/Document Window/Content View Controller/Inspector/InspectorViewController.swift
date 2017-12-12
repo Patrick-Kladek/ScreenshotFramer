@@ -8,11 +8,13 @@
 
 import Cocoa
 
+
 final class InspectorViewController: NSViewController {
 
     // MARK: - Properties
     private let layerStateHistory: LayerStateHistory
 
+    let viewStateController: ViewStateController
     var selectedRow: Int = -1 {
         didSet {
             self.updateUI()
@@ -21,6 +23,8 @@ final class InspectorViewController: NSViewController {
 
 
     // MARK: - Interface Builder
+    @IBOutlet weak var textFieldImageNumber: NSTextField!
+    @IBOutlet weak var stepperImageNumber: NSStepper!
 
     @IBOutlet weak var textFieldFile: NSTextField!
 
@@ -41,9 +45,10 @@ final class InspectorViewController: NSViewController {
 
     // MARK: - Lifecycle
 
-    init(layerStateHistory: LayerStateHistory, selectedRow: Int) {
+    init(layerStateHistory: LayerStateHistory, selectedRow: Int, viewStateController: ViewStateController) {
         self.layerStateHistory = layerStateHistory
         self.selectedRow = selectedRow
+        self.viewStateController = viewStateController
         super.init(nibName: NSNib.Name(rawValue: String(describing: type(of: self))), bundle: nil)
     }
 
@@ -92,12 +97,17 @@ final class InspectorViewController: NSViewController {
     // MARK: - Actions
 
     @IBAction func stepperPressed(sender: NSStepper) {
+        self.textFieldImageNumber.integerValue = self.stepperImageNumber.integerValue
         self.textFieldX.doubleValue = self.stepperX.doubleValue
         self.textFieldY.doubleValue = self.stepperY.doubleValue
         self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
         self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
 
-        self.updateFrame()
+        if sender == self.stepperImageNumber {
+            self.viewStateController.viewState = ViewState(imageNumber: self.textFieldImageNumber.integerValue)
+        } else {
+            self.updateFrame()
+        }
     }
 
     @IBAction func textFieldChanged(sender: NSTextField) {
@@ -105,7 +115,9 @@ final class InspectorViewController: NSViewController {
             let file = self.textFieldFile.stringValue
             let operation = UpdateFileOperation(layerStateHistory: self.layerStateHistory, file: file, indexOfLayer: self.selectedRow)
             operation.apply()
-        }  else {
+        } else if sender == self.textFieldImageNumber {
+            self.viewStateController.viewState = ViewState(imageNumber: self.textFieldImageNumber.integerValue)
+        } else {
             self.updateFrame()
         }
     }

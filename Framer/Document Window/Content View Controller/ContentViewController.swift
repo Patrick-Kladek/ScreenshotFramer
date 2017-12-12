@@ -17,6 +17,7 @@ final class ContentViewController: NSViewController {
     var windowController: DocumentWindowController? { return self.view.window?.windowController as? DocumentWindowController }
     var inspectorViewController: InspectorViewController?
     var document: Document
+    let viewStateController = ViewStateController()
 
 
     // MARK: - Interface Builder
@@ -25,6 +26,7 @@ final class ContentViewController: NSViewController {
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var segmentedControl: NSSegmentedControl!
     @IBOutlet var tableView: NSTableView!
+    @IBOutlet var addMenu: NSMenu!
 
 
     // MARK: - Lifecycle
@@ -33,6 +35,8 @@ final class ContentViewController: NSViewController {
         self.document = document
 
         super.init(nibName: self.nibName, bundle: nil)
+
+        self.viewStateController.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -51,7 +55,7 @@ final class ContentViewController: NSViewController {
     }
 
     override func viewDidLoad() {
-        let inspector = InspectorViewController(layerStateHistory: self.document.layerStateHistory, selectedRow: 0)
+        let inspector = InspectorViewController(layerStateHistory: self.document.layerStateHistory, selectedRow: 0, viewStateController: viewStateController)
         self.addChildViewController(inspector)
         self.inspectorPlaceholder.addSubview(inspector.view)
 
@@ -63,7 +67,6 @@ final class ContentViewController: NSViewController {
 
         inspector.updateUI()
         self.inspectorViewController = inspector
-        self.addMenuToSegmentedControl()
 
         self.reloadLayout()
     }
@@ -84,7 +87,6 @@ final class ContentViewController: NSViewController {
         guard sender == self.segmentedControl else { return }
 
         if sender.indexOfSelectedItem == 0 {
-            sender.setEnabled(false, forSegment: 0)
             self.showMenu(for: sender)
         } else {
             sender.setEnabled(false, forSegment: 1)
@@ -92,20 +94,17 @@ final class ContentViewController: NSViewController {
         }
     }
 
-    @objc
-    func addContent() {
+    @IBAction func addContent(_ sender: AnyObject?) {
         let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
     }
 
-    @objc
-    func addDevice() {
+    @IBAction func addDevice(_ sender: AnyObject?) {
         let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
     }
 
-    @objc
-    func addText() {
+    @IBAction func addText(_ sender: AnyObject?) {
         let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
     }
@@ -143,6 +142,12 @@ final class ContentViewController: NSViewController {
     @IBAction func redo(_ sender: AnyObject?) {
         self.layerStateHistory.redo()
     }
+
+    func reloadLayout() {
+        self.tableView.reloadDataKeepingSelection()
+        self.scrollView.documentView = self.layouthierarchy()
+        self.updateEnabledStateOfControls()
+    }
 }
 
 
@@ -171,17 +176,18 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
 }
 
 
-// MARK: - Document Delegate
+// MARK: - View State Delegate
 
-extension ContentViewController: DocumentDelegate {
+extension ContentViewController: ViewStateControllerDelegate {
 
-    func document(_ document: Document, didUpdateLayers layers: [LayoutableObject]) {
+    func viewStateDidChange(_ viewState: ViewState) {
         self.reloadLayout()
     }
 }
 
 
 // MARK: - Private
+
 private extension ContentViewController {
 
     func updateEnabledStateOfControls() {
@@ -191,18 +197,6 @@ private extension ContentViewController {
         let selectedRow = self.tableView.selectedRow
         self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
         self.inspectorViewController?.selectedRow = selectedRow
-    }
-
-    func reloadLayout() {
-        self.reloadTableViewKeepingSelection()
-        self.scrollView.documentView = self.layouthierarchy()
-        self.updateEnabledStateOfControls()
-    }
-
-    func reloadTableViewKeepingSelection() {
-        let selectedRowIndexes = self.tableView.selectedRowIndexes
-        self.tableView.reloadData()
-        self.tableView.selectRowIndexes(selectedRowIndexes, byExtendingSelection: false)
     }
 
     func layouthierarchy() -> NSView? {
@@ -223,7 +217,11 @@ private extension ContentViewController {
             let view: NSView
 
             if let absoluteURL = self.absoluteURL(for: object) {
-                view = RenderedView(frame: object.frame, url: absoluteURL)
+                if object.title == "Text", let text = self.localizedTitle(from: absoluteURL, imageNumber: self.viewStateController.viewState.imageNumber) {
+                    view = self.textField(with: text, frame: object.frame, color: NSColor.white, font: NSFont.systemFont(ofSize: NSFont.systemFontSize))
+                } else {
+                    view = RenderedView(frame: object.frame, url: absoluteURL)
+                }
             } else {
                 view = pkView(frame: object.frame)
                 (view as! pkView).backgroundColor = NSColor.blue
@@ -235,29 +233,51 @@ private extension ContentViewController {
         return rootView
     }
 
+    func textField(with string: String, frame: CGRect, color: NSColor, font: NSFont) -> NSTextField {
+        let textField             = NSTextField(frame: frame)
+        textField.textColor       = color
+        textField.backgroundColor = NSColor.clear
+        textField.isBezeled       = false
+        textField.isEditable      = false
+        textField.stringValue     = string
+        textField.alignment       = .center
+
+        let kMaxFontSize = CGFloat(120.0)
+        let kMinFontSize = CGFloat(6.0)
+        var fontSize = kMaxFontSize;
+        var size = (string as NSString).size(withAttributes: [NSAttributedStringKey.font: NSFont(name: font.fontName, size: kMaxFontSize)!])
+        while (size.width >= frame.width - 5 || size.height >= frame.height - 5) && fontSize > kMinFontSize  {
+            fontSize -= 1
+            let newFontSize = CGFloat(fontSize)
+            let newFont = NSFont(name: font.fontName, size: newFontSize)
+
+            size = (string as NSString).size(withAttributes: [NSAttributedStringKey.font: newFont!])
+        }
+        textField.font = NSFont(name: font.fontName, size: fontSize)
+        return textField
+    }
+
     func absoluteURL(for object: LayoutableObject) -> URL? {
         let documentUrl = self.document.fileURL
         let folderURL = documentUrl?.deletingLastPathComponent()
         guard object.file.count > 0 else { return nil }
 
-        let absoluteURL = folderURL?.appendingPathComponent(object.file)
+        let file = object.file.replacingOccurrences(of: "$image", with: "\(self.viewStateController.viewState.imageNumber)")
+
+        let absoluteURL = folderURL?.appendingPathComponent(file)
         return absoluteURL
     }
 
-    func addMenuToSegmentedControl() {
-        let menu = NSMenu(title: "Add")
-        menu.addItem(withTitle: "Add Content", action: #selector(addContent), keyEquivalent: "")
-        menu.addItem(withTitle: "Add Device", action: #selector(addDevice), keyEquivalent: "")
-        menu.addItem(withTitle: "Add Text", action: #selector(addText), keyEquivalent: "")
+    func localizedTitle(from url: URL, imageNumber: Int) -> String? {
+        guard let dict = NSDictionary(contentsOf: url) else { return nil }
 
-        self.segmentedControl.setMenu(menu, forSegment: 0)
-        self.segmentedControl.setShowsMenuIndicator(true, forSegment: 0)
+        let value = dict["\(imageNumber)"] as? String
+        return value
     }
 
     func showMenu(for segmentedControl: NSSegmentedControl) {
-        let menu = segmentedControl.menu(forSegment: 0)!
         var menuLocation = segmentedControl.bounds.origin
         menuLocation.y += segmentedControl.bounds.size.height + 5.0
-        menu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
+        self.addMenu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
     }
 }

@@ -9,15 +9,9 @@
 import Cocoa
 
 
-protocol DocumentDelegate: class {
-    func document(_ document: Document, didUpdateLayers layers: [LayoutableObject])
-}
-
-
 final class Document: NSDocument {
 
     private(set) var layerStateHistory = LayerStateHistory()
-    weak var delegate: DocumentDelegate?
     lazy var timeTravelWindowController = DebugWindowController(layerStateHistory: self.layerStateHistory)
 
 
@@ -85,6 +79,9 @@ extension Document: LayerStateHistoryDelegate {
 
     func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState) {
         self.updateChangeCount(.changeDone)
-        self.delegate?.document(self, didUpdateLayers: self.layerStateHistory.currentLayerState.layers)
+        guard let windowController = self.windowControllers.first(where: { $0 is DocumentWindowController }) as? DocumentWindowController else { return }
+        guard let contentViewController = windowController.contentViewController as? ContentViewController else { return }
+
+        contentViewController.reloadLayout()
     }
 }

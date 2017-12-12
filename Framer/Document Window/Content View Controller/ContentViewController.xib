@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ContentViewController" customModule="FrameMe" customModuleProvider="target">
             <connections>
+                <outlet property="addMenu" destination="AHX-7H-zUZ" id="OEl-uH-I6C"/>
                 <outlet property="inspectorPlaceholder" destination="slX-x1-2Hr" id="5YM-u0-GFc"/>
                 <outlet property="scrollView" destination="O0C-Q5-AWh" id="UpB-Ws-4t6"/>
                 <outlet property="segmentedControl" destination="hmg-Jg-ukQ" id="w4B-dQ-MX2"/>
@@ -164,6 +165,29 @@
             </constraints>
             <point key="canvasLocation" x="-9" y="239"/>
         </customView>
+        <menu id="AHX-7H-zUZ">
+            <items>
+                <menuItem title="Add Content" id="dt3-n2-hZC">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addContent:" target="-2" id="i5H-vj-Pxs"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Add Device" id="8wP-Kr-dLg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addDevice:" target="-2" id="unM-tJ-eOl"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Add Text" id="4Op-Xx-6nE">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addText:" target="-2" id="ZrV-HY-7jW"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="513" y="267"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

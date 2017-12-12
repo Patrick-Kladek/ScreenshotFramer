@@ -14,7 +14,6 @@ protocol OperationProtocol {
     func apply()
 }
 
-
 final class UpdateFrameOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
