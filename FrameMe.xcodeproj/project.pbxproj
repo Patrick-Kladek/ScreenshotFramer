@@ -17,6 +17,7 @@
 		CD50EF4F1FDE95D200FB0F2F /* RenderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4E1FDE95D200FB0F2F /* RenderedView.swift */; };
 		CD50EF511FDED20E00FB0F2F /* ViewStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF501FDED20E00FB0F2F /* ViewStateController.swift */; };
 		CD50EF551FDFEB7600FB0F2F /* NSTableView+keepSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */; };
+		CD50EF581FDFEE3600FB0F2F /* LayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */; };
 		CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */; };
 		CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0411FCD557200AD2ED7 /* Document.swift */; };
 		CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */; };
@@ -56,6 +57,7 @@
 		CD50EF4E1FDE95D200FB0F2F /* RenderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderedView.swift; sourceTree = "<group>"; };
 		CD50EF501FDED20E00FB0F2F /* ViewStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStateController.swift; sourceTree = "<group>"; };
 		CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTableView+keepSelection.swift"; sourceTree = "<group>"; };
+		CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutController.swift; sourceTree = "<group>"; };
 		CD5EE03C1FCD557200AD2ED7 /* FrameMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5EE0411FCD557200AD2ED7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -109,8 +111,17 @@
 				CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */,
 				CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */,
 				CD26F83E1FCEFAA100449B4A /* Inspector */,
+				CD50EF561FDFEE2100FB0F2F /* Layout Controller */,
 			);
 			path = "Content View Controller";
+			sourceTree = "<group>";
+		};
+		CD50EF561FDFEE2100FB0F2F /* Layout Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */,
+			);
+			path = "Layout Controller";
 			sourceTree = "<group>";
 		};
 		CD5EE0331FCD557200AD2ED7 = {
@@ -324,6 +335,7 @@
 				CDFF69AA1FD849E300E652EE /* CenterClipView.swift in Sources */,
 				CD5EE0531FCD55E000AD2ED7 /* DocumentWindowController.swift in Sources */,
 				CD26F8411FCEFAC700449B4A /* InspectorViewController.swift in Sources */,
+				CD50EF581FDFEE3600FB0F2F /* LayoutController.swift in Sources */,
 				CD26F83B1FCEE01800449B4A /* LayerState.swift in Sources */,
 				CD50EF551FDFEB7600FB0F2F /* NSTableView+keepSelection.swift in Sources */,
 				CDFF69A81FD8387D00E652EE /* DetailTableCellView.swift in Sources */,
