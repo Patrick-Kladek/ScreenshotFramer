@@ -16,6 +16,8 @@ protocol LayerStateHistoryDelegate {
 
 final class LayerStateHistory {
 
+    // MARK: - Properties
+
     private(set) var currentStackPosition: Int = -1
     private(set) var layerStates: [LayerState] = []
     var delegate: LayerStateHistoryDelegate?
@@ -30,6 +32,8 @@ final class LayerStateHistory {
         }
     }
 
+    // MARK: - Lifecycle
+
     init() {
         let initialState = LayerState(title: "Initial Operation", layers: [])
         self.append(initialState)
@@ -40,6 +44,7 @@ final class LayerStateHistory {
         self.currentStackPosition = self.layerStates.count - 1
         self.delegate = delegate
     }
+
 
     // MARK: - Actions
 
@@ -53,6 +58,7 @@ final class LayerStateHistory {
         self.layerStates.append(layerState)
         self.notifyLayerStateDidChange()
     }
+
 
     // MARK: - Undo / Redo
 
@@ -80,6 +86,7 @@ final class LayerStateHistory {
         return self.layerStates.count > 0 && self.currentStackPosition > 0
     }
 
+
     // MARK: - Private
 
     private func notifyLayerStateDidChange() {
@@ -88,6 +95,8 @@ final class LayerStateHistory {
         NotificationCenter.default.post(name: Constants.LayerStateHistoryDidChangeConstant, object: self)
     }
 }
+
+// MARK: - Constants used in Notifications
 
 struct Constants {
     static let LayerStateHistoryDidChangeConstant = NSNotification.Name(rawValue: "LayerStateHistoryDidChange")

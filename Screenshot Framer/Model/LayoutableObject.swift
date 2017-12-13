@@ -12,6 +12,8 @@ import Foundation
 /// Model that holds all information about a rendered layer
 struct LayoutableObject: Codable {
 
+    // MARK: - Properties
+
     var title: String
     var frame: CGRect
     var file: String
@@ -27,6 +29,7 @@ struct LayoutableObject: Codable {
         self.file = file
         self.isRoot = isRoot
     }
+
 
     // MARK: - Encoding/Decoding
 
@@ -57,12 +60,18 @@ struct LayoutableObject: Codable {
     }
 }
 
+
+// MARK: - Equatable
+
 extension LayoutableObject: Equatable {
 
     static func ==(lhs: LayoutableObject, rhs: LayoutableObject) -> Bool {
         return lhs.title == rhs.title && lhs.frame == rhs.frame
     }
 }
+
+
+// MARK: - Private
 
 private extension LayoutableObject {
 

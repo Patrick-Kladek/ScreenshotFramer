@@ -10,8 +10,11 @@ import Cocoa
 
 final class TimeTravelWindowController: NSWindowController {
 
+    // MARK: - Properties
+
     @IBOutlet var tableView: NSTableView?
     private(set) var layerStateHistory: LayerStateHistory
+
 
     // MARK: - Overrides
 
@@ -23,6 +26,7 @@ final class TimeTravelWindowController: NSWindowController {
         get { return nil }
         set {}
     }
+
 
     // MARK: Lifecycle
 
@@ -39,6 +43,7 @@ final class TimeTravelWindowController: NSWindowController {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     // MARK: - Update
 
     @objc func updateFromNotification(_ notification: Notification) {
@@ -49,6 +54,9 @@ final class TimeTravelWindowController: NSWindowController {
         UserDefaults.standard.showTimeTravelWindow = false
     }
 }
+
+
+// MARK: - TableView Delegate
 
 extension TimeTravelWindowController: NSTableViewDelegate, NSTableViewDataSource {
 

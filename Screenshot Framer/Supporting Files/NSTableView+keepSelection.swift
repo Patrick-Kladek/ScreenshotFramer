@@ -9,7 +9,7 @@
 import Cocoa
 
 
-extension NSTableView {
+extension NSTableView: NSTableViewDelegate {
 
     func reloadDataKeepingSelection() {
         let selectedRowIndexes = self.selectedRowIndexes

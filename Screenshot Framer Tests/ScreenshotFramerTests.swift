@@ -1,5 +1,5 @@
 //
-//  FrameMeTests.swift
+//  ScreenshotFramerTests.swift
 //  FrameMeTests
 //
 //  Created by Patrick Kladek on 06.12.17.
@@ -9,13 +9,12 @@
 import XCTest
 
 
-class FrameMeTests: XCTestCase {
+class ScreenshotFramerTests: XCTestCase {
 
     var layerStateHistory: LayerStateHistory!
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
 
         self.layerStateHistory = LayerStateHistory()
 
@@ -24,7 +23,7 @@ class FrameMeTests: XCTestCase {
     }
 
     func testSetup() {
-        // 2: because we it is guranted that layerStates has at least 1 LayerState (Initial Operation) and we added a new LayerState
+        // 2: because it is guranted that layerStates has at least 1 LayerState (Initial Operation) and we added a new LayerState in setUp (First Operation)
         XCTAssert(self.layerStateHistory.layerStates.count == 2)
     }
 

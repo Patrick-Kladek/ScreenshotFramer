@@ -17,7 +17,8 @@ class LayoutController {
     let layerStateHistory: LayerStateHistory
     let viewStateController: ViewStateController
     let languageController: LanguageController
-    var highlightLayer: Int = -1
+    var highlightLayer: Int = 0
+    var shouldHighlightSelectedLayer = false
 
 
     // MARK: Init
@@ -60,7 +61,7 @@ class LayoutController {
                 (view as! pkView).backgroundColor = NSColor.blue
             }
 
-            if self.highlightLayer >= 0 && object == layoutableObjects[self.highlightLayer] {
+            if self.shouldHighlightSelectedLayer && object == layoutableObjects[self.highlightLayer] {
                 view.wantsLayer = true
                 view.layer?.borderColor = NSColor.red.cgColor
                 view.layer?.borderWidth = 2.0

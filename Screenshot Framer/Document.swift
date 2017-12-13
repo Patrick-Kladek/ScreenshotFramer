@@ -11,9 +11,12 @@ import Cocoa
 
 final class Document: NSDocument {
 
+    //MARK: - Properties
+
     private(set) var layerStateHistory = LayerStateHistory()
     lazy var timeTravelWindowController = TimeTravelWindowController(layerStateHistory: self.layerStateHistory)
     var documentRoot: URL? { return self.fileURL?.deletingLastPathComponent() }
+
 
     // MARK: - Lifecycle
 
@@ -23,9 +26,8 @@ final class Document: NSDocument {
         self.layerStateHistory.delegate = self
         self.hasUndoManager = false
 
-        let layer = LayoutableObject(title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: true)
-        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
-        self.layerStateHistory.append(newLayerState)
+        let operation = AddBackgroundOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
     }
     
 
@@ -45,6 +47,7 @@ final class Document: NSDocument {
         }
     }
 
+
     // Responder Chain
 
     @IBAction func showTimeTravelWindow(_ sender: AnyObject?) {
@@ -63,6 +66,7 @@ final class Document: NSDocument {
         return super.validateMenuItem(menuItem)
     }
 
+
     // MARK: - Read/Write
 
     override func data(ofType typeName: String) throws -> Data {
@@ -78,6 +82,9 @@ final class Document: NSDocument {
         self.updateChangeCount(.changeCleared)
     }
 }
+
+
+// MARK: - LayerStateHistoryDelegate
 
 extension Document: LayerStateHistoryDelegate {
 

@@ -12,6 +12,7 @@ import Cocoa
 final class InspectorViewController: NSViewController {
 
     // MARK: - Properties
+
     private let layerStateHistory: LayerStateHistory
     private let languageController: LanguageController
 
@@ -24,6 +25,7 @@ final class InspectorViewController: NSViewController {
 
 
     // MARK: - Interface Builder
+
     @IBOutlet weak var textFieldImageNumber: NSTextField!
     @IBOutlet weak var stepperImageNumber: NSStepper!
 
@@ -59,6 +61,7 @@ final class InspectorViewController: NSViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 
     // MARK: - Update Methods
 
@@ -98,6 +101,7 @@ final class InspectorViewController: NSViewController {
         }
     }
 
+    
     // MARK: - Actions
 
     @IBAction func stepperPressed(sender: NSStepper) {
@@ -109,7 +113,7 @@ final class InspectorViewController: NSViewController {
 
         if sender == self.stepperImageNumber {
             let imageNumber = self.textFieldImageNumber.integerValue
-            self.viewStateController.newViewState(with: imageNumber)
+            self.viewStateController.newViewState(imageNumber: imageNumber)
         } else {
             self.updateFrame()
         }
@@ -122,7 +126,7 @@ final class InspectorViewController: NSViewController {
             operation.apply()
         } else if sender == self.textFieldImageNumber {
             let imageNumber = self.textFieldImageNumber.integerValue
-            self.viewStateController.newViewState(with: imageNumber)
+            self.viewStateController.newViewState(imageNumber: imageNumber)
         } else {
             self.updateFrame()
         }
@@ -130,7 +134,7 @@ final class InspectorViewController: NSViewController {
 
     @IBAction func popupDidChange(sender: NSPopUpButton) {
         if sender == self.languages {
-            self.viewStateController.newViewState(with: self.languages.titleOfSelectedItem ?? "en-US")
+            self.viewStateController.newViewState(language: self.languages.titleOfSelectedItem ?? "en-US")
         }
     }
 }

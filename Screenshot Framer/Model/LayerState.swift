@@ -10,8 +10,14 @@ import Foundation
 
 
 struct LayerState: Codable {
+
+    // MARK: - Properties
+
     let title: String
     let layers: [LayoutableObject]
+
+
+    // MARK: - Mutating Functions
 
     func addingLayer(_ layer: LayoutableObject) -> LayerState {
         var layers = self.layers

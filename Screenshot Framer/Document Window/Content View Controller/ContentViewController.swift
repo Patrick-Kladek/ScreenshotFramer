@@ -73,6 +73,8 @@ final class ContentViewController: NSViewController {
 
         inspector.updateUI()
         self.inspectorViewController = inspector
+
+        self.reloadLayout()
     }
 
     override func viewDidAppear() {
@@ -84,49 +86,8 @@ final class ContentViewController: NSViewController {
         }
     }
 
-
-    // MARK: - Actions
-
-    @IBAction func segmentClicked(sender: NSSegmentedControl) {
-        guard sender == self.segmentedControl else { return }
-
-        if sender.indexOfSelectedItem == 0 {
-            self.showMenu(for: sender)
-        } else {
-            sender.setEnabled(false, forSegment: 1)
-            self.removeLayoutableObject()
-        }
-    }
-
-    @IBAction func addContent(_ sender: AnyObject?) {
-        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-    }
-
-    @IBAction func addDevice(_ sender: AnyObject?) {
-        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-    }
-
-    @IBAction func addText(_ sender: AnyObject?) {
-        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-    }
-
-    @IBAction func toggleHighlightCurrentLayer(_ sender: AnyObject?) {
-        if self.layoutController.highlightLayer <= 0 {
-            self.layoutController.highlightLayer = self.tableView.selectedRow
-        } else {
-            self.layoutController.highlightLayer = -1
-        }
-    }
-
-    func removeLayoutableObject() {
-        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
-        operation.apply()
-    }
-
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        self.updateMenuItem(menuItem)
         guard let action = menuItem.action else { return false }
 
         switch action {
@@ -150,6 +111,63 @@ final class ContentViewController: NSViewController {
         }
     }
 
+    func updateMenuItem(_ menuItem: NSMenuItem) {
+        if menuItem.action == #selector(ContentViewController.toggleHighlightCurrentLayer) {
+            if self.layoutController.shouldHighlightSelectedLayer {
+                menuItem.state = .on
+            } else {
+                menuItem.state = .off
+            }
+        }
+    }
+
+
+    // MARK: - Actions
+
+    @IBAction func segmentClicked(sender: NSSegmentedControl) {
+        guard sender == self.segmentedControl else { return }
+
+        if sender.indexOfSelectedItem == 0 {
+            self.showMenu(for: sender)
+        } else {
+            sender.setEnabled(false, forSegment: 1)
+            self.removeLayoutableObject()
+        }
+    }
+
+    @IBAction func addContent(_ sender: AnyObject?) {
+        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @IBAction func addDevice(_ sender: AnyObject?) {
+        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @IBAction func addText(_ sender: AnyObject?) {
+        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    func removeLayoutableObject() {
+        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
+
+        let firstIndex = IndexSet(integer: 0)
+        self.tableView.selectRowIndexes(firstIndex, byExtendingSelection: false)
+
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @IBAction func toggleHighlightCurrentLayer(_ sender: AnyObject?) {
+        self.layoutController.shouldHighlightSelectedLayer = !self.layoutController.shouldHighlightSelectedLayer
+        self.viewStateController.newViewState(selectedLayer: self.tableView.selectedRow)
+    }
+
     @IBAction func undo(_ sender: AnyObject?) {
         self.layerStateHistory.undo()
     }
@@ -159,7 +177,7 @@ final class ContentViewController: NSViewController {
     }
 
     func reloadLayout() {
-        self.tableView.reloadDataKeepingSelection()
+        self.layoutController.highlightLayer = self.tableView.selectedRow
         self.scrollView.documentView = self.layoutController.layouthierarchy()
         self.updateEnabledStateOfControls()
     }
@@ -185,12 +203,8 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func tableViewSelectionDidChange(_ notification: Notification) {
         self.updateEnabledStateOfControls()
-
-        if self.layoutController.highlightLayer >= 0 {
-            self.layoutController.highlightLayer = self.tableView.selectedRow
-        }
-
         self.inspectorViewController?.updateUI()
+        self.viewStateController.newViewState(selectedLayer: self.tableView.selectedRow)
     }
 }
 

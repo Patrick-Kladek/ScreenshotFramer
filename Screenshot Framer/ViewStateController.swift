@@ -10,6 +10,7 @@ import Foundation
 
 
 struct ViewState {
+    let selectedLayer: Int
     let imageNumber: Int
     let language: String
 }
@@ -31,15 +32,18 @@ final class ViewStateController {
     }
 
     init() {
-        self.viewState = ViewState(imageNumber: 1, language: "en-US")
+        self.viewState = ViewState(selectedLayer: 0, imageNumber: 1, language: "en-US")
     }
 
-
-    func newViewState(with newImageNumber: Int) {
-        self.viewState = ViewState(imageNumber: newImageNumber, language: self.viewState.language)
+    func newViewState(selectedLayer: Int) {
+        self.viewState = ViewState(selectedLayer: selectedLayer, imageNumber: self.viewState.imageNumber, language: self.viewState.language)
     }
 
-    func newViewState(with newLanguage: String) {
-        self.viewState = ViewState(imageNumber: self.viewState.imageNumber, language: newLanguage)
+    func newViewState(imageNumber: Int) {
+        self.viewState = ViewState(selectedLayer: self.viewState.selectedLayer, imageNumber: imageNumber, language: self.viewState.language)
+    }
+
+    func newViewState(language: String) {
+        self.viewState = ViewState(selectedLayer: self.viewState.selectedLayer, imageNumber: self.viewState.imageNumber, language: language)
     }
 }

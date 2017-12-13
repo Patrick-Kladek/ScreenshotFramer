@@ -14,6 +14,7 @@ protocol OperationProtocol {
     func apply()
 }
 
+
 final class UpdateFrameOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -99,6 +100,12 @@ final class AddBackgroundOperation: AddLayerOperation {
 
     override var nameOfLayer: String {
         return "Background"
+    }
+
+    override func apply() {
+        let layer = LayoutableObject(title: self.nameOfLayer, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: false)
+        let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
+        self.layerStateHistory.append(newLayerState)
     }
 }
 
