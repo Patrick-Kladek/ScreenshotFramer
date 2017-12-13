@@ -11,7 +11,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="FrameMe" customModuleProvider="target"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Screenshot_Framer" customModuleProvider="target"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
@@ -626,6 +626,12 @@
                                     <action selector="toggleHighlightCurrentLayer:" target="-1" id="3RU-lt-6se"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Show Time Travel" id="5Pd-5Y-YJM">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showTimeTravelWindow:" target="-1" id="7aV-Az-VF0"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
@@ -658,13 +664,6 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="WRa-hA-c84"/>
-                            <menuItem title="Show Time Travel" id="5Pd-5Y-YJM">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showTimeTravelWindow:" target="-1" id="7aV-Az-VF0"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
