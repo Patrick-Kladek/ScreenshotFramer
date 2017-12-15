@@ -1,6 +1,6 @@
 //
 //  RenderedView.swift
-//  FrameMe
+//  Screenshot Framer
 //
 //  Created by Patrick Kladek on 11.12.17.
 //  Copyright © 2017 Patrick Kladek. All rights reserved.

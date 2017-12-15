@@ -6,14 +6,14 @@
 //  Copyright © 2017 Patrick Kladek. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 enum LayoutableObjectType: String, Codable {
+    case none
     case background
     case content
     case device
     case text
-    case none
 }
 
 /// Model that holds all information about a rendered layer
@@ -28,6 +28,7 @@ struct LayoutableObject: Codable {
     var isRoot: Bool = false
     var font: String?
     var fontSize: CGFloat?
+    var color: NSColor?
 
 
     // MARK: - Lifecycle
@@ -56,6 +57,10 @@ struct LayoutableObject: Codable {
 
         self.font = try? container.decode(String.self, forKey: .font)
         self.fontSize = try? container.decode(CGFloat.self, forKey: .fontSize)
+
+        if let colorHex = try? container.decode(String.self, forKey: .color) {
+            self.color = NSColor.init(hex: colorHex)
+        }
     }
 
     func encode(to encoder: Encoder) throws {
@@ -71,6 +76,7 @@ struct LayoutableObject: Codable {
 
         try container.encode(self.font, forKey: .font)
         try container.encode(self.fontSize, forKey: .fontSize)
+        try container.encode(self.color?.hexString(), forKey: .color)
     }
 }
 
@@ -97,5 +103,6 @@ private extension LayoutableObject {
         case root = "isRoot"
         case font = "font"
         case fontSize = "fontSize"
+        case color = "color"
     }
 }

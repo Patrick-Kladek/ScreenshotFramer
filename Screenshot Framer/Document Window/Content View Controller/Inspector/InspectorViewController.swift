@@ -48,6 +48,7 @@ final class InspectorViewController: NSViewController {
     @IBOutlet weak var textFieldFont: NSTextField!
     @IBOutlet weak var textFieldFontSize: NSTextField!
     @IBOutlet weak var stepperFontSize: NSStepper!
+    @IBOutlet weak var colorWell: NSColorWell!
 
 
     // MARK: - Lifecycle
@@ -96,6 +97,25 @@ final class InspectorViewController: NSViewController {
             self.textFieldFontSize.doubleValue = Double(fontSize)
             self.stepperFontSize.doubleValue = self.textFieldFontSize.doubleValue
         }
+
+        if layoutableObject.type == .text {
+            self.textFieldFont.isEnabled = true
+            self.textFieldFontSize.isEnabled = true
+            self.stepperFontSize.isEnabled = true
+            self.colorWell.isEnabled = true
+        } else {
+            self.textFieldFont.isEnabled = false
+            self.textFieldFontSize.isEnabled = false
+            self.stepperFontSize.isEnabled = false
+            self.colorWell.isEnabled = false
+        }
+
+        if let color = layoutableObject.color {
+            self.colorWell.color = color
+        } else {
+            self.colorWell.color = NSColor.black
+        }
+
 
         let selectedLanguage = self.languages.titleOfSelectedItem
         self.languages.removeAllItems()
@@ -160,6 +180,13 @@ final class InspectorViewController: NSViewController {
         if sender == self.languages {
             self.viewStateController.newViewState(language: self.languages.titleOfSelectedItem ?? "en-US")
         }
+    }
+
+    @IBAction func colorWellDidUpdateColor(sender: NSColorWell) {
+        let color = sender.color
+        let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
+        operation.apply()
+
     }
 }
 

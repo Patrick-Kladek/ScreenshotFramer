@@ -6,7 +6,7 @@
 //  Copyright © 2017 Patrick Kladek. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 
 struct LayerState: Codable {
@@ -83,6 +83,15 @@ struct LayerState: Codable {
 
         layers[index].fontSize = fontSize
         return LayerState(title: "Updating Font Size", layers: layers)
+    }
+
+    func updating(color: NSColor, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].color = color
+        return LayerState(title: "Updating Color", layers: layers)
     }
 
     private func title(of rect: CGRect) -> String {

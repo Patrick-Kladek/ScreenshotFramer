@@ -1,6 +1,6 @@
 //
 //  LayoutController.swift
-//  FrameMe
+//  Screenshot Framer
 //
 //  Created by Patrick Kladek on 12.12.17.
 //  Copyright © 2017 Patrick Kladek. All rights reserved.
@@ -81,6 +81,10 @@ private extension LayoutController {
 
         if let font = NSFont(name: object.font ?? "", size: object.fontSize ?? 25) {
             textField.font = font
+        }
+
+        if let color = object.color {
+            textField.textColor = color
         }
 
         self.limitFontSize(for: textField)

@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InspectorViewController" customModule="Screenshot_Framer" customModuleProvider="target">
             <connections>
+                <outlet property="colorWell" destination="Jpq-k7-BJm" id="d3K-fF-Nah"/>
                 <outlet property="languages" destination="yja-tK-Z7E" id="dQ5-W5-Wm4"/>
                 <outlet property="stepperFontSize" destination="wOa-Mi-6AY" id="yKV-uo-PPP"/>
                 <outlet property="stepperHeight" destination="xDV-62-B6M" id="2xV-AG-cAU"/>
@@ -268,6 +269,17 @@
                         <action selector="stepperPressedWithSender:" target="-2" id="dvy-zu-7as"/>
                     </connections>
                 </stepper>
+                <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Jpq-k7-BJm">
+                    <rect key="frame" x="92" y="20" width="44" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="9CG-kM-M3Y"/>
+                        <constraint firstAttribute="height" constant="23" id="Zf9-GM-BI6"/>
+                    </constraints>
+                    <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="colorWellDidUpdateColorWithSender:" target="-2" id="pny-VJ-UkU"/>
+                    </connections>
+                </colorWell>
             </subviews>
             <constraints>
                 <constraint firstItem="oN4-WM-Ps9" firstAttribute="leading" secondItem="yja-tK-Z7E" secondAttribute="leading" id="0tG-tQ-QkS"/>
@@ -282,6 +294,7 @@
                 <constraint firstItem="3Ff-UD-oeG" firstAttribute="trailing" secondItem="OV3-6o-u7R" secondAttribute="trailing" id="8AA-bn-ODK"/>
                 <constraint firstItem="3Ff-UD-oeG" firstAttribute="trailing" secondItem="oUH-Bi-Kod" secondAttribute="trailing" id="ARd-Ka-8Ve"/>
                 <constraint firstItem="oin-xw-pVq" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="12" id="AuS-aR-JtD"/>
+                <constraint firstItem="frh-tt-8wW" firstAttribute="centerY" secondItem="Jpq-k7-BJm" secondAttribute="centerY" id="B9m-T9-egO"/>
                 <constraint firstItem="wOa-Mi-6AY" firstAttribute="centerY" secondItem="frh-tt-8wW" secondAttribute="centerY" id="BTL-sZ-KCa"/>
                 <constraint firstItem="eF7-8b-K0Y" firstAttribute="leading" secondItem="OV3-6o-u7R" secondAttribute="leading" id="C5e-XI-nQO"/>
                 <constraint firstItem="xDV-62-B6M" firstAttribute="trailing" secondItem="oN4-WM-Ps9" secondAttribute="trailing" id="CJO-gX-3mT"/>
@@ -304,11 +317,13 @@
                 <constraint firstAttribute="bottom" secondItem="frh-tt-8wW" secondAttribute="bottom" constant="20" id="PeI-O4-QJ0"/>
                 <constraint firstItem="b0u-3f-zfE" firstAttribute="trailing" secondItem="oN4-WM-Ps9" secondAttribute="trailing" id="RdE-Pi-aNp"/>
                 <constraint firstItem="5ip-bW-6as" firstAttribute="leading" secondItem="oN4-WM-Ps9" secondAttribute="leading" id="Sgp-QV-Uaw"/>
+                <constraint firstItem="Jpq-k7-BJm" firstAttribute="leading" secondItem="RiV-ZM-fbm" secondAttribute="leading" id="T9w-B2-gG9"/>
                 <constraint firstItem="3Ff-UD-oeG" firstAttribute="leading" secondItem="OV3-6o-u7R" secondAttribute="leading" id="TVl-ii-rWG"/>
                 <constraint firstItem="oUH-Bi-Kod" firstAttribute="trailing" secondItem="eF7-8b-K0Y" secondAttribute="trailing" id="Vdt-Le-qOJ"/>
                 <constraint firstItem="oin-xw-pVq" firstAttribute="top" secondItem="yja-tK-Z7E" secondAttribute="bottom" constant="8" id="Wiv-RC-DvV"/>
                 <constraint firstItem="vE2-7V-Kgz" firstAttribute="baseline" secondItem="oUH-Bi-Kod" secondAttribute="baseline" id="Wq0-iK-hKv"/>
                 <constraint firstItem="8uV-0r-Gjg" firstAttribute="centerX" secondItem="vE2-7V-Kgz" secondAttribute="centerX" id="Wwd-eC-i8L"/>
+                <constraint firstItem="frh-tt-8wW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jpq-k7-BJm" secondAttribute="trailing" constant="16" id="Xru-SZ-DKY"/>
                 <constraint firstItem="6Aw-b6-Nss" firstAttribute="centerX" secondItem="PoL-Ah-qxY" secondAttribute="centerX" id="Xtx-ju-Qte"/>
                 <constraint firstItem="Dhj-E6-Yr3" firstAttribute="top" secondItem="oN4-WM-Ps9" secondAttribute="bottom" constant="8" id="Ywa-QR-eNB"/>
                 <constraint firstItem="eF7-8b-K0Y" firstAttribute="trailing" secondItem="OV3-6o-u7R" secondAttribute="trailing" id="aCs-5e-buX"/>

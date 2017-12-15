@@ -1,6 +1,6 @@
 //
 //  ScreenshotFramerTests.swift
-//  FrameMeTests
+//  Screenshot Framer
 //
 //  Created by Patrick Kladek on 06.12.17.
 //  Copyright © 2017 Patrick Kladek. All rights reserved.

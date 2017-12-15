@@ -1,12 +1,12 @@
 //
 //  Operations.swift
-//  FrameMe
+//  Screenshot Framer
 //
 //  Created by Patrick Kladek on 11.12.17.
 //  Copyright © 2017 Patrick Kladek. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 
 protocol OperationProtocol {
@@ -100,6 +100,27 @@ final class UpdateFontSizeOperation: OperationProtocol {
 }
 
 
+final class UpdateTextColorOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let color: NSColor
+
+    init(layerStateHistory: LayerStateHistory, color: NSColor, indexOfLayer: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.indexOfLayer = indexOfLayer
+        self.color = color
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(color: self.color, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class RemoveLayerOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -139,7 +160,6 @@ class AddLayerOperation: OperationProtocol {
 
 final class AddBackgroundOperation: AddLayerOperation {
 
-//    override var nameOfLayer: String { return "Background" }
     override var type: LayoutableObjectType { return .background }
 
     override func apply() {
@@ -151,18 +171,15 @@ final class AddBackgroundOperation: AddLayerOperation {
 
 final class AddTextOperation: AddLayerOperation {
 
-//    override var nameOfLayer: String { return "Text" }
     override var type: LayoutableObjectType { return .text }
 }
 
 final class AddContentOperation: AddLayerOperation {
 
-//    override var nameOfLayer: String { return "Content" }
     override var type: LayoutableObjectType { return .content }
 }
 
 final class AddDeviceOperation: AddLayerOperation {
 
-//    override var nameOfLayer: String { return "Device" }
     override var type: LayoutableObjectType { return .device }
 }
