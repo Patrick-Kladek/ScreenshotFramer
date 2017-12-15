@@ -35,7 +35,7 @@ final class LayerStateHistory {
     // MARK: - Lifecycle
 
     init() {
-        let initialState = LayerState(title: "Initial Operation", layers: [])
+        let initialState = LayerState(title: "Initial Operation", layers: [], output: "")
         self.append(initialState)
     }
 

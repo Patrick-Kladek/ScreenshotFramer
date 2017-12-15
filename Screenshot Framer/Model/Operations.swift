@@ -15,6 +15,23 @@ protocol OperationProtocol {
 }
 
 
+final class UpdateOutputOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let output: String
+
+    init(layerStateHistory: LayerStateHistory, output: String) {
+        self.layerStateHistory = layerStateHistory
+        self.output = output
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        let newLayerState = lastLayerState.updating(output: self.output)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
 final class UpdateFrameOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory

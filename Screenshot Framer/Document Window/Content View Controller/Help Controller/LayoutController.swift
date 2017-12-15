@@ -19,15 +19,17 @@ class LayoutController {
     let languageController: LanguageController
     var highlightLayer: Int = 0
     var shouldHighlightSelectedLayer = false
+    var fileController: FileController
 
 
     // MARK: Init
 
-    init(document: Document, layerStateHistory: LayerStateHistory, viewStateController: ViewStateController, languageController: LanguageController) {
+    init(document: Document, layerStateHistory: LayerStateHistory, viewStateController: ViewStateController, languageController: LanguageController, fileController: FileController) {
         self.document = document
         self.layerStateHistory = layerStateHistory
         self.viewStateController = viewStateController
         self.languageController = languageController
+        self.fileController = fileController
     }
 
 
@@ -68,8 +70,9 @@ class LayoutController {
 private extension LayoutController {
 
     func textField(from object: LayoutableObject) -> NSTextField {
-        let absoluteURL = self.absoluteURL(for: object)
-        let text = self.localizedTitle(from: absoluteURL, imageNumber: self.viewStateController.viewState.imageNumber) ?? ""
+        let viewState = self.viewStateController.viewState
+        let absoluteURL = self.fileController.absoluteURL(for: object, viewState: viewState)
+        let text = self.fileController.localizedTitle(from: absoluteURL, viewState: viewState) ?? ""
 
         let textField = NSTextField(frame: object.frame)
         textField.textColor       = NSColor.white
@@ -117,7 +120,8 @@ private extension LayoutController {
     }
 
     func view(from object: LayoutableObject) -> NSView {
-        if let url = self.absoluteURL(for: object) {
+        let viewState = self.viewStateController.viewState
+        if let url = self.fileController.absoluteURL(for: object, viewState: viewState) {
             return RenderedView(frame: object.frame, url: url)
         } else {
             let view = pkView(frame: object.frame)
@@ -126,6 +130,7 @@ private extension LayoutController {
         }
     }
 
+    /*
     func absoluteURL(for object: LayoutableObject) -> URL? {
         guard object.file.count > 0 else { return nil }
 
@@ -143,4 +148,5 @@ private extension LayoutController {
         let value = dict["\(imageNumber)"] as? String
         return value
     }
+    */
 }

@@ -20,6 +20,7 @@ final class ContentViewController: NSViewController {
     let viewStateController = ViewStateController()
     let layoutController: LayoutController
     var languageController: LanguageController
+    var fileController: FileController
 
 
     // MARK: - Interface Builder
@@ -29,6 +30,7 @@ final class ContentViewController: NSViewController {
     @IBOutlet var segmentedControl: NSSegmentedControl!
     @IBOutlet var tableView: pkTableView!
     @IBOutlet var addMenu: NSMenu!
+    @IBOutlet weak var textFieldOutput: NSTextField!
     @IBOutlet weak var buttonSave: NSButton!
     @IBOutlet weak var buttonSaveAll: NSButton!
 
@@ -38,10 +40,12 @@ final class ContentViewController: NSViewController {
 
     init(document: Document) {
         let languageController = LanguageController(document: document)
+        let fileController = FileController(document: document)
 
         self.document = document
-        self.layoutController = LayoutController(document: self.document, layerStateHistory: document.layerStateHistory, viewStateController: self.viewStateController, languageController: languageController)
+        self.layoutController = LayoutController(document: self.document, layerStateHistory: document.layerStateHistory, viewStateController: self.viewStateController, languageController: languageController, fileController: fileController)
         self.languageController = languageController
+        self.fileController = fileController
 
         super.init(nibName: self.nibName, bundle: nil)
 
@@ -173,25 +177,32 @@ final class ContentViewController: NSViewController {
 
     @IBAction func undo(_ sender: AnyObject?) {
         self.layerStateHistory.undo()
-//        self.tableView.reloadDataKeepingSelection()
         self.tableView.reloadData()
     }
 
     @IBAction func redo(_ sender: AnyObject?) {
         self.layerStateHistory.redo()
-//        self.tableView.reloadDataKeepingSelection()
         self.tableView.reloadData()
     }
 
+    @IBAction func outputDidChange(_ sender: AnyObject?) {
+        self.updateEnabledStateOfControls()
+        let operation = UpdateOutputOperation(layerStateHistory: self.layerStateHistory, output: self.textFieldOutput.stringValue)
+        operation.apply()
+    }
+
     @IBAction func saveImage(_ sender: NSButton) {
-        let view = self.scrollView.documentView
-//        view?.pngRepresentation()
-//        self.layoutController.
+        if sender == self.buttonSave {
+            self.saveSingleImage()
+        } else {
+            self.saveAllImages()
+        }
     }
 
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.scrollView.documentView = self.layoutController.layouthierarchy()
+        self.textFieldOutput.stringValue = self.lastLayerState.output
         self.updateEnabledStateOfControls()
     }
 }
@@ -248,11 +259,40 @@ private extension ContentViewController {
 
         let selectedRow = self.tableView.selectedRow
         self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
+
+        self.buttonSave.isEnabled = self.textFieldOutput.stringValue.count > 0
+        self.buttonSaveAll.isEnabled = self.buttonSave.isEnabled
     }
 
     func showMenu(for segmentedControl: NSSegmentedControl) {
         var menuLocation = segmentedControl.bounds.origin
         menuLocation.y += segmentedControl.bounds.size.height + 5.0
         self.addMenu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
+    }
+
+    func saveSingleImage() {
+        guard let view = self.scrollView.documentView else { return }
+        let data = view.pngData()
+        guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: self.viewStateController.viewState) else { return }
+
+        try? data?.write(to: url, options: .atomic)
+    }
+
+    func saveAllImages() {
+        let viewStateController = ViewStateController()
+        let layoutController = LayoutController(document: self.document, layerStateHistory: self.layerStateHistory, viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
+
+        for language in self.languageController.allLanguages() {
+            viewStateController.newViewState(language: language)
+            for index in 1...5 {
+                viewStateController.newViewState(imageNumber: index)
+                guard let view = layoutController.layouthierarchy() else { continue }
+
+                let data = view.pngData()
+                guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return }
+
+                try? data?.write(to: url, options: .atomic)
+            }
+        }
     }
 }
