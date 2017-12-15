@@ -42,3 +42,14 @@ final class pkView: NSView {
         }
     }
 }
+
+
+extension NSView {
+
+    func pngRepresentation() -> Data? {
+        self.lockFocus()
+        let rep = NSBitmapImageRep(focusedViewRect: self.bounds)
+        self.unlockFocus()
+        return rep?.representation(using: .png, properties: [:])
+    }
+}

@@ -29,6 +29,9 @@ final class ContentViewController: NSViewController {
     @IBOutlet var segmentedControl: NSSegmentedControl!
     @IBOutlet var tableView: pkTableView!
     @IBOutlet var addMenu: NSMenu!
+    @IBOutlet weak var buttonSave: NSButton!
+    @IBOutlet weak var buttonSaveAll: NSButton!
+
 
 
     // MARK: - Lifecycle
@@ -178,6 +181,12 @@ final class ContentViewController: NSViewController {
         self.layerStateHistory.redo()
 //        self.tableView.reloadDataKeepingSelection()
         self.tableView.reloadData()
+    }
+
+    @IBAction func saveImage(_ sender: NSButton) {
+        let view = self.scrollView.documentView
+//        view?.pngRepresentation()
+//        self.layoutController.
     }
 
     func reloadLayout() {

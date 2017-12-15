@@ -8,6 +8,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ContentViewController" customModule="Screenshot_Framer" customModuleProvider="target">
             <connections>
                 <outlet property="addMenu" destination="AHX-7H-zUZ" id="OEl-uH-I6C"/>
+                <outlet property="buttonSave" destination="tAW-Cr-EAJ" id="pfU-BL-Jgr"/>
+                <outlet property="buttonSaveAll" destination="dxm-LX-Mdn" id="sAM-5G-vlU"/>
                 <outlet property="inspectorPlaceholder" destination="slX-x1-2Hr" id="5YM-u0-GFc"/>
                 <outlet property="scrollView" destination="O0C-Q5-AWh" id="UpB-Ws-4t6"/>
                 <outlet property="segmentedControl" destination="hmg-Jg-ukQ" id="w4B-dQ-MX2"/>
@@ -135,20 +137,50 @@
                                     </connections>
                                 </segmentedControl>
                                 <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slX-x1-2Hr">
-                                    <rect key="frame" x="0.0" y="0.0" width="237" height="283"/>
+                                    <rect key="frame" x="0.0" y="49" width="237" height="234"/>
                                 </customView>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tAW-Cr-EAJ">
+                                    <rect key="frame" x="14" y="13" width="102" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="90" id="fGt-K8-tu3"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ISH-Yq-cd1">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="saveImage:" target="-2" id="7ye-Kh-YNq"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dxm-LX-Mdn">
+                                    <rect key="frame" x="121" y="13" width="102" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="90" id="hpl-EW-esg"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="push" title="Save All" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WoR-vg-17j">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="saveImage:" target="-2" id="OiZ-eC-zdR"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="slX-x1-2Hr" firstAttribute="leading" secondItem="V5e-jM-e5B" secondAttribute="leading" id="6Jh-iF-5sS"/>
                                 <constraint firstAttribute="trailing" secondItem="kcc-rK-wzh" secondAttribute="trailing" id="Grq-dI-hCc"/>
+                                <constraint firstAttribute="bottom" secondItem="tAW-Cr-EAJ" secondAttribute="bottom" constant="20" id="KT8-hV-VBv"/>
+                                <constraint firstItem="tAW-Cr-EAJ" firstAttribute="leading" secondItem="V5e-jM-e5B" secondAttribute="leading" constant="20" id="OSy-S7-KDF"/>
+                                <constraint firstItem="dxm-LX-Mdn" firstAttribute="top" secondItem="slX-x1-2Hr" secondAttribute="bottom" constant="8" id="QgP-R2-TM5"/>
                                 <constraint firstAttribute="trailing" secondItem="slX-x1-2Hr" secondAttribute="trailing" id="R7a-Dq-VE5"/>
-                                <constraint firstAttribute="bottom" secondItem="slX-x1-2Hr" secondAttribute="bottom" id="brz-zV-JAs"/>
                                 <constraint firstItem="hmg-Jg-ukQ" firstAttribute="leading" secondItem="V5e-jM-e5B" secondAttribute="leading" constant="8" id="h3n-JA-BgF"/>
                                 <constraint firstItem="slX-x1-2Hr" firstAttribute="top" secondItem="hmg-Jg-ukQ" secondAttribute="bottom" constant="8" id="jez-Ie-Xyk"/>
                                 <constraint firstItem="hmg-Jg-ukQ" firstAttribute="top" secondItem="kcc-rK-wzh" secondAttribute="bottom" constant="8" id="kQz-Ip-qXr"/>
                                 <constraint firstItem="kcc-rK-wzh" firstAttribute="leading" secondItem="V5e-jM-e5B" secondAttribute="leading" id="mCu-VA-zLs"/>
+                                <constraint firstAttribute="bottom" secondItem="dxm-LX-Mdn" secondAttribute="bottom" constant="20" id="qGE-1J-Of1"/>
                                 <constraint firstAttribute="width" constant="220" id="rdT-cw-ABT"/>
                                 <constraint firstItem="kcc-rK-wzh" firstAttribute="top" secondItem="V5e-jM-e5B" secondAttribute="top" id="xap-gl-nvr"/>
+                                <constraint firstAttribute="trailing" secondItem="dxm-LX-Mdn" secondAttribute="trailing" constant="20" id="z5A-qu-JsG"/>
                             </constraints>
                         </customView>
                     </subviews>
