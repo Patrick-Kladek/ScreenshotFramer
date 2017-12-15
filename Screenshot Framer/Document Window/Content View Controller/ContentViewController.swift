@@ -27,7 +27,7 @@ final class ContentViewController: NSViewController {
     @IBOutlet var inspectorPlaceholder: NSView!
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var segmentedControl: NSSegmentedControl!
-    @IBOutlet var tableView: NSTableView!
+    @IBOutlet var tableView: pkTableView!
     @IBOutlet var addMenu: NSMenu!
 
 
@@ -156,7 +156,7 @@ final class ContentViewController: NSViewController {
     func removeLayoutableObject() {
         let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
 
-        let firstIndex = IndexSet(integer: 0)
+        let firstIndex = IndexSet(integer: self.tableView.selectedRow - 1)
         self.tableView.selectRowIndexes(firstIndex, byExtendingSelection: false)
 
         operation.apply()
@@ -170,10 +170,14 @@ final class ContentViewController: NSViewController {
 
     @IBAction func undo(_ sender: AnyObject?) {
         self.layerStateHistory.undo()
+//        self.tableView.reloadDataKeepingSelection()
+        self.tableView.reloadData()
     }
 
     @IBAction func redo(_ sender: AnyObject?) {
         self.layerStateHistory.redo()
+//        self.tableView.reloadDataKeepingSelection()
+        self.tableView.reloadData()
     }
 
     func reloadLayout() {
@@ -202,8 +206,14 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
+        guard self.tableView.isReloading == false else { return}
+
         self.updateEnabledStateOfControls()
-        self.inspectorViewController?.updateUI()
+
+        if let selectedRow = self.tableView?.selectedRow {
+            self.inspectorViewController?.selectedRow = selectedRow
+        }
+
         self.viewStateController.newViewState(selectedLayer: self.tableView.selectedRow)
     }
 }
@@ -229,7 +239,6 @@ private extension ContentViewController {
 
         let selectedRow = self.tableView.selectedRow
         self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
-        self.inspectorViewController?.selectedRow = selectedRow
     }
 
     func showMenu(for segmentedControl: NSSegmentedControl) {

@@ -28,6 +28,7 @@ final class Document: NSDocument {
 
         let operation = AddBackgroundOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
+        self.updateChangeCount(.changeCleared)
     }
     
 
@@ -88,7 +89,7 @@ final class Document: NSDocument {
 
 extension Document: LayerStateHistoryDelegate {
 
-    func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState) {
+    func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState, layerCountDidChange: Bool) {
         self.updateChangeCount(.changeDone)
         guard let windowController = self.windowControllers.first(where: { $0 is DocumentWindowController }) as? DocumentWindowController else { return }
         guard let contentViewController = windowController.contentViewController as? ContentViewController else { return }

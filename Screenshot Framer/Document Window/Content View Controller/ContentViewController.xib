@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ContentViewController" customModule="FrameMe" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ContentViewController" customModule="Screenshot_Framer" customModuleProvider="target">
             <connections>
                 <outlet property="addMenu" destination="AHX-7H-zUZ" id="OEl-uH-I6C"/>
                 <outlet property="inspectorPlaceholder" destination="slX-x1-2Hr" id="5YM-u0-GFc"/>
@@ -26,7 +26,7 @@
                         <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" id="O0C-Q5-AWh">
                             <rect key="frame" x="0.0" y="0.0" width="398" height="470"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <clipView key="contentView" id="MQh-pm-viu" customClass="CenterClipView" customModule="FrameMe" customModuleProvider="target">
+                            <clipView key="contentView" id="MQh-pm-viu" customClass="CenterClipView" customModule="Screenshot_Framer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="398" height="470"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
@@ -35,6 +35,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </clipView>
                             <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="KNx-7p-XS5">
                                 <rect key="frame" x="-100" y="-100" width="415" height="16"/>
@@ -55,7 +56,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="237" height="150"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" viewBased="YES" id="m2P-9G-URw">
+                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" viewBased="YES" id="m2P-9G-URw" customClass="pkTableView" customModule="Screenshot_Framer" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="237" height="150"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -112,7 +113,7 @@
                                         <constraint firstAttribute="height" constant="150" id="V47-OI-SNH"/>
                                     </constraints>
                                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1Mi-pP-3hA">
-                                        <rect key="frame" x="0.0" y="134" width="184" height="16"/>
+                                        <rect key="frame" x="0.0" y="134" width="220" height="16"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="ZMV-Zh-HNM">

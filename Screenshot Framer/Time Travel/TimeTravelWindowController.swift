@@ -48,6 +48,11 @@ final class TimeTravelWindowController: NSWindowController {
 
     @objc func updateFromNotification(_ notification: Notification) {
         self.tableView?.reloadData()
+        guard let numberOfRows = self.tableView?.numberOfRows else { return }
+
+        if numberOfRows > 0 {
+        	self.tableView?.scrollRowToVisible(numberOfRows - 1)
+        }
     }
 
     @objc func windowWillClose(notification: Notification) {

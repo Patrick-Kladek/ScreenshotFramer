@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol LayerStateHistoryDelegate {
-    func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState)
+    func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState, layerCountDidChange: Bool)
 }
 
 
@@ -90,7 +90,7 @@ final class LayerStateHistory {
     // MARK: - Private
 
     private func notifyLayerStateDidChange() {
-        self.delegate?.layerStateHistory(self, didUpdateHistory: self.currentLayerState)
+        self.delegate?.layerStateHistory(self, didUpdateHistory: self.currentLayerState, layerCountDidChange: true)
 
         NotificationCenter.default.post(name: Constants.LayerStateHistoryDidChangeConstant, object: self)
     }

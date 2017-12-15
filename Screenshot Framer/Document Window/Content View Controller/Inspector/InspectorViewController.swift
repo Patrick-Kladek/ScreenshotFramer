@@ -46,6 +46,8 @@ final class InspectorViewController: NSViewController {
     @IBOutlet weak var stepperHeight: NSStepper!
 
     @IBOutlet weak var textFieldFont: NSTextField!
+    @IBOutlet weak var textFieldFontSize: NSTextField!
+    @IBOutlet weak var stepperFontSize: NSStepper!
 
 
     // MARK: - Lifecycle
@@ -90,6 +92,11 @@ final class InspectorViewController: NSViewController {
             self.textFieldFont.stringValue = fontString
         }
 
+        if let fontSize = layoutableObject.fontSize {
+            self.textFieldFontSize.doubleValue = Double(fontSize)
+            self.stepperFontSize.doubleValue = self.textFieldFontSize.doubleValue
+        }
+
         let selectedLanguage = self.languages.titleOfSelectedItem
         self.languages.removeAllItems()
         let allLanguages = self.languageController.allLanguages()
@@ -97,7 +104,7 @@ final class InspectorViewController: NSViewController {
         if selectedLanguage != nil {
             self.languages.selectItem(withTitle: selectedLanguage!)
         } else {
-            self.popupDidChange(sender: self.languages)
+            self.languages.selectItem(withTitle: "en-US")
         }
     }
 
@@ -110,24 +117,41 @@ final class InspectorViewController: NSViewController {
         self.textFieldY.doubleValue = self.stepperY.doubleValue
         self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
         self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
+        self.textFieldFontSize.doubleValue = self.stepperFontSize.doubleValue
 
-        if sender == self.stepperImageNumber {
+        switch sender {
+        case self.stepperImageNumber:
             let imageNumber = self.textFieldImageNumber.integerValue
             self.viewStateController.newViewState(imageNumber: imageNumber)
-        } else {
+
+        case self.stepperFontSize:
+            self.updateFontSize()
+
+        default:
             self.updateFrame()
         }
     }
 
     @IBAction func textFieldChanged(sender: NSTextField) {
-        if sender == self.textFieldFile {
+        switch sender {
+        case self.textFieldFile:
             let file = self.textFieldFile.stringValue
             let operation = UpdateFileOperation(layerStateHistory: self.layerStateHistory, file: file, indexOfLayer: self.selectedRow)
             operation.apply()
-        } else if sender == self.textFieldImageNumber {
+
+        case self.textFieldImageNumber:
             let imageNumber = self.textFieldImageNumber.integerValue
             self.viewStateController.newViewState(imageNumber: imageNumber)
-        } else {
+
+        case self.textFieldFont:
+            let font = self.textFieldFont.stringValue
+            let operation = UpdateFontOperation(layerStateHistory: self.layerStateHistory, font: font, indexOfLayer: self.selectedRow)
+            operation.apply()
+
+        case self.textFieldFontSize:
+            self.updateFontSize()
+
+        default:
             self.updateFrame()
         }
     }
@@ -151,6 +175,12 @@ private extension InspectorViewController {
                            height: self.textFieldHeight.doubleValue)
 
         let operation = UpdateFrameOperation(layerStateHistory: self.layerStateHistory, frame: frame, indexOfLayer: self.selectedRow)
+        operation.apply()
+    }
+
+    func updateFontSize() {
+        let fontSize = CGFloat(self.textFieldFontSize.floatValue)
+        let operation = UpdateFontSizeOperation(layerStateHistory: self.layerStateHistory, fontSize: fontSize, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 }

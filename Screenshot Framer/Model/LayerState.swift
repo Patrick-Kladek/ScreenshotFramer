@@ -67,6 +67,24 @@ struct LayerState: Codable {
         return LayerState(title: "Updating File", layers: layers)
     }
 
+    func updating(font: String, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].font = font
+        return LayerState(title: "Updating Font", layers: layers)
+    }
+
+    func updating(fontSize: CGFloat, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].fontSize = fontSize
+        return LayerState(title: "Updating Font Size", layers: layers)
+    }
+
     private func title(of rect: CGRect) -> String {
         return "\(Int(rect.origin.x)) \(Int(rect.origin.y)) | \(Int(rect.size.width)) \(Int(rect.size.height))"
     }

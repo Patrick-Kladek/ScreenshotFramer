@@ -38,27 +38,15 @@ class LayoutController {
         guard layoutableObjects.count > 0 else { return nil }
 
         let firstLayoutableObject = layoutableObjects[0]
-        let rootView: NSView
-
-        if let absoluteURL = self.absoluteURL(for: firstLayoutableObject) {
-            rootView = RenderedView(frame: firstLayoutableObject.frame, url: absoluteURL)
-        } else {
-            rootView = pkView(frame: firstLayoutableObject.frame)
-            (rootView as! pkView).backgroundColor = NSColor.red
-        }
+        let rootView = self.view(from: firstLayoutableObject)
 
         for object in layoutableObjects where object != layoutableObjects[0] {
             let view: NSView
 
-            if let absoluteURL = self.absoluteURL(for: object) {
-                if object.title == "Text", let text = self.localizedTitle(from: absoluteURL, imageNumber: self.viewStateController.viewState.imageNumber) {
-                    view = self.textField(with: text, frame: object.frame, color: NSColor.white, font: NSFont.systemFont(ofSize: NSFont.systemFontSize))
-                } else {
-                    view = RenderedView(frame: object.frame, url: absoluteURL)
-                }
+            if object.type == .text {
+                view = self.textField(from: object)
             } else {
-                view = pkView(frame: object.frame)
-                (view as! pkView).backgroundColor = NSColor.blue
+                view = self.view(from: object)
             }
 
             if self.shouldHighlightSelectedLayer && object == layoutableObjects[self.highlightLayer] {
@@ -79,28 +67,59 @@ class LayoutController {
 
 private extension LayoutController {
 
-    func textField(with string: String, frame: CGRect, color: NSColor, font: NSFont) -> NSTextField {
-        let textField             = NSTextField(frame: frame)
-        textField.textColor       = color
+    func textField(from object: LayoutableObject) -> NSTextField {
+        let absoluteURL = self.absoluteURL(for: object)
+        let text = self.localizedTitle(from: absoluteURL, imageNumber: self.viewStateController.viewState.imageNumber) ?? ""
+
+        let textField = NSTextField(frame: object.frame)
+        textField.textColor       = NSColor.white
         textField.backgroundColor = NSColor.clear
         textField.isBezeled       = false
         textField.isEditable      = false
-        textField.stringValue     = string
+        textField.stringValue     = text
         textField.alignment       = .center
 
-        let kMaxFontSize = CGFloat(120.0)
+        if let font = NSFont(name: object.font ?? "", size: object.fontSize ?? 25) {
+            textField.font = font
+        }
+
+        self.limitFontSize(for: textField)
+
+        return textField
+    }
+
+    @discardableResult
+    func limitFontSize(for textField: NSTextField) -> Bool {
+        guard let font = textField.font else { return false }
+        guard let fontSizeObject = font.fontDescriptor.object(forKey: NSFontDescriptor.AttributeName.size) as? NSNumber else { return false }
+
+        var fontSize = CGFloat(fontSizeObject.floatValue)
         let kMinFontSize = CGFloat(6.0)
-        var fontSize = kMaxFontSize;
-        var size = (string as NSString).size(withAttributes: [NSAttributedStringKey.font: NSFont(name: font.fontName, size: kMaxFontSize)!])
+        let frame = textField.frame
+        let string = textField.stringValue as NSString
+        var limited = false
+
+        var size = string.size(withAttributes: [NSAttributedStringKey.font: NSFont(name: font.fontName, size: fontSize)!])
         while (size.width >= frame.width || size.height >= frame.height) && fontSize > kMinFontSize  {
+            limited = true
             fontSize -= 0.5
             let newFontSize = CGFloat(fontSize)
             let newFont = NSFont(name: font.fontName, size: newFontSize)
 
-            size = (string as NSString).size(withAttributes: [NSAttributedStringKey.font: newFont!])
+            size = string.size(withAttributes: [NSAttributedStringKey.font: newFont!])
         }
-        textField.font = NSFont(name: font.fontName, size: fontSize)
-        return textField
+
+        return limited
+    }
+
+    func view(from object: LayoutableObject) -> NSView {
+        if let url = self.absoluteURL(for: object) {
+            return RenderedView(frame: object.frame, url: url)
+        } else {
+            let view = pkView(frame: object.frame)
+            view.backgroundColor = NSColor.red
+            return view
+        }
     }
 
     func absoluteURL(for object: LayoutableObject) -> URL? {
@@ -113,7 +132,8 @@ private extension LayoutController {
         return absoluteURL
     }
 
-    func localizedTitle(from url: URL, imageNumber: Int) -> String? {
+    func localizedTitle(from url: URL?, imageNumber: Int) -> String? {
+        guard let url = url else { return nil }
         guard let dict = NSDictionary(contentsOf: url) else { return nil }
 
         let value = dict["\(imageNumber)"] as? String

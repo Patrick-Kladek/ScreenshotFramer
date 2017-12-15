@@ -9,11 +9,17 @@
 import Cocoa
 
 
-extension NSTableView: NSTableViewDelegate {
+final class pkTableView: NSTableView {
+
+    var isReloading = false
 
     func reloadDataKeepingSelection() {
+        self.isReloading = true
         let selectedRowIndexes = self.selectedRowIndexes
         self.reloadData()
+        self.isReloading = false
+
         self.selectRowIndexes(selectedRowIndexes, byExtendingSelection: false)
+//        NotificationCenter.default.post(name: NSTableView.selectionDidChangeNotification, object: self)
     }
 }

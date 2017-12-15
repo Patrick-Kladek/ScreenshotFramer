@@ -57,6 +57,49 @@ final class UpdateFileOperation: OperationProtocol {
     }
 }
 
+
+final class UpdateFontOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let fontString: String
+
+    init(layerStateHistory: LayerStateHistory, font: String, indexOfLayer: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.indexOfLayer = indexOfLayer
+        self.fontString = font
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(font: self.fontString, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
+final class UpdateFontSizeOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let fontSize: CGFloat
+
+    init(layerStateHistory: LayerStateHistory, fontSize: CGFloat, indexOfLayer: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.indexOfLayer = indexOfLayer
+        self.fontSize = fontSize
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(fontSize: self.fontSize, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class RemoveLayerOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -81,16 +124,14 @@ final class RemoveLayerOperation: OperationProtocol {
 class AddLayerOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
-    var nameOfLayer: String {
-        return "Layer"
-    }
+    var type: LayoutableObjectType { return .none }
 
     init(layerStateHistory: LayerStateHistory) {
         self.layerStateHistory = layerStateHistory
     }
 
     func apply() {
-        let layer = LayoutableObject(title: self.nameOfLayer, frame: .zero, file: "", isRoot: false)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: .zero, file: "", isRoot: false)
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
@@ -98,12 +139,11 @@ class AddLayerOperation: OperationProtocol {
 
 final class AddBackgroundOperation: AddLayerOperation {
 
-    override var nameOfLayer: String {
-        return "Background"
-    }
+//    override var nameOfLayer: String { return "Background" }
+    override var type: LayoutableObjectType { return .background }
 
     override func apply() {
-        let layer = LayoutableObject(title: self.nameOfLayer, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: false)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: false)
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
@@ -111,21 +151,18 @@ final class AddBackgroundOperation: AddLayerOperation {
 
 final class AddTextOperation: AddLayerOperation {
 
-    override var nameOfLayer: String {
-        return "Text"
-    }
+//    override var nameOfLayer: String { return "Text" }
+    override var type: LayoutableObjectType { return .text }
 }
 
 final class AddContentOperation: AddLayerOperation {
 
-    override var nameOfLayer: String {
-        return "Content"
-    }
+//    override var nameOfLayer: String { return "Content" }
+    override var type: LayoutableObjectType { return .content }
 }
 
 final class AddDeviceOperation: AddLayerOperation {
 
-    override var nameOfLayer: String {
-        return "Device"
-    }
+//    override var nameOfLayer: String { return "Device" }
+    override var type: LayoutableObjectType { return .device }
 }
