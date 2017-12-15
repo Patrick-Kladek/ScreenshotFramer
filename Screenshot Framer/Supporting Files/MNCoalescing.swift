@@ -9,6 +9,10 @@
 import Foundation
 
 
-final class MNCoalescing {
+extension NSObject {
 
+    func coalesceCalls(to selector: Selector, interval: TimeInterval, object: AnyObject? = nil) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        self.perform(selector, with: object, afterDelay: interval)
+    }
 }

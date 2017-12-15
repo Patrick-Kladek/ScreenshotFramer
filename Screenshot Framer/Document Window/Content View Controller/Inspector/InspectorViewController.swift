@@ -184,9 +184,12 @@ final class InspectorViewController: NSViewController {
 
     @IBAction func colorWellDidUpdateColor(sender: NSColorWell) {
         let color = sender.color
+        self.coalesceCalls(to: #selector(applyColor), interval: 0.5, object: color)
+    }
+
+    @objc func applyColor(_ color: NSColor) {
         let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
         operation.apply()
-
     }
 }
 

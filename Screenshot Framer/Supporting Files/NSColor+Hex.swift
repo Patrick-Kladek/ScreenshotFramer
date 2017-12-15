@@ -30,10 +30,11 @@ extension NSColor {
     }
 
     func hexString() -> String {
-        let r = Int(self.redComponent * 255.0)
-        let g = Int(self.greenComponent * 255.0)
-        let b = Int(self.blueComponent * 255.0)
-        let a = Int(self.alphaComponent * 255.0)
+        guard let standardizedColor = self.usingColorSpace(.sRGB) else { return "" }
+        let r = Int(standardizedColor.redComponent * 255.0)
+        let g = Int(standardizedColor.greenComponent * 255.0)
+        let b = Int(standardizedColor.blueComponent * 255.0)
+        let a = Int(standardizedColor.alphaComponent * 255.0)
 
         return String(format: "#%02X%02X%02X%02X", r, g, b, a)
     }
