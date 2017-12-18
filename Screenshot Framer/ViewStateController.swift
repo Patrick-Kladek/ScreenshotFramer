@@ -24,6 +24,8 @@ protocol ViewStateControllerDelegate {
 
 final class ViewStateController {
 
+    // MARK: - Properties
+
     var delegate: ViewStateControllerDelegate?
     var viewState: ViewState {
         didSet {
@@ -31,9 +33,18 @@ final class ViewStateController {
         }
     }
 
+    // MARK: - Lifecycle
+
     init() {
         self.viewState = ViewState(selectedLayer: 0, imageNumber: 1, language: "en-US")
     }
+
+    init(viewState: ViewState) {
+        self.viewState = viewState
+    }
+
+
+    // MARK: - Functions
 
     func newViewState(selectedLayer: Int) {
         self.viewState = ViewState(selectedLayer: selectedLayer, imageNumber: self.viewState.imageNumber, language: self.viewState.language)

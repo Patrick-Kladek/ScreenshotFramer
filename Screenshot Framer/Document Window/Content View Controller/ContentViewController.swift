@@ -8,6 +8,14 @@
 
 import Cocoa
 
+
+
+
+/*
+ *  TODO: add overlay view while exporting & show progress
+ */
+
+
 final class ContentViewController: NSViewController {
 
     // MARK: - Properties
@@ -21,6 +29,8 @@ final class ContentViewController: NSViewController {
     let layoutController: LayoutController
     var languageController: LanguageController
     var fileController: FileController
+    let exportController: ExportController
+    var progressWindowController: ProgressWindowController?
 
 
     // MARK: - Interface Builder
@@ -46,10 +56,12 @@ final class ContentViewController: NSViewController {
         self.layoutController = LayoutController(document: self.document, layerStateHistory: document.layerStateHistory, viewStateController: self.viewStateController, languageController: languageController, fileController: fileController)
         self.languageController = languageController
         self.fileController = fileController
+        self.exportController = ExportController(document: document, fileController: fileController, languageController: languageController)
 
         super.init(nibName: self.nibName, bundle: nil)
 
         self.viewStateController.delegate = self
+        self.exportController.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -193,9 +205,17 @@ final class ContentViewController: NSViewController {
 
     @IBAction func saveImage(_ sender: NSButton) {
         if sender == self.buttonSave {
-            self.saveSingleImage()
+            self.exportController.saveSingleImage(viewState: self.viewStateController.viewState)
         } else {
-            self.saveAllImages()
+            self.progressWindowController = ProgressWindowController()
+            guard let mainWindow = self.windowController?.window else { return }
+            guard let progressWindow = self.progressWindowController?.window else { return }
+
+            mainWindow.beginSheet(progressWindow, completionHandler: { (responde) in
+                // Handle Cancel button
+            })
+
+            self.exportController.saveAllImages()
         }
     }
 
@@ -249,6 +269,26 @@ extension ContentViewController: ViewStateControllerDelegate {
 }
 
 
+// MARK: Export Delegate
+
+extension ContentViewController: ExportControllerDelegate {
+
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double) {
+        NSLog("export progress: %f", progress)
+        guard let progressWindowController = self.progressWindowController else { return }
+
+        progressWindowController.maxProgress = 1.0
+        progressWindowController.progressBar.doubleValue = progress
+
+        if progress == 1.0 {
+            guard let mainWindow = self.windowController?.window else { return }
+            guard let progressWindow = self.progressWindowController?.window else { return }
+
+            mainWindow.endSheet(progressWindow, returnCode: .OK)
+        }
+    }
+}
+
 // MARK: - Private
 
 private extension ContentViewController {
@@ -268,31 +308,5 @@ private extension ContentViewController {
         var menuLocation = segmentedControl.bounds.origin
         menuLocation.y += segmentedControl.bounds.size.height + 5.0
         self.addMenu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
-    }
-
-    func saveSingleImage() {
-        guard let view = self.scrollView.documentView else { return }
-        let data = view.pngData()
-        guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: self.viewStateController.viewState) else { return }
-
-        try? data?.write(to: url, options: .atomic)
-    }
-
-    func saveAllImages() {
-        let viewStateController = ViewStateController()
-        let layoutController = LayoutController(document: self.document, layerStateHistory: self.layerStateHistory, viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
-
-        for language in self.languageController.allLanguages() {
-            viewStateController.newViewState(language: language)
-            for index in 1...5 {
-                viewStateController.newViewState(imageNumber: index)
-                guard let view = layoutController.layouthierarchy() else { continue }
-
-                let data = view.pngData()
-                guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return }
-
-                try? data?.write(to: url, options: .atomic)
-            }
-        }
     }
 }

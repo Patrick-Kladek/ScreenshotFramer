@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ProgressWindowController" customModule="Screenshot_Framer" customModuleProvider="target">
+            <connections>
+                <outlet property="progressBar" destination="YD1-Ye-YQp" id="3Gq-dN-PKZ"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="61"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="61"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y0o-yj-TtP">
+                        <rect key="frame" x="384" y="13" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fYJ-XY-wJP">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelPressed:" target="-2" id="0km-m2-0qG"/>
+                        </connections>
+                    </button>
+                    <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="YD1-Ye-YQp">
+                        <rect key="frame" x="20" y="25" width="362" height="11"/>
+                    </progressIndicator>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="YD1-Ye-YQp" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="1bR-mg-Jzw"/>
+                    <constraint firstItem="y0o-yj-TtP" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="3VE-ky-VfJ"/>
+                    <constraint firstAttribute="trailing" secondItem="y0o-yj-TtP" secondAttribute="trailing" constant="20" id="F1N-s2-eFk"/>
+                    <constraint firstAttribute="bottom" secondItem="y0o-yj-TtP" secondAttribute="bottom" constant="20" id="aOE-SN-XGk"/>
+                    <constraint firstItem="y0o-yj-TtP" firstAttribute="centerY" secondItem="YD1-Ye-YQp" secondAttribute="centerY" id="dTk-D6-9nA"/>
+                    <constraint firstItem="y0o-yj-TtP" firstAttribute="baseline" secondItem="YD1-Ye-YQp" secondAttribute="baseline" id="fv5-Oc-nbh"/>
+                    <constraint firstItem="y0o-yj-TtP" firstAttribute="leading" secondItem="YD1-Ye-YQp" secondAttribute="trailing" constant="8" id="rZg-zw-BC2"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="67" y="95"/>
+        </window>
+    </objects>
+</document>

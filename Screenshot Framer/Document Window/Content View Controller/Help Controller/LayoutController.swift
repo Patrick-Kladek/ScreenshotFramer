@@ -129,24 +129,4 @@ private extension LayoutController {
             return view
         }
     }
-
-    /*
-    func absoluteURL(for object: LayoutableObject) -> URL? {
-        guard object.file.count > 0 else { return nil }
-
-        var file = object.file.replacingOccurrences(of: "$image", with: "\(self.viewStateController.viewState.imageNumber)")
-        file = file.replacingOccurrences(of: "$language", with: self.viewStateController.viewState.language)
-
-        let absoluteURL = self.document.documentRoot?.appendingPathComponent(file)
-        return absoluteURL
-    }
-
-    func localizedTitle(from url: URL?, imageNumber: Int) -> String? {
-        guard let url = url else { return nil }
-        guard let dict = NSDictionary(contentsOf: url) else { return nil }
-
-        let value = dict["\(imageNumber)"] as? String
-        return value
-    }
-    */
 }

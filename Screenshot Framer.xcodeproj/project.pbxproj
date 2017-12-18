@@ -19,6 +19,9 @@
 		CD50EF551FDFEB7600FB0F2F /* NSTableView+keepSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */; };
 		CD50EF581FDFEE3600FB0F2F /* LayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */; };
 		CD50EF5A1FDFF86D00FB0F2F /* LanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */; };
+		CD5110AA1FE7AAE300AEC595 /* ExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5110A91FE7AAE300AEC595 /* ExportController.swift */; };
+		CD5110AE1FE7B64D00AEC595 /* ProgressWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5110AC1FE7B64D00AEC595 /* ProgressWindowController.swift */; };
+		CD5110AF1FE7B64D00AEC595 /* ProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5110AD1FE7B64D00AEC595 /* ProgressWindowController.xib */; };
 		CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */; };
 		CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0411FCD557200AD2ED7 /* Document.swift */; };
 		CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0431FCD557200AD2ED7 /* DocumentWindowController.xib */; };
@@ -64,6 +67,9 @@
 		CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTableView+keepSelection.swift"; sourceTree = "<group>"; };
 		CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutController.swift; sourceTree = "<group>"; };
 		CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageController.swift; sourceTree = "<group>"; };
+		CD5110A91FE7AAE300AEC595 /* ExportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportController.swift; sourceTree = "<group>"; };
+		CD5110AC1FE7B64D00AEC595 /* ProgressWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindowController.swift; sourceTree = "<group>"; };
+		CD5110AD1FE7B64D00AEC595 /* ProgressWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgressWindowController.xib; sourceTree = "<group>"; };
 		CD5EE03C1FCD557200AD2ED7 /* Screenshot Framer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Screenshot Framer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5EE03F1FCD557200AD2ED7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5EE0411FCD557200AD2ED7 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -129,11 +135,22 @@
 		CD50EF561FDFEE2100FB0F2F /* Help Controller */ = {
 			isa = PBXGroup;
 			children = (
-				CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */,
-				CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */,
+				CD5110A91FE7AAE300AEC595 /* ExportController.swift */,
 				CDB659121FE4268200430F20 /* FileController.swift */,
+				CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */,
+				CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */,
+				CD5110AB1FE7B62A00AEC595 /* Progress Window */,
 			);
 			path = "Help Controller";
+			sourceTree = "<group>";
+		};
+		CD5110AB1FE7B62A00AEC595 /* Progress Window */ = {
+			isa = PBXGroup;
+			children = (
+				CD5110AC1FE7B64D00AEC595 /* ProgressWindowController.swift */,
+				CD5110AD1FE7B64D00AEC595 /* ProgressWindowController.xib */,
+			);
+			path = "Progress Window";
 			sourceTree = "<group>";
 		};
 		CD5EE0331FCD557200AD2ED7 = {
@@ -319,6 +336,7 @@
 				CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */,
 				CDFF69A61FD834AE00E652EE /* TimeTravelWindowController.xib in Resources */,
 				CD26F8421FCEFAC700449B4A /* InspectorViewController.xib in Resources */,
+				CD5110AF1FE7B64D00AEC595 /* ProgressWindowController.xib in Resources */,
 				CD5EE04A1FCD557200AD2ED7 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */,
+				CD5110AA1FE7AAE300AEC595 /* ExportController.swift in Sources */,
 				CDFF69A51FD834AE00E652EE /* TimeTravelWindowController.swift in Sources */,
 				CD5EE05A1FCDA30600AD2ED7 /* LayoutableObject.swift in Sources */,
 				CDB6590B1FE16EE800430F20 /* UserDefaults+Keys.swift in Sources */,
@@ -346,6 +365,7 @@
 				CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */,
 				CD5EE0551FCD9A1000AD2ED7 /* pkView.swift in Sources */,
 				CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */,
+				CD5110AE1FE7B64D00AEC595 /* ProgressWindowController.swift in Sources */,
 				CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */,
 				CD50EF511FDED20E00FB0F2F /* ViewStateController.swift in Sources */,
 				CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */,

@@ -47,19 +47,9 @@ final class pkView: NSView {
 extension NSView {
 
     func pngData() -> Data? {
-//        self.lockFocus()
-//        let rep = NSBitmapImageRep(focusedViewRect: self.bounds)
-//        self.unlockFocus()
-//        return rep?.representation(using: .png, properties: [:])
-
         guard let rep = self.bitmapImageRepForCachingDisplay(in: self.bounds) else { return nil }
+
         self.cacheDisplay(in: self.bounds, to: rep)
         return rep.representation(using: .png, properties: [:])
-
-
-//        NSBitmapImageRep* rep = [self bitmapImageRepForCachingDisplayInRect:bounds];
-//        [self cacheDisplayInRect:bounds toBitmapImageRep:rep];
-//        NSData* data = [rep representationUsingType:NSJPEGFileType properties:nil];
-//        [data writeToFile:@"/path/to/file.jpg" atomically:NO];
     }
 }
