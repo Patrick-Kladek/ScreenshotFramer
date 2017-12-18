@@ -63,7 +63,7 @@ final class ExportController {
                 self.delegate?.exportController(self, didUpdateProgress: progress)
 
                 viewStateController.newViewState(imageNumber: index)
-                guard let view = layoutController.layouthierarchy() else { continue }
+                guard let view = layoutController.layouthierarchy() else { continue }           // TODO: is called from a background thread
 
                 let data = view.pngData()
                 guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return }

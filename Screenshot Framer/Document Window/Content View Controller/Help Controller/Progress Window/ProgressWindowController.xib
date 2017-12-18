@@ -35,7 +35,7 @@ Gw
                             <action selector="cancelPressed:" target="-2" id="0km-m2-0qG"/>
                         </connections>
                     </button>
-                    <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="YD1-Ye-YQp">
+                    <progressIndicator wantsLayer="YES" maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="YD1-Ye-YQp">
                         <rect key="frame" x="20" y="25" width="362" height="11"/>
                     </progressIndicator>
                 </subviews>

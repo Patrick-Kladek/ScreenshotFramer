@@ -9,13 +9,6 @@
 import Cocoa
 
 
-
-
-/*
- *  TODO: add overlay view while exporting & show progress
- */
-
-
 final class ContentViewController: NSViewController {
 
     // MARK: - Properties
@@ -43,7 +36,6 @@ final class ContentViewController: NSViewController {
     @IBOutlet weak var textFieldOutput: NSTextField!
     @IBOutlet weak var buttonSave: NSButton!
     @IBOutlet weak var buttonSaveAll: NSButton!
-
 
 
     // MARK: - Lifecycle
@@ -215,7 +207,9 @@ final class ContentViewController: NSViewController {
                 // Handle Cancel button
             })
 
-            self.exportController.saveAllImages()
+            DispatchQueue.global(qos: .background).async {
+                self.exportController.saveAllImages()
+            }
         }
     }
 
@@ -274,11 +268,11 @@ extension ContentViewController: ViewStateControllerDelegate {
 extension ContentViewController: ExportControllerDelegate {
 
     func exportController(_ exportController: ExportController, didUpdateProgress progress: Double) {
-        NSLog("export progress: %f", progress)
         guard let progressWindowController = self.progressWindowController else { return }
 
-        progressWindowController.maxProgress = 1.0
-        progressWindowController.progressBar.doubleValue = progress
+        DispatchQueue.main.async {
+            progressWindowController.progressBar.doubleValue = progress
+        }
 
         if progress == 1.0 {
             guard let mainWindow = self.windowController?.window else { return }
