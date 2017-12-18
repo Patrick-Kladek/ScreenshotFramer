@@ -113,7 +113,7 @@ final class InspectorViewController: NSViewController {
         if let color = layoutableObject.color {
             self.colorWell.color = color
         } else {
-            self.colorWell.color = NSColor.black
+            self.colorWell.color = NSColor.white
         }
 
 

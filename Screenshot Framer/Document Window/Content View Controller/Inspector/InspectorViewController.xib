@@ -115,7 +115,7 @@
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kE7-9X-EoV">
                     <rect key="frame" x="131" y="154" width="19" height="27"/>
-                    <stepperCell key="cell" continuous="YES" alignment="left" increment="-10000" maxValue="10000" id="fqX-mJ-ZyR"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="fqX-mJ-ZyR"/>
                     <connections>
                         <action selector="stepperPressedWithSender:" target="-2" id="nlp-64-F3c"/>
                     </connections>

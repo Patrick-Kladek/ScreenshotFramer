@@ -200,6 +200,7 @@ final class ContentViewController: NSViewController {
             self.exportController.saveSingleImage(viewState: self.viewStateController.viewState)
         } else {
             self.progressWindowController = ProgressWindowController()
+            self.progressWindowController?.delegate = self
             guard let mainWindow = self.windowController?.window else { return }
             guard let progressWindow = self.progressWindowController?.window else { return }
 
@@ -215,6 +216,7 @@ final class ContentViewController: NSViewController {
 
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
+        self.inspectorViewController?.updateUI()
         self.scrollView.documentView = self.layoutController.layouthierarchy()
         self.textFieldOutput.stringValue = self.lastLayerState.output
         self.updateEnabledStateOfControls()
@@ -280,6 +282,16 @@ extension ContentViewController: ExportControllerDelegate {
 
             mainWindow.endSheet(progressWindow, returnCode: .OK)
         }
+    }
+}
+
+
+// MARK: - Progress Window Controller Delegate
+
+extension ContentViewController: ProgressWindowControllerDelegate {
+
+    func progressWindowControllerDidRequestCancel(_ windowController: ProgressWindowController) {
+        self.exportController.cancel()
     }
 }
 

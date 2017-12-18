@@ -111,9 +111,10 @@ private extension LayoutController {
             limited = true
             fontSize -= 0.5
             let newFontSize = CGFloat(fontSize)
-            let newFont = NSFont(name: font.fontName, size: newFontSize)
+            guard let newFont = NSFont(name: font.fontName, size: newFontSize) else { return limited }
 
-            size = string.size(withAttributes: [NSAttributedStringKey.font: newFont!])
+            size = string.size(withAttributes: [NSAttributedStringKey.font: newFont])
+            textField.font = newFont
         }
 
         return limited

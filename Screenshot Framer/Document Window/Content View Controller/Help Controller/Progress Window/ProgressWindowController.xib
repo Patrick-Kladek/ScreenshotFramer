@@ -36,23 +36,39 @@ Gw
                         </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="YD1-Ye-YQp">
-                        <rect key="frame" x="20" y="25" width="362" height="11"/>
+                        <rect key="frame" x="37" y="25" width="345" height="11"/>
                     </progressIndicator>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="laL-Gm-uAf">
+                        <rect key="frame" x="18" y="23" width="13" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="8D0-OV-vtG">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="percent" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="z3p-K6-DYA">
+                                <integer key="multiplier" value="100"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="self.progressBar.doubleValue" id="2xH-ip-dCu"/>
+                        </connections>
+                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="YD1-Ye-YQp" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="1bR-mg-Jzw"/>
                     <constraint firstItem="y0o-yj-TtP" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="3VE-ky-VfJ"/>
+                    <constraint firstItem="y0o-yj-TtP" firstAttribute="baseline" secondItem="laL-Gm-uAf" secondAttribute="baseline" id="6Wt-mI-nzm"/>
                     <constraint firstAttribute="trailing" secondItem="y0o-yj-TtP" secondAttribute="trailing" constant="20" id="F1N-s2-eFk"/>
                     <constraint firstAttribute="bottom" secondItem="y0o-yj-TtP" secondAttribute="bottom" constant="20" id="aOE-SN-XGk"/>
                     <constraint firstItem="y0o-yj-TtP" firstAttribute="centerY" secondItem="YD1-Ye-YQp" secondAttribute="centerY" id="dTk-D6-9nA"/>
                     <constraint firstItem="y0o-yj-TtP" firstAttribute="baseline" secondItem="YD1-Ye-YQp" secondAttribute="baseline" id="fv5-Oc-nbh"/>
+                    <constraint firstItem="laL-Gm-uAf" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="pwc-Pa-Ffu"/>
                     <constraint firstItem="y0o-yj-TtP" firstAttribute="leading" secondItem="YD1-Ye-YQp" secondAttribute="trailing" constant="8" id="rZg-zw-BC2"/>
+                    <constraint firstItem="YD1-Ye-YQp" firstAttribute="leading" secondItem="laL-Gm-uAf" secondAttribute="trailing" constant="8" id="tTi-Fy-sji"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="67" y="95"/>
+            <point key="canvasLocation" x="67" y="94.5"/>
         </window>
     </objects>
 </document>

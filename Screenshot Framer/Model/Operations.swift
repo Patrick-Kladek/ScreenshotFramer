@@ -180,7 +180,7 @@ final class AddBackgroundOperation: AddLayerOperation {
     override var type: LayoutableObjectType { return .background }
 
     override func apply() {
-        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: false)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: true)
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
