@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol LayerStateHistoryDelegate {
+protocol LayerStateHistoryDelegate: class {
     func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState, layerCountDidChange: Bool)
 }
 
@@ -20,7 +20,7 @@ final class LayerStateHistory {
 
     private(set) var currentStackPosition: Int = -1
     private(set) var layerStates: [LayerState] = []
-    var delegate: LayerStateHistoryDelegate?
+    weak var delegate: LayerStateHistoryDelegate?
 
     /**
      *  returns the current LayerState based on undo (currentStackPosition)
