@@ -88,7 +88,17 @@ final class ExportController {
 private extension ExportController {
 
     func calculatePossibleComabinations(languageController: LanguageController) -> Int {
-        return languageController.allLanguages().count * (self.lastLayerState.outputConfig.toImageNumber - self.lastLayerState.outputConfig.fromImageNumber)
+        let outputConfig = self.lastLayerState.outputConfig
+        var totalSteps = outputConfig.toImageNumber - outputConfig.fromImageNumber
+
+        if totalSteps == 0 {
+            // because we use a for-loop and `for n in 1...1` would
+            // mean 1 execution but (1 - 1 = 0) we handle this special case
+            // by adding +1 so the progressBar is still updated correlty
+            totalSteps = 1
+        }
+
+        return languageController.allLanguages().count * totalSteps
     }
 }
 
