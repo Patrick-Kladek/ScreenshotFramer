@@ -128,7 +128,11 @@ private extension LayoutController {
     func view(from object: LayoutableObject) -> NSView {
         let viewState = self.viewStateController.viewState
         if let url = self.fileController.absoluteURL(for: object, viewState: viewState) {
-            return RenderedView(frame: object.frame, url: url)
+            let imageView = NSImageView(frame: object.frame)
+            imageView.image = NSImage(contentsOf: url)
+            imageView.imageScaling = .scaleAxesIndependently
+            imageView.layer?.shouldRasterize = true
+            return imageView
         } else {
             let view = pkView(frame: object.frame)
             view.backgroundColor = NSColor.red

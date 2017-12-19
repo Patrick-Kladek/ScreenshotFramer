@@ -36,7 +36,7 @@ final class LanguageController {
             return isDir.boolValue
         }.flatMap { $0.lastPathComponent }) as Set<String>
 
-        let blackList: Set = ["backgrounds", "device_frames"]
+        let blackList: Set = ["backgrounds", "device_frames", "Export"]
         return Array(allLanguages.subtracting(blackList))
     }
 }

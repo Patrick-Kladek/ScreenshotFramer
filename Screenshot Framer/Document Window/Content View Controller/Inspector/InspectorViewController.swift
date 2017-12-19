@@ -119,12 +119,15 @@ final class InspectorViewController: NSViewController {
 
         let selectedLanguage = self.languages.titleOfSelectedItem
         self.languages.removeAllItems()
-        let allLanguages = self.languageController.allLanguages()
+        let allLanguages = self.languageController.allLanguages().sorted()
         self.languages.addItems(withTitles: allLanguages)
         if selectedLanguage != nil {
             self.languages.selectItem(withTitle: selectedLanguage!)
         } else {
-            self.languages.selectItem(withTitle: "en-US")
+            self.languages.selectItem(at: 0)
+            guard let selectedLanguage = self.languages.titleOfSelectedItem else { return }
+
+            self.viewStateController.newViewState(language: selectedLanguage)
         }
     }
 
