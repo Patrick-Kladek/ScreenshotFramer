@@ -34,6 +34,8 @@ final class ContentViewController: NSViewController {
     @IBOutlet var tableView: pkTableView!
     @IBOutlet var addMenu: NSMenu!
     @IBOutlet weak var textFieldOutput: NSTextField!
+    @IBOutlet weak var textFieldFromImageNumber: NSTextField!
+    @IBOutlet weak var textFieldToImageNumber: NSTextField!
     @IBOutlet weak var buttonSave: NSButton!
     @IBOutlet weak var buttonSaveAll: NSButton!
 
@@ -189,10 +191,28 @@ final class ContentViewController: NSViewController {
         self.tableView.reloadData()
     }
 
-    @IBAction func outputDidChange(_ sender: AnyObject?) {
-        self.updateEnabledStateOfControls()
-        let operation = UpdateOutputOperation(layerStateHistory: self.layerStateHistory, output: self.textFieldOutput.stringValue)
-        operation.apply()
+    @IBAction func outputConfigDidChange(_ sender: AnyObject?) {
+        guard let sender = sender as? NSTextField else { return }
+
+        switch sender {
+        case self.textFieldOutput:
+            self.updateEnabledStateOfControls()
+            let operation = UpdateOutputOperation(layerStateHistory: self.layerStateHistory, output: self.textFieldOutput.stringValue)
+            operation.apply()
+
+        case self.textFieldFromImageNumber:
+            self.updateEnabledStateOfControls()
+            let operation = UpdateFromImageNuberOperation(layerStateHistory: self.layerStateHistory, fromImageNumber: self.textFieldFromImageNumber.integerValue)
+            operation.apply()
+
+        case self.textFieldToImageNumber:
+            self.updateEnabledStateOfControls()
+            let operation = UpdateToImageNuberOperation(layerStateHistory: self.layerStateHistory, toImageNumber: self.textFieldToImageNumber.integerValue)
+            operation.apply()
+
+        default:
+            return
+        }
     }
 
     @IBAction func saveImage(_ sender: NSButton) {
@@ -218,7 +238,11 @@ final class ContentViewController: NSViewController {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
         self.scrollView.documentView = self.layoutController.layouthierarchy()
-        self.textFieldOutput.stringValue = self.lastLayerState.output
+
+        self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
+        self.textFieldFromImageNumber.integerValue = self.lastLayerState.outputConfig.fromImageNumber
+        self.textFieldToImageNumber.integerValue = self.lastLayerState.outputConfig.toImageNumber
+
         self.updateEnabledStateOfControls()
     }
 }

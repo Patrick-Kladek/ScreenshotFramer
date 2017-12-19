@@ -72,15 +72,20 @@ private extension LayoutController {
     func textField(from object: LayoutableObject) -> NSTextField {
         let viewState = self.viewStateController.viewState
         let absoluteURL = self.fileController.absoluteURL(for: object, viewState: viewState)
-        let text = self.fileController.localizedTitle(from: absoluteURL, viewState: viewState) ?? ""
+        let text = self.fileController.localizedTitle(from: absoluteURL, viewState: viewState)
 
         let textField = NSTextField(frame: object.frame)
         textField.textColor       = NSColor.white
         textField.backgroundColor = NSColor.clear
         textField.isBezeled       = false
         textField.isEditable      = false
-        textField.stringValue     = text
         textField.alignment       = .center
+
+        if let text = text {
+            textField.stringValue = text
+        } else {
+            textField.backgroundColor = NSColor.red
+        }
 
         if let font = NSFont(name: object.font ?? "", size: object.fontSize ?? 25) {
             textField.font = font

@@ -63,7 +63,7 @@ final class ExportController {
 
         for language in self.languageController.allLanguages() {
             viewStateController.newViewState(language: language)
-            for index in 1...5 {
+            for index in self.lastLayerState.outputConfig.fromImageNumber...self.lastLayerState.outputConfig.toImageNumber {
                 currentStep += 1
                 let progress = Double(currentStep)/Double(totalSteps)
                 self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress)
@@ -88,7 +88,7 @@ final class ExportController {
 private extension ExportController {
 
     func calculatePossibleComabinations(languageController: LanguageController) -> Int {
-        return languageController.allLanguages().count * 5
+        return languageController.allLanguages().count * (self.lastLayerState.outputConfig.toImageNumber - self.lastLayerState.outputConfig.fromImageNumber)
     }
 }
 

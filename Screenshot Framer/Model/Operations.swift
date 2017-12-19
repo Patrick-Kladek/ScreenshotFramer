@@ -32,6 +32,43 @@ final class UpdateOutputOperation: OperationProtocol {
     }
 }
 
+
+final class UpdateFromImageNuberOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let fromImageNumber: Int
+
+    init(layerStateHistory: LayerStateHistory, fromImageNumber: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.fromImageNumber = fromImageNumber
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        let newLayerState = lastLayerState.updating(fromImageNumber: self.fromImageNumber)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
+final class UpdateToImageNuberOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let toImageNumber: Int
+
+    init(layerStateHistory: LayerStateHistory, toImageNumber: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.toImageNumber = toImageNumber
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        let newLayerState = lastLayerState.updating(toImageNumber: self.toImageNumber)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class UpdateFrameOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory

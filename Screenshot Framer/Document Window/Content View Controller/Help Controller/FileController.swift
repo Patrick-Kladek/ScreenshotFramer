@@ -45,7 +45,7 @@ final class FileController {
 
     func outputURL(for layerState: LayerState, viewState: ViewState) -> URL? {
         guard let base = self.document.documentRoot else { return nil }
-        var file = layerState.output.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
+        var file = layerState.outputConfig.output.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)
 
         return base.appendingPathComponent(file)
