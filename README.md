@@ -1,5 +1,6 @@
 # ScreenshotFramer
 [![Twitter: @PatrickKladek](https://img.shields.io/badge/twitter-@PatrickKladek-red.svg?style=flat)](https://twitter.com/PatrickKladek)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE.md)
 ![alt text](https://img.shields.io/badge/Platform-Mac%2010.13+-blue.svg "Target Mac")
 ![alt text](https://img.shields.io/badge/Language-Swift%204-orange.svg "Language")
 
