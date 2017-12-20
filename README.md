@@ -20,7 +20,7 @@ You can specify the path of every image layer and use a `.strings` file for the 
 Download the Sample Project here or create your own project structure.
 When you are using Fastlanes snapshot you can reuse that folder structure and only add missing files:
 
-![](Documentation/File Structure.png)
+![](Documentation/File%20Structure.png)
 
 ##### backgrounds
 If you want a background other that white
