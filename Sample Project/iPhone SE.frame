@@ -1,0 +1,52 @@
+[
+  {
+    "layers" : [
+      {
+        "color" : null,
+        "file" : "backgrounds\/$image.jpg",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{0, 0}, {640, 1136}}",
+        "isRoot" : true,
+        "title" : "background",
+        "type" : "background"
+      },
+      {
+        "color" : null,
+        "file" : "device_frames\/iPhone-SE-Silver.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{-98, -310}, {830, 1456}}",
+        "isRoot" : false,
+        "title" : "device",
+        "type" : "device"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/iPhone SE-$image.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{82, 0}, {476, 840}}",
+        "isRoot" : false,
+        "title" : "content",
+        "type" : "content"
+      },
+      {
+        "color" : "#FFFFFFFF",
+        "file" : "$language\/screenshots.strings",
+        "font" : "Paul Grotesk Soft Medium",
+        "fontSize" : 45,
+        "frame" : "{{0, 1035}, {640, 70}}",
+        "isRoot" : false,
+        "title" : "text",
+        "type" : "text"
+      }
+    ],
+    "outputConfig" : {
+      "fromImageNumber" : 1,
+      "output" : "Export\/$language\/iPhone SE-$image framed.png",
+      "toImageNumber" : 5
+    },
+    "title" : "iPhone SE"
+  }
+]

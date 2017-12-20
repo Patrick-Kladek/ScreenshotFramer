@@ -1,0 +1,52 @@
+[
+  {
+    "layers" : [
+      {
+        "color" : null,
+        "file" : "backgrounds\/$image.jpg",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{0, 0}, {2732, 2048}}",
+        "isRoot" : true,
+        "title" : "background",
+        "type" : "background"
+      },
+      {
+        "color" : null,
+        "file" : "device_frames\/iPad-Pro-12_9-Silver.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{-160, -360}, {3052, 2350}}",
+        "isRoot" : false,
+        "title" : "device",
+        "type" : "device"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/iPad Pro (12.9-inch)-$image.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{275, 0}, {2182, 1636}}",
+        "isRoot" : false,
+        "title" : "content",
+        "type" : "content"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/screenshots.strings",
+        "font" : "Paul Grotesk Soft Medium",
+        "fontSize" : 90,
+        "frame" : "{{0, 1830}, {2732, 150}}",
+        "isRoot" : false,
+        "title" : "text",
+        "type" : "text"
+      }
+    ],
+    "outputConfig" : {
+      "fromImageNumber" : 1,
+      "output" : "Export\/$language\/iPad Pro 12_9-$image.png",
+      "toImageNumber" : 5
+    },
+    "title" : "iPad Pro 12_9"
+  }
+]

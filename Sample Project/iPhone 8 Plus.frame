@@ -1,0 +1,52 @@
+[
+  {
+    "layers" : [
+      {
+        "color" : null,
+        "file" : "backgrounds\/$image.jpg",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{0, 0}, {1242, 2208}}",
+        "isRoot" : true,
+        "title" : "background",
+        "type" : "background"
+      },
+      {
+        "color" : null,
+        "file" : "device_frames\/iPhone-8-Plus-Silver.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{-30, -343}, {1300, 2311}}",
+        "isRoot" : false,
+        "title" : "device",
+        "type" : "device"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/iPhone 8 Plus-$image.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{154, 0}, {933, 1657}}",
+        "isRoot" : false,
+        "title" : "content",
+        "type" : "content"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/screenshots.strings",
+        "font" : "Paul Grotesk Soft Medium",
+        "fontSize" : 80,
+        "frame" : "{{0, 1980}, {1242, 140}}",
+        "isRoot" : false,
+        "title" : "text",
+        "type" : "text"
+      }
+    ],
+    "outputConfig" : {
+      "fromImageNumber" : 1,
+      "output" : "Export\/$language\/iPhone 8 Plus-$image framed.png",
+      "toImageNumber" : 5
+    },
+    "title" : "iPhone 8 Plus"
+  }
+]

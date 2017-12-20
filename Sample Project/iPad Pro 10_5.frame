@@ -1,0 +1,52 @@
+[
+  {
+    "layers" : [
+      {
+        "color" : null,
+        "file" : "backgrounds\/$image.jpg",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{0, 0}, {2224, 1668}}",
+        "isRoot" : true,
+        "title" : "background",
+        "type" : "background"
+      },
+      {
+        "color" : null,
+        "file" : "device_frames\/iPad-Pro-10_5-Silver.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{-173, -284}, {2570, 1926}}",
+        "isRoot" : false,
+        "title" : "device",
+        "type" : "device"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/iPad Pro (10.5-inch)-$image.png",
+        "font" : null,
+        "fontSize" : null,
+        "frame" : "{{200, 0}, {1824, 1368}}",
+        "isRoot" : false,
+        "title" : "content",
+        "type" : "content"
+      },
+      {
+        "color" : null,
+        "file" : "$language\/screenshots.strings",
+        "font" : "Paul Grotesk Soft Medium",
+        "fontSize" : 90,
+        "frame" : "{{0, 1490}, {2224, 130}}",
+        "isRoot" : false,
+        "title" : "text",
+        "type" : "text"
+      }
+    ],
+    "outputConfig" : {
+      "fromImageNumber" : 1,
+      "output" : "Export\/$language\/iPad Pro 10_5-$image.png",
+      "toImageNumber" : 5
+    },
+    "title" : "iPad Pro 10_5"
+  }
+]
