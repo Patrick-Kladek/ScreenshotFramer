@@ -64,7 +64,7 @@ When you are happy with the output you can check how the screenshots look in dif
 
 
 ### Known limitations & bugs
-Please keep in mind that this tool was made to automate screenshots and to be more flexible than Fastlane's frameit. However this tool is not exessivly tests as frameit. If you find bugs please create an issue first. Pull Requests are welcome but please disscuse the change before you start with your work - It can save both of us a lot of time.
+Please keep in mind that this tool was made to automate screenshots and to be more flexible than Fastlane's frameit. However this tool is not excessively tested as frameit. If you find bugs please create an issue first. Pull Requests are welcome but please discuss the change before you start with your work - It can save both of us a lot of time.
 
 * No rearanging of layers (drag and drop in tableView)
 * May use exessice amount of memory while exporing (up to 4GB)
