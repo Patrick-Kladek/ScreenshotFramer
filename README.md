@@ -29,7 +29,7 @@ If you want a background other that white
 If you want your screenshots framed in a device. You may use any Image here. It is useful if the images support alpha values. Unfortunatley we can not give you our device images due to copyrights. You can download apples device images and copy them in this folder. It may be neccesary to export them as png tho.
 
 ##### localized image Folder
-(en-US, de-DE and so on) are generated using Fastlane snapshot oder you may also copy them in this folders. Important is that you have a strings file in this folder called `screenshots.strings`
+(en-US, de-DE and so on) are generated using Fastlane snapshot or you may also copy them in this folders. Important is that you have a strings file in this folder called `screenshots.strings`
 
 ```
 "1" = "It Starts With a Thought";
@@ -37,6 +37,8 @@ If you want your screenshots framed in a device. You may use any Image here. It 
 "3" = "Discover Connections";
 "4" = "Visualize Your Idea";
 "5" = "Productive on the Go";
+ |
+This Number is later replaced with variable "image"
 ```
 
 ##### Configuration File
@@ -53,7 +55,7 @@ Possible Variables:
 * `$image` can contain only numbers (typically 1-5)
 * `$language` contains every sub-folder name in your project folder (in this case `Sample Project`) excluding `backgrounds, device_frames and Export`
 
-In the screenshot below the File is: `$language/iPhone SE-$image.png`. This is automatically translated to `en-US/iPhone SE-1.png` and exaclty this file is rendered.
+In the screenshot below the File is: `$language/iPhone SE-$image.png`. This is automatically translated to `en-US/iPhone SE-1.png` and this file is rendered. For german this would be translated to `de-DE/iPhone SE-1.png`
 
 ![](Documentation/Usage.png)
 
@@ -62,8 +64,8 @@ When you are happy with the output you can check how the screenshots look in dif
 
 ### Known limitations & bugs
 * No rearanging of layers (drag and drop in tableView)
-* May use exessice amount of memeory while exporing (up to 4GB)
+* May use exessice amount of memory while exporing (up to 4GB)
 * no ascpect ratio lock. keep that in mind if you scale images
-* For better overview output is set to `Export/$language/iPhone SE-$image framed.png` but you could also remove `Export` from and Fastlane Upload to itunesconnect should work (not tested)
+* For better overview output is set to `Export/$language/iPhone SE-$image framed.png` but you could also remove `Export` and Fastlane Upload to itunesconnect should work (not tested)
 
 Callisto is brought to you by IdeasOnCanvas, the creator of MindNode for iOS, macOS & watchOS.
