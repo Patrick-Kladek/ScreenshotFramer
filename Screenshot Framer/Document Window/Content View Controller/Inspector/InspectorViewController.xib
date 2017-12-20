@@ -115,7 +115,7 @@
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kE7-9X-EoV">
                     <rect key="frame" x="131" y="154" width="19" height="27"/>
-                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="fqX-mJ-ZyR"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="-10000" maxValue="10000" id="fqX-mJ-ZyR"/>
                     <connections>
                         <action selector="stepperPressedWithSender:" target="-2" id="nlp-64-F3c"/>
                     </connections>
@@ -168,7 +168,7 @@
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OYd-zi-Km8">
                     <rect key="frame" x="131" y="105" width="19" height="27"/>
-                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="xjL-jC-pEK"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="-10000" maxValue="10000" id="xjL-jC-pEK"/>
                     <connections>
                         <action selector="stepperPressedWithSender:" target="-2" id="sV8-rw-m4R"/>
                     </connections>
@@ -182,7 +182,7 @@
                 </stepper>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xDV-62-B6M">
                     <rect key="frame" x="211" y="105" width="19" height="27"/>
-                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="NFj-jm-AV9"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="-10000" maxValue="10000" id="NFj-jm-AV9"/>
                     <connections>
                         <action selector="stepperPressedWithSender:" target="-2" id="KFH-Ys-B27"/>
                     </connections>

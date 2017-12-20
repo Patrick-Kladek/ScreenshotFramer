@@ -196,7 +196,7 @@
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rqd-2b-Uwz">
                                     <rect key="frame" x="6" y="157" width="51" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="EXPORT" id="xxY-2P-85y">
-                                        <font key="font" metaFont="systemBold" size="11"/>
+                                        <font key="font" metaFont="smallSystemBold"/>
                                         <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -260,6 +260,7 @@
                                 <constraint firstItem="521-6H-ajq" firstAttribute="top" secondItem="PbT-SF-U1c" secondAttribute="bottom" constant="8" id="TN2-WH-g5q"/>
                                 <constraint firstItem="pL1-dp-sqK" firstAttribute="top" secondItem="521-6H-ajq" secondAttribute="bottom" constant="12" id="UhM-o1-9aU"/>
                                 <constraint firstItem="tAW-Cr-EAJ" firstAttribute="top" secondItem="pL1-dp-sqK" secondAttribute="bottom" constant="20" id="YA3-av-NI6"/>
+                                <constraint firstItem="rqd-2b-Uwz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="slX-x1-2Hr" secondAttribute="bottom" constant="16" id="aGO-Gd-spn"/>
                                 <constraint firstItem="hmg-Jg-ukQ" firstAttribute="leading" secondItem="V5e-jM-e5B" secondAttribute="leading" constant="8" id="h3n-JA-BgF"/>
                                 <constraint firstItem="slX-x1-2Hr" firstAttribute="top" secondItem="hmg-Jg-ukQ" secondAttribute="bottom" constant="8" id="jez-Ie-Xyk"/>
                                 <constraint firstItem="hmg-Jg-ukQ" firstAttribute="top" secondItem="kcc-rK-wzh" secondAttribute="bottom" constant="8" id="kQz-Ip-qXr"/>
@@ -270,7 +271,6 @@
                                 <constraint firstAttribute="width" constant="220" id="rdT-cw-ABT"/>
                                 <constraint firstItem="521-6H-ajq" firstAttribute="baseline" secondItem="KGD-QO-68c" secondAttribute="baseline" id="tZa-9G-I8h"/>
                                 <constraint firstItem="kcc-rK-wzh" firstAttribute="top" secondItem="V5e-jM-e5B" secondAttribute="top" id="xap-gl-nvr"/>
-                                <constraint firstItem="pL1-dp-sqK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="slX-x1-2Hr" secondAttribute="bottom" constant="8" id="y59-Nv-KGd"/>
                                 <constraint firstItem="RMb-WP-rgZ" firstAttribute="top" secondItem="rqd-2b-Uwz" secondAttribute="bottom" constant="12" id="yPI-gp-pRM"/>
                                 <constraint firstItem="pL1-dp-sqK" firstAttribute="trailing" secondItem="PbT-SF-U1c" secondAttribute="trailing" id="yyP-gp-EU5"/>
                                 <constraint firstAttribute="trailing" secondItem="dxm-LX-Mdn" secondAttribute="trailing" constant="20" id="z5A-qu-JsG"/>
