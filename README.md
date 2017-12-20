@@ -11,7 +11,7 @@ With Screenshot Framer you can create Localized App Store Images.
 Screenshot Framer simply put pictures on top of each other and saves the image to disk.
 You can specify the path of every image layer and use a `.strings` file for the text layers. You can than export all possible Image & Language combinations
 
-![](Documentation/How it works.gif)
+![](Documentation/How%20it%20works.gif)
 
 
 
