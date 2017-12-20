@@ -18,7 +18,7 @@ You can specify the path of every image layer and use a `.strings` file for the 
 
 ### Preparation
 
-Download the Sample Project here or create your own project structure.
+Open the Sample Project or create your own project structure.
 When you are using Fastlanes snapshot you can reuse that folder structure and only add missing files:
 
 ![](Documentation/File%20Structure.png)
@@ -27,7 +27,7 @@ When you are using Fastlanes snapshot you can reuse that folder structure and on
 If you want a background other that white
 
 ##### device_frames
-If you want your screenshots framed in a device. You may use any Image here. It is useful if the images support alpha values. Unfortunatley we can not give you our device images due to copyrights. You can download apples device images and copy them in this folder. It may be neccesary to export them as png tho.
+If you want your screenshots framed in a device. You may use any Image here. It is useful if the images support alpha values. Unfortunatley we can not give you our device images due to copyrights. You can download apples device images and copy them in this folder. It may be necessary to export them as png tho.
 
 ##### localized image Folder
 (en-US, de-DE and so on) are generated using Fastlane snapshot or you may also copy them in this folders. Important is that you have a strings file in this folder called `screenshots.strings`
@@ -64,6 +64,8 @@ When you are happy with the output you can check how the screenshots look in dif
 
 
 ### Known limitations & bugs
+Please keep in mind that this tool was made to automate screenshots and to be more flexible than Fastlane's frameit. However this tool is not exessivly tests as frameit. If you find bugs please create an issue first. Pull Requests are welcome but please disscuse the change before you start with your work - It can save both of us a lot of time.
+
 * No rearanging of layers (drag and drop in tableView)
 * May use exessice amount of memory while exporing (up to 4GB)
 * no ascpect ratio lock. keep that in mind if you scale images
