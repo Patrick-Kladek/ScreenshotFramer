@@ -111,6 +111,27 @@ final class UpdateFileOperation: OperationProtocol {
     }
 }
 
+final class UpdateTitleOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let title: String
+
+
+    init(layerStateHistory: LayerStateHistory, indexOfLayer: Int, title: String) {
+        self.layerStateHistory = layerStateHistory
+        self.indexOfLayer = indexOfLayer
+        self.title = title
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(title: self.title, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
 
 final class UpdateFontOperation: OperationProtocol {
 

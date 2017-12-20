@@ -234,6 +234,17 @@ final class ContentViewController: NSViewController {
         }
     }
 
+    @IBAction func endEditingText(_ sender: NSTextField?) {
+        guard let textField = sender else { return }
+
+        let row = self.tableView.row(for: textField)
+        guard row >= 0 else { return }
+
+        let title = textField.stringValue
+        let operation = UpdateTitleOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: row, title: title)
+        operation.apply()
+    }
+
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
@@ -261,6 +272,8 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
         let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "layerCell"), owner: nil) as? NSTableCellView
 
         view?.textField?.stringValue = layer.title
+        view?.textField?.action = #selector(ContentViewController.endEditingText)
+        view?.textField?.target = self
 
         return view
     }
