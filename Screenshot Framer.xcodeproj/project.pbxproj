@@ -35,6 +35,8 @@
 		CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659101FE3F00000430F20 /* MNCoalescing.swift */; };
 		CDB659131FE4268200430F20 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
 		CDE9C3541FEBDBD100168B40 /* Document Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CDE9C3531FEBDBD100168B40 /* Document Icon.icns */; };
+		CDE9C3551FEBEBCE00168B40 /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
+		CDE9C3561FEBEBD300168B40 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4C1FDE883200FB0F2F /* Operations.swift */; };
 		CDFF69981FD827B800E652EE /* ScreenshotFramerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFF69971FD827B800E652EE /* ScreenshotFramerTests.swift */; };
 		CDFF699F1FD827D900E652EE /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
 		CDFF69A01FD8280100E652EE /* LayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83A1FCEE01800449B4A /* LayerState.swift */; };
@@ -393,7 +395,9 @@
 				CDFF69A01FD8280100E652EE /* LayerState.swift in Sources */,
 				CDFF699F1FD827D900E652EE /* LayerStateHistory.swift in Sources */,
 				CDFF69A11FD8280700E652EE /* LayoutableObject.swift in Sources */,
+				CDE9C3561FEBEBD300168B40 /* Operations.swift in Sources */,
 				CDFF69981FD827B800E652EE /* ScreenshotFramerTests.swift in Sources */,
+				CDE9C3551FEBEBCE00168B40 /* OutputConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,7 +547,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Screenshot Framer/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kladek.Framer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kladek.ScreenshotFramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -560,7 +564,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Screenshot Framer/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kladek.Framer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kladek.ScreenshotFramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -574,7 +578,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UG25H62DPY;
-				INFOPLIST_FILE = FrameMeTests/Info.plist;
+				INFOPLIST_FILE = "Screenshot Framer Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kladek.FrameMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -590,7 +594,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UG25H62DPY;
-				INFOPLIST_FILE = FrameMeTests/Info.plist;
+				INFOPLIST_FILE = "Screenshot Framer Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kladek.FrameMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -15,9 +15,6 @@ struct LayerState: Codable {
 
     let title: String
     let layers: [LayoutableObject]
-//    let output: String
-//    let fromImageNumber: Int
-//    let toImageNumber: Int
     let outputConfig: OutputConfig
 
 
