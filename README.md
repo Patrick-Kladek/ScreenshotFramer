@@ -72,4 +72,4 @@ Please keep in mind that this tool was made to automate screenshots and to be mo
 * no ascpect ratio lock. keep that in mind if you scale images
 * For better overview output is set to `Export/$language/iPhone SE-$image framed.png` but you could also remove `Export` and Fastlane Upload to itunesconnect should work (not tested)
 
-Callisto is brought to you by IdeasOnCanvas, the creator of MindNode for iOS, macOS & watchOS.
+Screenshot Framer is brought to you by IdeasOnCanvas, the creator of MindNode for iOS, macOS & watchOS.
