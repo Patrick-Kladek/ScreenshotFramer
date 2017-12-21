@@ -34,6 +34,7 @@
 		CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */; };
 		CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659101FE3F00000430F20 /* MNCoalescing.swift */; };
 		CDB659131FE4268200430F20 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
+		CDE9C3541FEBDBD100168B40 /* Document Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CDE9C3531FEBDBD100168B40 /* Document Icon.icns */; };
 		CDFF69981FD827B800E652EE /* ScreenshotFramerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFF69971FD827B800E652EE /* ScreenshotFramerTests.swift */; };
 		CDFF699F1FD827D900E652EE /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
 		CDFF69A01FD8280100E652EE /* LayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83A1FCEE01800449B4A /* LayerState.swift */; };
@@ -85,6 +86,7 @@
 		CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		CDB659101FE3F00000430F20 /* MNCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCoalescing.swift; sourceTree = "<group>"; };
 		CDB659121FE4268200430F20 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
+		CDE9C3531FEBDBD100168B40 /* Document Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Document Icon.icns"; sourceTree = "<group>"; };
 		CDFF69951FD827B800E652EE /* Screenshot FramerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Screenshot FramerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDFF69971FD827B800E652EE /* ScreenshotFramerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotFramerTests.swift; sourceTree = "<group>"; };
 		CDFF69991FD827B800E652EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			children = (
 				CD5EE0461FCD557200AD2ED7 /* Assets.xcassets */,
 				CDFF69A91FD849E300E652EE /* CenterClipView.swift */,
+				CDE9C3531FEBDBD100168B40 /* Document Icon.icns */,
 				CD5EE04C1FCD557200AD2ED7 /* Framer.entitlements */,
 				CD5EE04B1FCD557200AD2ED7 /* Info.plist */,
 				CD5EE0481FCD557200AD2ED7 /* MainMenu.xib */,
@@ -332,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD2EC1CC1FD7F10800C17756 /* ContentViewController.xib in Resources */,
+				CDE9C3541FEBDBD100168B40 /* Document Icon.icns in Resources */,
 				CD5EE0471FCD557200AD2ED7 /* Assets.xcassets in Resources */,
 				CD5EE0451FCD557200AD2ED7 /* DocumentWindowController.xib in Resources */,
 				CDFF69A61FD834AE00E652EE /* TimeTravelWindowController.xib in Resources */,

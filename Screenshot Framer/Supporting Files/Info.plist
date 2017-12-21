@@ -12,7 +12,7 @@
 				<string>frame</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string></string>
+			<string>Document Icon</string>
 			<key>CFBundleTypeName</key>
 			<string>DocumentType</string>
 			<key>CFBundleTypeOSTypes</key>

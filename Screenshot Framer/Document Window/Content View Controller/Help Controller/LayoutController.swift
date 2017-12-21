@@ -41,6 +41,7 @@ class LayoutController {
 
         let firstLayoutableObject = layoutableObjects[0]
         let rootView = self.view(from: firstLayoutableObject)
+        (rootView as? pkView)?.backgroundColor = NSColor.lightGray
 
         for object in layoutableObjects where object != layoutableObjects[0] {
             let view: NSView
@@ -59,7 +60,6 @@ class LayoutController {
 
             rootView.addSubview(view)
         }
-
         return rootView
     }
 }
@@ -87,16 +87,13 @@ private extension LayoutController {
             textField.backgroundColor = NSColor.red
         }
 
-        if let font = NSFont(name: object.font ?? "", size: object.fontSize ?? 25) {
-            textField.font = font
-        }
+        textField.font = self.font(for: object)
 
         if let color = object.color {
             textField.textColor = color
         }
 
         self.limitFontSize(for: textField)
-
         return textField
     }
 
@@ -121,7 +118,6 @@ private extension LayoutController {
             size = string.size(withAttributes: [NSAttributedStringKey.font: newFont])
             textField.font = newFont
         }
-
         return limited
     }
 
@@ -138,5 +134,20 @@ private extension LayoutController {
             view.backgroundColor = NSColor.red
             return view
         }
+    }
+
+    func font(for object: LayoutableObject) -> NSFont? {
+        var fontName: String?
+
+        if let fontFamily = object.font {
+            fontName = fontFamily
+        }
+
+        if fontName == nil || fontName?.count == 0 {
+            fontName = "Helvetica Neue"
+        }
+
+        let font = NSFont(name: fontName!, size: object.fontSize ?? 25)
+        return font
     }
 }

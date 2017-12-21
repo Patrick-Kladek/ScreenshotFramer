@@ -34,7 +34,7 @@
       {
         "color" : null,
         "file" : "$language\/screenshots.strings",
-        "font" : "Paul Grotesk Soft Medium",
+        "font" : "",
         "fontSize" : 80,
         "frame" : "{{0, 1980}, {1242, 140}}",
         "isRoot" : false,
