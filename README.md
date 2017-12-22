@@ -9,7 +9,7 @@ With Screenshot Framer you can easily create nice-looking and localized App Stor
 ![](Documentation/Overview.png)
 
 ### How does it work?
-It's super simply: Screenshot Framer simply puts pictures on top of each other (think Photoshop Layers), allows you to move them around and saves the resulting image to disk. You can specify the path of every image layer and use a `.strings` file to localize the displayed texts. Once you're done configuring, you can export all possible image & language combinations at once.
+It's super simple: Screenshot Framer simply puts pictures on top of each other (think Photoshop Layers), allows you to move them around and saves the resulting image to disk. You can specify the path of every image layer and use a `.strings` file to localize the displayed texts. Once you're done configuring, you can export all possible image & language combinations at once.
 
 ![](Documentation/How%20it%20works.gif)
 
