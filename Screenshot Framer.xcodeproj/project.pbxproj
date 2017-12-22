@@ -15,7 +15,7 @@
 		CD2EC1CC1FD7F10800C17756 /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */; };
 		CD50EF4D1FDE883200FB0F2F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4C1FDE883200FB0F2F /* Operations.swift */; };
 		CD50EF511FDED20E00FB0F2F /* ViewStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF501FDED20E00FB0F2F /* ViewStateController.swift */; };
-		CD50EF551FDFEB7600FB0F2F /* NSTableView+keepSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */; };
+		CD50EF551FDFEB7600FB0F2F /* SSFTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF541FDFEB7600FB0F2F /* SSFTableView.swift */; };
 		CD50EF581FDFEE3600FB0F2F /* LayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */; };
 		CD50EF5A1FDFF86D00FB0F2F /* LanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */; };
 		CD5110AA1FE7AAE300AEC595 /* ExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5110A91FE7AAE300AEC595 /* ExportController.swift */; };
@@ -27,9 +27,10 @@
 		CD5EE0471FCD557200AD2ED7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0461FCD557200AD2ED7 /* Assets.xcassets */; };
 		CD5EE04A1FCD557200AD2ED7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE0481FCD557200AD2ED7 /* MainMenu.xib */; };
 		CD5EE0531FCD55E000AD2ED7 /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0521FCD55E000AD2ED7 /* DocumentWindowController.swift */; };
-		CD5EE0551FCD9A1000AD2ED7 /* pkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0541FCD9A1000AD2ED7 /* pkView.swift */; };
+		CD5EE0551FCD9A1000AD2ED7 /* SSFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */; };
 		CD5EE05A1FCDA30600AD2ED7 /* LayoutableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0591FCDA30600AD2ED7 /* LayoutableObject.swift */; };
 		CD75DDA71FE916E80035952D /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
+		CDAEE1FF1FED484500F4B1BA /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAEE1FE1FED484500F4B1BA /* Sugar.swift */; };
 		CDB6590B1FE16EE800430F20 /* UserDefaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */; };
 		CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */; };
 		CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659101FE3F00000430F20 /* MNCoalescing.swift */; };
@@ -66,7 +67,7 @@
 		CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
 		CD50EF4C1FDE883200FB0F2F /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
 		CD50EF501FDED20E00FB0F2F /* ViewStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStateController.swift; sourceTree = "<group>"; };
-		CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTableView+keepSelection.swift"; sourceTree = "<group>"; };
+		CD50EF541FDFEB7600FB0F2F /* SSFTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSFTableView.swift; sourceTree = "<group>"; };
 		CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutController.swift; sourceTree = "<group>"; };
 		CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageController.swift; sourceTree = "<group>"; };
 		CD5110A91FE7AAE300AEC595 /* ExportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportController.swift; sourceTree = "<group>"; };
@@ -81,9 +82,10 @@
 		CD5EE04B1FCD557200AD2ED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD5EE04C1FCD557200AD2ED7 /* Framer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Framer.entitlements; sourceTree = "<group>"; };
 		CD5EE0521FCD55E000AD2ED7 /* DocumentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
-		CD5EE0541FCD9A1000AD2ED7 /* pkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pkView.swift; sourceTree = "<group>"; };
+		CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSFView.swift; sourceTree = "<group>"; };
 		CD5EE0591FCDA30600AD2ED7 /* LayoutableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutableObject.swift; sourceTree = "<group>"; };
 		CD75DDA61FE916E80035952D /* OutputConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputConfig.swift; sourceTree = "<group>"; };
+		CDAEE1FE1FED484500F4B1BA /* Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sugar.swift; sourceTree = "<group>"; };
 		CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Keys.swift"; sourceTree = "<group>"; };
 		CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		CDB659101FE3F00000430F20 /* MNCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCoalescing.swift; sourceTree = "<group>"; };
@@ -210,9 +212,10 @@
 				CD5EE0481FCD557200AD2ED7 /* MainMenu.xib */,
 				CDB659101FE3F00000430F20 /* MNCoalescing.swift */,
 				CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */,
-				CD50EF541FDFEB7600FB0F2F /* NSTableView+keepSelection.swift */,
-				CD5EE0541FCD9A1000AD2ED7 /* pkView.swift */,
+				CD50EF541FDFEB7600FB0F2F /* SSFTableView.swift */,
+				CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */,
 				CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */,
+				CDAEE1FE1FED484500F4B1BA /* Sugar.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "Screenshot Framer" */;
 			buildPhases = (
+				CDAEE1FC1FED46EE00F4B1BA /* ShellScript */,
 				CD5EE0381FCD557200AD2ED7 /* Sources */,
 				CD5EE0391FCD557200AD2ED7 /* Frameworks */,
 				CD5EE03A1FCD557200AD2ED7 /* Resources */,
@@ -298,7 +302,7 @@
 				TargetAttributes = {
 					CD5EE03B1FCD557200AD2ED7 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -356,6 +360,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CDAEE1FC1FED46EE00F4B1BA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CD5EE0381FCD557200AD2ED7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -368,7 +388,7 @@
 				CDB6590B1FE16EE800430F20 /* UserDefaults+Keys.swift in Sources */,
 				CD50EF4D1FDE883200FB0F2F /* Operations.swift in Sources */,
 				CD5EE0421FCD557200AD2ED7 /* Document.swift in Sources */,
-				CD5EE0551FCD9A1000AD2ED7 /* pkView.swift in Sources */,
+				CD5EE0551FCD9A1000AD2ED7 /* SSFView.swift in Sources */,
 				CD75DDA71FE916E80035952D /* OutputConfig.swift in Sources */,
 				CD5EE0401FCD557200AD2ED7 /* AppDelegate.swift in Sources */,
 				CD5110AE1FE7B64D00AEC595 /* ProgressWindowController.swift in Sources */,
@@ -376,13 +396,14 @@
 				CD50EF511FDED20E00FB0F2F /* ViewStateController.swift in Sources */,
 				CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */,
 				CDFF69AA1FD849E300E652EE /* CenterClipView.swift in Sources */,
+				CDAEE1FF1FED484500F4B1BA /* Sugar.swift in Sources */,
 				CDB659131FE4268200430F20 /* FileController.swift in Sources */,
 				CD50EF5A1FDFF86D00FB0F2F /* LanguageController.swift in Sources */,
 				CD5EE0531FCD55E000AD2ED7 /* DocumentWindowController.swift in Sources */,
 				CD26F8411FCEFAC700449B4A /* InspectorViewController.swift in Sources */,
 				CD50EF581FDFEE3600FB0F2F /* LayoutController.swift in Sources */,
 				CD26F83B1FCEE01800449B4A /* LayerState.swift in Sources */,
-				CD50EF551FDFEB7600FB0F2F /* NSTableView+keepSelection.swift in Sources */,
+				CD50EF551FDFEB7600FB0F2F /* SSFTableView.swift in Sources */,
 				CDFF69A81FD8387D00E652EE /* DetailTableCellView.swift in Sources */,
 				CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */,
 			);
@@ -541,10 +562,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Screenshot Framer/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
@@ -558,10 +579,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Screenshot Framer/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;

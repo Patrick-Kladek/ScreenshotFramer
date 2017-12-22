@@ -15,7 +15,7 @@ final class ContentViewController: NSViewController {
 
     var document: Document
     var layerStateHistory: LayerStateHistory { return self.document.layerStateHistory }
-    var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState}
+    var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState }
     var windowController: DocumentWindowController? { return self.view.window?.windowController as? DocumentWindowController }
     var inspectorViewController: InspectorViewController?
     let viewStateController = ViewStateController()
@@ -28,16 +28,16 @@ final class ContentViewController: NSViewController {
 
     // MARK: - Interface Builder
 
-    @IBOutlet var inspectorPlaceholder: NSView!
-    @IBOutlet var scrollView: NSScrollView!
-    @IBOutlet var segmentedControl: NSSegmentedControl!
-    @IBOutlet var tableView: pkTableView!
-    @IBOutlet var addMenu: NSMenu!
-    @IBOutlet weak var textFieldOutput: NSTextField!
-    @IBOutlet weak var textFieldFromImageNumber: NSTextField!
-    @IBOutlet weak var textFieldToImageNumber: NSTextField!
-    @IBOutlet weak var buttonSave: NSButton!
-    @IBOutlet weak var buttonSaveAll: NSButton!
+    @IBOutlet private var inspectorPlaceholder: NSView!
+    @IBOutlet private var scrollView: NSScrollView!
+    @IBOutlet private var segmentedControl: NSSegmentedControl!
+    @IBOutlet private var tableView: SSFTableView!
+    @IBOutlet private var addMenu: NSMenu!
+    @IBOutlet private var textFieldOutput: NSTextField!
+    @IBOutlet private var textFieldFromImageNumber: NSTextField!
+    @IBOutlet private var textFieldToImageNumber: NSTextField!
+    @IBOutlet private var buttonSave: NSButton!
+    @IBOutlet private var buttonSaveAll: NSButton!
 
 
     // MARK: - Lifecycle
@@ -74,6 +74,8 @@ final class ContentViewController: NSViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         let inspector = InspectorViewController(layerStateHistory: self.document.layerStateHistory, selectedRow: 0, viewStateController: viewStateController, languageController: languageController)
         self.addChildViewController(inspector)
         self.inspectorPlaceholder.addSubview(inspector.view)
@@ -81,7 +83,7 @@ final class ContentViewController: NSViewController {
         NSLayoutConstraint.activate([
             self.inspectorPlaceholder.topAnchor.constraint(equalTo: inspector.view.topAnchor, constant: 0),
             self.inspectorPlaceholder.leadingAnchor.constraint(equalTo: inspector.view.leadingAnchor, constant: 0),
-            self.inspectorPlaceholder.trailingAnchor.constraint(equalTo: inspector.view.trailingAnchor, constant: 0),
+            self.inspectorPlaceholder.trailingAnchor.constraint(equalTo: inspector.view.trailingAnchor, constant: 0)
         ])
 
         inspector.updateUI()
@@ -224,7 +226,7 @@ final class ContentViewController: NSViewController {
             guard let mainWindow = self.windowController?.window else { return }
             guard let progressWindow = self.progressWindowController?.window else { return }
 
-            mainWindow.beginSheet(progressWindow, completionHandler: { (responde) in
+            mainWindow.beginSheet(progressWindow, completionHandler: { _ in
                 // Handle Cancel button
             })
 
@@ -279,7 +281,7 @@ extension ContentViewController: NSTableViewDelegate, NSTableViewDataSource {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        guard self.tableView.isReloading == false else { return}
+        guard self.tableView.isReloading == false else { return }
 
         self.updateEnabledStateOfControls()
 
@@ -310,7 +312,7 @@ extension ContentViewController: ExportControllerDelegate {
         guard let progressWindowController = self.progressWindowController else { return }
 
         DispatchQueue.main.async {
-            progressWindowController.progressBar.doubleValue = progress
+            progressWindowController.progress = progress
         }
 
         if progress == 1.0 {
@@ -343,7 +345,7 @@ private extension ContentViewController {
         let selectedRow = self.tableView.selectedRow
         self.segmentedControl.setEnabled(selectedRow != 0, forSegment: 1)
 
-        self.buttonSave.isEnabled = self.textFieldOutput.stringValue.count > 0
+        self.buttonSave.isEnabled = self.textFieldOutput.stringValue.isEmpty == false
         self.buttonSaveAll.isEnabled = self.buttonSave.isEnabled
     }
 

@@ -114,8 +114,7 @@ struct LayerState: Codable {
     }
 
 
-
-
+    // MARK: - Private
 
     private func title(of rect: CGRect) -> String {
         return "\(Int(rect.origin.x)) \(Int(rect.origin.y)) | \(Int(rect.size.width)) \(Int(rect.size.height))"

@@ -12,9 +12,9 @@ class DetailTableCellView: NSTableCellView {
 
     // MARK: - Interface Builder
 
-    @IBOutlet var detailTextField: NSTextField!
+    @IBOutlet private var detailTextField: NSTextField!
 
-    
+
     // MARK: - Logic
 
     func setLayerState(_ state: LayerState) {

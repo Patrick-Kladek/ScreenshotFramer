@@ -1,5 +1,5 @@
 //
-//  pkView.swift
+//  SSFView.swift
 //  Framer
 //
 //  Created by Patrick Kladek on 28.11.17.
@@ -10,7 +10,7 @@ import Cocoa
 
 
 @IBDesignable
-final class pkView: NSView {
+final class SSFView: NSView {
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)

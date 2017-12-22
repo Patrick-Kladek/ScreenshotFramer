@@ -22,10 +22,15 @@ class ProgressWindowController: NSWindowController {
         get { return self.progressBar.maxValue }
     }
 
+    var progress: Double {
+        set { self.progressBar.doubleValue = newValue }
+        get { return self.progressBar.doubleValue }
+    }
+
 
     // MARK: - Interface Builder
 
-    @IBOutlet weak var progressBar: NSProgressIndicator!
+    @IBOutlet private var progressBar: NSProgressIndicator!
 
 
     // MARK: - Overrides

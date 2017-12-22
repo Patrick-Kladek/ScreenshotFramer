@@ -39,5 +39,4 @@ class ScreenshotFramerTests: XCTestCase {
 
         XCTAssert(self.layerStateHistory.layerStates.count == 3)
     }
-    
 }

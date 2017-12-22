@@ -9,7 +9,7 @@
 import Cocoa
 
 
-final class pkTableView: NSTableView {
+final class SSFTableView: NSTableView {
 
     var isReloading = false
 
@@ -20,6 +20,5 @@ final class pkTableView: NSTableView {
         self.isReloading = false
 
         self.selectRowIndexes(selectedRowIndexes, byExtendingSelection: false)
-//        NotificationCenter.default.post(name: NSTableView.selectionDidChangeNotification, object: self)
     }
 }

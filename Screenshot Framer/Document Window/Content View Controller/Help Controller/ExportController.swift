@@ -24,7 +24,7 @@ final class ExportController {
     weak var delegate: ExportControllerDelegate?
 
     var layerStateHistory: LayerStateHistory { return self.document.layerStateHistory }
-    var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState}
+    var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState }
 
 
     // MARK: - Lifecycle
@@ -53,7 +53,7 @@ final class ExportController {
 
     func saveAllImages() {
         self.shouldCancel = false
-        
+
         let viewStateController = ViewStateController()
         let layoutController = LayoutController(document: self.document, layerStateHistory: self.layerStateHistory, viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
         let fileManager = FileManager()
@@ -65,7 +65,7 @@ final class ExportController {
             viewStateController.newViewState(language: language)
             for index in self.lastLayerState.outputConfig.fromImageNumber...self.lastLayerState.outputConfig.toImageNumber {
                 currentStep += 1
-                let progress = Double(currentStep)/Double(totalSteps)
+                let progress = Double(currentStep) / Double(totalSteps)
                 self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress)
 
                 viewStateController.newViewState(imageNumber: index)
@@ -101,5 +101,3 @@ private extension ExportController {
         return languageController.allLanguages().count * totalSteps
     }
 }
-
-

@@ -26,7 +26,7 @@ final class FileController {
     // MARK: - Functions
 
     func absoluteURL(for object: LayoutableObject, viewState: ViewState) -> URL? {
-        guard object.file.count > 0 else { return nil }
+        guard object.file.hasElements else { return nil }
 
         var file = object.file.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)

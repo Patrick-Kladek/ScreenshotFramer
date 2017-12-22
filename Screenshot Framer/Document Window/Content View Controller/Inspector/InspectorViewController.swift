@@ -26,29 +26,29 @@ final class InspectorViewController: NSViewController {
 
     // MARK: - Interface Builder
 
-    @IBOutlet weak var textFieldImageNumber: NSTextField!
-    @IBOutlet weak var stepperImageNumber: NSStepper!
+    @IBOutlet private var textFieldImageNumber: NSTextField!
+    @IBOutlet private var stepperImageNumber: NSStepper!
 
-    @IBOutlet weak var languages: NSPopUpButton!
+    @IBOutlet private var languages: NSPopUpButton!
 
-    @IBOutlet weak var textFieldFile: NSTextField!
+    @IBOutlet private var textFieldFile: NSTextField!
 
-    @IBOutlet weak var textFieldX: NSTextField!
-    @IBOutlet weak var stepperX: NSStepper!
+    @IBOutlet private var textFieldX: NSTextField!
+    @IBOutlet private var stepperX: NSStepper!
 
-    @IBOutlet weak var textFieldY: NSTextField!
-    @IBOutlet weak var stepperY: NSStepper!
+    @IBOutlet private var textFieldY: NSTextField!
+    @IBOutlet private var stepperY: NSStepper!
 
-    @IBOutlet weak var textFieldWidth: NSTextField!
-    @IBOutlet weak var stepperWidth: NSStepper!
+    @IBOutlet private var textFieldWidth: NSTextField!
+    @IBOutlet private var stepperWidth: NSStepper!
 
-    @IBOutlet weak var textFieldHeight: NSTextField!
-    @IBOutlet weak var stepperHeight: NSStepper!
+    @IBOutlet private var textFieldHeight: NSTextField!
+    @IBOutlet private var stepperHeight: NSStepper!
 
-    @IBOutlet weak var textFieldFont: NSTextField!
-    @IBOutlet weak var textFieldFontSize: NSTextField!
-    @IBOutlet weak var stepperFontSize: NSStepper!
-    @IBOutlet weak var colorWell: NSColorWell!
+    @IBOutlet private var textFieldFont: NSTextField!
+    @IBOutlet private var textFieldFontSize: NSTextField!
+    @IBOutlet private var stepperFontSize: NSStepper!
+    @IBOutlet private var colorWell: NSColorWell!
 
 
     // MARK: - Lifecycle
@@ -68,8 +68,10 @@ final class InspectorViewController: NSViewController {
 
     // MARK: - Update Methods
 
+    // swiftlint:disable:next function_body_length
     func updateUI() {
         guard self.selectedRow >= 0 else { return }
+        guard self.layerStateHistory.currentLayerState.layers.hasElements else { return }
 
         let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
 
@@ -131,7 +133,6 @@ final class InspectorViewController: NSViewController {
         }
     }
 
-    
     // MARK: - Actions
 
     @IBAction func stepperPressed(sender: NSStepper) {

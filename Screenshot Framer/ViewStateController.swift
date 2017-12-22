@@ -16,7 +16,7 @@ struct ViewState {
 }
 
 
-protocol ViewStateControllerDelegate {
+protocol ViewStateControllerDelegate: class {
 
     func viewStateDidChange(_ viewState: ViewState)
 }
@@ -26,7 +26,7 @@ final class ViewStateController {
 
     // MARK: - Properties
 
-    var delegate: ViewStateControllerDelegate?
+    weak var delegate: ViewStateControllerDelegate?
     var viewState: ViewState {
         didSet {
             self.delegate?.viewStateDidChange(self.viewState)

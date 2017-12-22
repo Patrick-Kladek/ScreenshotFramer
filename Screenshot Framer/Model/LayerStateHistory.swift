@@ -27,9 +27,7 @@ final class LayerStateHistory {
      *  Warning: Ensure that at least one object is availible
      */
     var currentLayerState: LayerState {
-        get {
-            return self.layerStates[self.currentStackPosition]
-        }
+        return self.layerStates[self.currentStackPosition]
     }
 
     // MARK: - Lifecycle
@@ -83,7 +81,7 @@ final class LayerStateHistory {
     }
 
     var canUndo: Bool {
-        return self.layerStates.count > 0 && self.currentStackPosition > 0
+        return self.layerStates.hasElements && self.currentStackPosition > 0
     }
 
 

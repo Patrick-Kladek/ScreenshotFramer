@@ -59,7 +59,7 @@ struct LayoutableObject: Codable {
         self.fontSize = try? container.decode(CGFloat.self, forKey: .fontSize)
 
         if let colorHex = try? container.decode(String.self, forKey: .color) {
-            self.color = NSColor.init(hex: colorHex)
+            self.color = NSColor(hex: colorHex)
         }
     }
 
@@ -85,7 +85,7 @@ struct LayoutableObject: Codable {
 
 extension LayoutableObject: Equatable {
 
-    static func ==(lhs: LayoutableObject, rhs: LayoutableObject) -> Bool {
+    static func == (lhs: LayoutableObject, rhs: LayoutableObject) -> Bool {
         return  lhs.type == rhs.type && lhs.title == rhs.title && lhs.frame == rhs.frame
     }
 }

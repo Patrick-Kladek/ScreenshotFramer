@@ -20,7 +20,7 @@ extension NSColor {
         var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         cString.cleanHexPrefix()
 
-        var hexNumber:UInt32 = 0
+        var hexNumber: UInt32 = 0
         Scanner(string: cString).scanHexInt32(&hexNumber)
 
 		self.init(red: CGFloat( (hexNumber & 0xFF000000) >> 24) / 255.0,
@@ -44,9 +44,8 @@ extension NSColor {
 private extension String {
 
     mutating func cleanHexPrefix() {
-        if (self.hasPrefix("#")) {
+        if self.hasPrefix("#") {
             self.removeFirst()
         }
     }
 }
-

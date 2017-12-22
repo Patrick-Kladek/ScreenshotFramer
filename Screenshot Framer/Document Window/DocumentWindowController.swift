@@ -20,6 +20,7 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         self.shouldCloseDocument = true
 
+        // swiftlint:disable:next force_cast
         let contentViewController = ContentViewController(document: self.document as! Document)
         self.contentViewController = contentViewController
     }

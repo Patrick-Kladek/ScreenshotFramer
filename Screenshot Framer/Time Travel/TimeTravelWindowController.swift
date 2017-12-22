@@ -12,7 +12,7 @@ final class TimeTravelWindowController: NSWindowController {
 
     // MARK: - Properties
 
-    @IBOutlet var tableView: NSTableView?
+    @IBOutlet private var tableView: NSTableView?
     private(set) var layerStateHistory: LayerStateHistory
 
 

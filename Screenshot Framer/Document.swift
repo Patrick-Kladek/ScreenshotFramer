@@ -11,7 +11,7 @@ import Cocoa
 
 final class Document: NSDocument {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     private(set) var layerStateHistory = LayerStateHistory()
     lazy var timeTravelWindowController = TimeTravelWindowController(layerStateHistory: self.layerStateHistory)
@@ -30,7 +30,7 @@ final class Document: NSDocument {
         operation.apply()
         self.updateChangeCount(.changeCleared)
     }
-    
+
 
     // MARK: - Override
 

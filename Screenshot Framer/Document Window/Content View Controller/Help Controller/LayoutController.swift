@@ -37,11 +37,11 @@ class LayoutController {
 
     func layouthierarchy() -> NSView? {
         let layoutableObjects = self.layerStateHistory.currentLayerState.layers
-        guard layoutableObjects.count > 0 else { return nil }
+        guard layoutableObjects.hasElements else { return nil }
 
         let firstLayoutableObject = layoutableObjects[0]
         let rootView = self.view(from: firstLayoutableObject)
-        (rootView as? pkView)?.backgroundColor = NSColor.lightGray
+        (rootView as? SSFView)?.backgroundColor = NSColor.lightGray
 
         for object in layoutableObjects where object != layoutableObjects[0] {
             let view: NSView
@@ -75,11 +75,11 @@ private extension LayoutController {
         let text = self.fileController.localizedTitle(from: absoluteURL, viewState: viewState)
 
         let textField = NSTextField(frame: object.frame)
-        textField.textColor       = NSColor.white
+        textField.textColor = NSColor.white
         textField.backgroundColor = NSColor.clear
-        textField.isBezeled       = false
-        textField.isEditable      = false
-        textField.alignment       = .center
+        textField.isBezeled = false
+        textField.isEditable = false
+        textField.alignment = .center
 
         if let text = text {
             textField.stringValue = text
@@ -109,7 +109,7 @@ private extension LayoutController {
         var limited = false
 
         var size = string.size(withAttributes: [NSAttributedStringKey.font: NSFont(name: font.fontName, size: fontSize)!])
-        while (size.width >= frame.width || size.height >= frame.height) && fontSize > kMinFontSize  {
+        while (size.width >= frame.width || size.height >= frame.height) && fontSize > kMinFontSize {
             limited = true
             fontSize -= 0.5
             let newFontSize = CGFloat(fontSize)
@@ -130,7 +130,7 @@ private extension LayoutController {
             imageView.layer?.shouldRasterize = true
             return imageView
         } else {
-            let view = pkView(frame: object.frame)
+            let view = SSFView(frame: object.frame)
             view.backgroundColor = NSColor.red
             return view
         }
@@ -143,6 +143,7 @@ private extension LayoutController {
             fontName = fontFamily
         }
 
+        // swiftlint:disable:next empty_count
         if fontName == nil || fontName?.count == 0 {
             fontName = "Helvetica Neue"
         }
