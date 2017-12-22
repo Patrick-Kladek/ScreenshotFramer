@@ -62,6 +62,16 @@ final class Document: NSDocument {
         return true
     }
 
+    override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
+        self.layerStateHistory.discardRedoHistory()
+
+        if self.isDocumentEdited && self.fileURL != nil {
+            self.save(nil)
+        }
+        self.close()
+    }
+
+
     // Responder Chain
 
     @IBAction func showTimeTravelWindow(_ sender: AnyObject?) {
