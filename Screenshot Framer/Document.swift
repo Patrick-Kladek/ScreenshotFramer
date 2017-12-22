@@ -34,9 +34,9 @@ final class Document: NSDocument {
 
     // MARK: - Override
 
-    override class var autosavesInPlace: Bool {
-        return true
-    }
+    override class var autosavesInPlace: Bool { return true }
+
+    override var shouldRunSavePanelWithAccessoryView: Bool { return true }
 
     override func makeWindowControllers() {
         let windowController = DocumentWindowController()
@@ -48,6 +48,19 @@ final class Document: NSDocument {
         }
     }
 
+    override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
+        let accessoryView = NSView(frame: CGRect(x: 0, y: 0, width: savePanel.frame.width, height: 60))
+        let detailLabel = NSTextField(labelWithString: "Screenshot Framer needs a project directory to start.\nYou will be able to access all files in this directory but no files outside of this directory")
+
+        detailLabel.frame = CGRect(x: 0, y: 15, width: savePanel.frame.width, height: detailLabel.frame.height)
+        detailLabel.alignment = .center
+        detailLabel.maximumNumberOfLines = 2
+
+        accessoryView.addSubview(detailLabel)
+        savePanel.accessoryView = accessoryView
+
+        return true
+    }
 
     // Responder Chain
 
