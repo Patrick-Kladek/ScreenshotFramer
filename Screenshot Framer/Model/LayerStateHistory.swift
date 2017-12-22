@@ -57,6 +57,14 @@ final class LayerStateHistory {
         self.notifyLayerStateDidChange()
     }
 
+    @discardableResult func discardRedoHistory() -> Bool {
+        guard self.currentStackPosition < self.layerStates.count - 1 else { return false }
+
+        let delta = (self.layerStates.count - 1) - self.currentStackPosition
+        self.layerStates.removeLast(delta)
+        return true
+    }
+
 
     // MARK: - Undo / Redo
 
