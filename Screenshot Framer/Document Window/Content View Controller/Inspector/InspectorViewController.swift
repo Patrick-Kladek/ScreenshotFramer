@@ -71,6 +71,7 @@ final class InspectorViewController: NSViewController {
     // swiftlint:disable:next function_body_length
     func updateUI() {
         guard self.selectedRow >= 0 else { return }
+        guard self.layerStateHistory.currentLayerState.layers.count - 1 >= self.selectedRow else { return }
         guard self.layerStateHistory.currentLayerState.layers.hasElements else { return }
 
         let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]

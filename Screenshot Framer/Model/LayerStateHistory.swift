@@ -90,12 +90,13 @@ final class LayerStateHistory {
     private func notifyLayerStateDidChange() {
         self.delegate?.layerStateHistory(self, didUpdateHistory: self.currentLayerState, layerCountDidChange: true)
 
-        NotificationCenter.default.post(name: Constants.LayerStateHistoryDidChangeConstant, object: self)
+        NotificationCenter.default.post(name: Constants.layerStateHistoryDidChangeConstant, object: self)
     }
 }
+
 
 // MARK: - Constants used in Notifications
 
 struct Constants {
-    static let LayerStateHistoryDidChangeConstant = NSNotification.Name(rawValue: "LayerStateHistoryDidChange")
+    static let layerStateHistoryDidChangeConstant = NSNotification.Name(rawValue: "LayerStateHistoryDidChange")
 }

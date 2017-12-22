@@ -107,7 +107,7 @@ final class ContentViewController: NSViewController {
 
         switch action {
         case #selector(ContentViewController.undo):
-            return self.layerStateHistory.canUndo
+            return self.layerStateHistory.canUndo && self.lastLayerState.layers.count > 1       // ensure that background layer is still availible after undo
         case #selector(ContentViewController.redo):
             return self.layerStateHistory.canRedo
 

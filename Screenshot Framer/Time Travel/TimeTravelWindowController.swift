@@ -35,7 +35,7 @@ final class TimeTravelWindowController: NSWindowController {
 
         super.init(window: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(updateFromNotification(_:)), name: Constants.LayerStateHistoryDidChangeConstant, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFromNotification(_:)), name: Constants.layerStateHistoryDidChangeConstant, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(windowWillClose(notification:)), name: NSWindow.willCloseNotification, object: nil)
     }
 
