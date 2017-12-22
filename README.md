@@ -1,37 +1,32 @@
 # ScreenshotFramer
+
 [![Twitter: @PatrickKladek](https://img.shields.io/badge/twitter-@PatrickKladek-red.svg?style=flat)](https://twitter.com/PatrickKladek)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE.md)
 ![alt text](https://img.shields.io/badge/Platform-Mac%2010.13+-blue.svg "Target Mac")
 ![alt text](https://img.shields.io/badge/Language-Swift%204-orange.svg "Language")
 
-With Screenshot Framer you can create Localized App Store Images.
+With Screenshot Framer you can easily create nice-looking and localized App Store Images.
 ![](Documentation/Overview.png)
 
-### How does it work
-
-Screenshot Framer simply put pictures on top of each other and saves the image to disk.
-You can specify the path of every image layer and use a `.strings` file for the text layers. You can than export all possible Image & Language combinations
+### How does it work?
+It's super simply: Screenshot Framer simply puts pictures on top of each other (think Photoshop Layers), allows you to move them around and saves the resulting image to disk. You can specify the path of every image layer and use a `.strings` file to localize the displayed texts. Once you're done configuring, you can export all possible image & language combinations at once.
 
 ![](Documentation/How%20it%20works.gif)
 
-
-
 ### Preparation
-
-First check out the Repository and build the app or download the precompiled app [here](https://github.com/IdeasOnCanvas/ScreenshotFramer/releases).
-Then open the Sample Project or create your own project structure.
-When you are using Fastlanes snapshot you can reuse that folder structure and only add missing files:
+- First check out the repository and build the app. Alternatively you can download the precompiled app [here](https://github.com/IdeasOnCanvas/ScreenshotFramer/releases).
+- Next open the Sample Project or create your own project structure. When you are using Fastlane's snapshot tool you can reuse that folder structure and only add missing files.
 
 ![](Documentation/File%20Structure.png)
 
 ##### backgrounds
-If you want a background other that white
+This folder allows you to specify background images for your screenshots, if you don't want to go all-white.
 
 ##### device_frames
-If you want your screenshots framed in a device. You may use any Image here. It is useful if the images support alpha values. Unfortunatley we can not give you our device images due to copyrights. You can download apples device images and copy them in this folder. It may be necessary to export them as png tho.
+If you want your screenshots framed in a device, you may use any image here. You can for example [download Apple's device images](https://developer.apple.com/app-store/marketing/guidelines/#images) and copy them into this folder.
 
-##### localized image Folder
-(en-US, de-DE and so on) are generated using Fastlane snapshot or you may also copy them in this folders. Important is that you have a strings file in this folder called `screenshots.strings`
+##### Localized Image Folders
+(en-US, de-DE, ...) are generated using Fastlane snapshot or you may also copy them into this folder. Important is that you have a strings file in this folder called `screenshots.strings`.
 
 ```
 "1" = "It Starts With a Thought";
@@ -45,31 +40,26 @@ This Number is later replaced with variable "image"
 
 ##### Configuration File
 This file contain the configuration for the image export.
-Open the file `iPhone SE` and change the number in image textfield or language popup. You may also change the position and size of each layer or create new layers.
-
+Open the file `iPhone SE` and change the number in the image textfield or language popup. You may also change the position and size of each layer or create new layers.
 
 ### Usage
+The main difference to your favorite image editor is that you can specify variables and use them for the image path.
 
-You create your Images like in your favorite Image editing App.
-The main difference is that you can specify variables and use them for the image path.
 Possible Variables:
 
 * `$image` can contain only numbers (typically 1-5)
 * `$language` contains every sub-folder name in your project folder (in this case `Sample Project`) excluding `backgrounds, device_frames and Export`
 
-In the screenshot below the File is: `$language/iPhone SE-$image.png`. This is automatically translated to `en-US/iPhone SE-1.png` and this file is rendered. For german this would be translated to `de-DE/iPhone SE-1.png`
+In the screenshot below the file is: `$language/iPhone SE-$image.png`. This is automatically translated to `en-US/iPhone SE-1.png` and this file is then rendered. For German this would for example be translated to `de-DE/iPhone SE-1.png`.
 
 ![](Documentation/Usage.png)
 
-When you are happy with the output you can check how the screenshots look in different languages by simply changing the languge popup and change the image number. You can than export the images by clicking `Export All`. You can also specify which images are created by changing `From` and `To` Values
+### Known Limitations & Bugs
+Please keep in mind that this tool was made to automate screenshots for a very specific need, so it might not fit yours. If you find bugs please create an issue first. Pull Requests are very welcome, but we also reserve the right to not merge them, if they don't take the tool into a direction we need. Therefore it's best to first open an issue and discuss your plans, before jumping right in and implementing it.
 
+* No rearranging of layers (drag & drop in table view)
+* May use excessive amount of memory while exporing (up to 4GB)
+* no aspect ratio lock, keep that in mind if you scale images
+* For better overview output is set to `Export/$language/iPhone SE-$image framed.png` 
 
-### Known limitations & bugs
-Please keep in mind that this tool was made to automate screenshots and to be more flexible than Fastlane's frameit. However this tool is not excessively tested as frameit. If you find bugs please create an issue first. Pull Requests are welcome but please discuss the change before you start with your work - It can save both of us a lot of time.
-
-* No rearanging of layers (drag and drop in tableView)
-* May use exessice amount of memory while exporing (up to 4GB)
-* no ascpect ratio lock. keep that in mind if you scale images
-* For better overview output is set to `Export/$language/iPhone SE-$image framed.png` but you could also remove `Export` and Fastlane Upload to itunesconnect should work (not tested)
-
-Screenshot Framer is brought to you by IdeasOnCanvas, the creator of MindNode for iOS, macOS & watchOS.
+Screenshot Framer is brought to you by [IdeasOnCanvas GmbH](https://ideasoncanvas.com), the creator of [MindNode for iOS, macOS & watchOS](https://mindnode.com).
