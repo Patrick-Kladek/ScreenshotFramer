@@ -1,0 +1,11 @@
+language: objective-c
+
+
+
+xcode_project: Screenshot Framer.xcodeproj
+xcode_scheme: Screenshot Framer
+osx_image: xcode9.2
+
+
+script:
+- xcodebuild clean build -project "Screenshot Framer.xcodeproj" -scheme "Screenshot Framer"
