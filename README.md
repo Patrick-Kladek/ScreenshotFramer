@@ -18,8 +18,8 @@ You can specify the path of every image layer and use a `.strings` file for the 
 
 ### Preparation
 
-First check out the Repository and build the app.
-Second open the Sample Project or create your own project structure.
+First check out the Repository and build the app or download the precompiled app [here](https://github.com/IdeasOnCanvas/ScreenshotFramer/releases).
+Then open the Sample Project or create your own project structure.
 When you are using Fastlanes snapshot you can reuse that folder structure and only add missing files:
 
 ![](Documentation/File%20Structure.png)
