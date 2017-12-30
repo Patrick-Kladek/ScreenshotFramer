@@ -58,15 +58,11 @@ final class ExportController {
         let fileManager = FileManager()
 
         let totalSteps = self.calculatePossibleComabinations(languageController: self.languageController)
-        var currentStep = -1
+        var currentStep = 0
 
         for language in self.languageController.allLanguages() {
             viewStateController.newViewState(language: language)
             for index in self.lastLayerState.outputConfig.fromImageNumber...self.lastLayerState.outputConfig.toImageNumber {
-                currentStep += 1
-                let progress = Double(currentStep) / Double(totalSteps)
-                self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress)
-
                 viewStateController.newViewState(imageNumber: index)
                 guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }           // TODO: is called from a background thread
 
@@ -75,6 +71,10 @@ final class ExportController {
 
                 try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
                 try? data?.write(to: url, options: .atomic)
+
+                currentStep += 1
+                let progress = Double(currentStep) / Double(totalSteps)
+                self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress)
             }
         }
     }
@@ -88,14 +88,11 @@ private extension ExportController {
 
     func calculatePossibleComabinations(languageController: LanguageController) -> Int {
         let outputConfig = self.lastLayerState.outputConfig
-        var totalSteps = outputConfig.toImageNumber - outputConfig.fromImageNumber
 
-        if totalSteps == 0 {
-            // because we use a for-loop and `for n in 1...1` would
-            // mean 1 execution but (1 - 1 = 0) we handle this special case
-            // by adding +1 so the progressBar is still updated correlty
-            totalSteps = 1
-        }
+        // because we use a for-loop and `for n in 1...1` would
+        // mean 1 execution but (1 - 1 = 0) we handle this special case
+        // by adding +1 so the progressBar is still updated correctly
+        let totalSteps = outputConfig.toImageNumber - outputConfig.fromImageNumber + 1
 
         return languageController.allLanguages().count * totalSteps
     }

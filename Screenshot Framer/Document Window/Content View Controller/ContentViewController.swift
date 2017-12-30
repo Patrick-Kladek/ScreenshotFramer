@@ -200,11 +200,19 @@ final class ContentViewController: NSViewController {
             operation.apply()
 
         case self.textFieldFromImageNumber:
+            guard self.textFieldFromImageNumber.integerValue <= self.textFieldToImageNumber.integerValue else {
+                self.reloadLayout()
+                return
+            }
             self.updateEnabledStateOfControls()
             let operation = UpdateFromImageNuberOperation(layerStateHistory: self.layerStateHistory, fromImageNumber: self.textFieldFromImageNumber.integerValue)
             operation.apply()
 
         case self.textFieldToImageNumber:
+            guard self.textFieldFromImageNumber.integerValue <= self.textFieldToImageNumber.integerValue else {
+                self.reloadLayout()
+                return
+            }
             self.updateEnabledStateOfControls()
             let operation = UpdateToImageNuberOperation(layerStateHistory: self.layerStateHistory, toImageNumber: self.textFieldToImageNumber.integerValue)
             operation.apply()
