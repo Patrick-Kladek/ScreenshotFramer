@@ -18,19 +18,18 @@ final class ExportController {
     // MARK: - Properties
 
     private var shouldCancel: Bool = false
-    let document: Document
     let fileController: FileController
     let languageController: LanguageController
+    let layerStateHistory: LayerStateHistory
     weak var delegate: ExportControllerDelegate?
 
-    var layerStateHistory: LayerStateHistory { return self.document.layerStateHistory }
     var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState }
 
 
     // MARK: - Lifecycle
 
-    init(document: Document, fileController: FileController, languageController: LanguageController) {
-        self.document = document
+    init(layerStateHistory: LayerStateHistory, fileController: FileController, languageController: LanguageController) {
+        self.layerStateHistory = layerStateHistory
         self.fileController = fileController
         self.languageController = languageController
     }
@@ -42,8 +41,8 @@ final class ExportController {
         self.shouldCancel = false
 
         let viewStateController = ViewStateController(viewState: viewState)
-        let layoutController = LayoutController(document: self.document, layerStateHistory: self.layerStateHistory, viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
-        guard let view = layoutController.layouthierarchy() else { return }
+        let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
+        guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { return }
 
         let data = view.pngData()
         guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return }
@@ -55,11 +54,11 @@ final class ExportController {
         self.shouldCancel = false
 
         let viewStateController = ViewStateController()
-        let layoutController = LayoutController(document: self.document, layerStateHistory: self.layerStateHistory, viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
+        let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
         let fileManager = FileManager()
 
         let totalSteps = self.calculatePossibleComabinations(languageController: self.languageController)
-        var currentStep = 0
+        var currentStep = -1
 
         for language in self.languageController.allLanguages() {
             viewStateController.newViewState(language: language)
@@ -69,7 +68,7 @@ final class ExportController {
                 self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress)
 
                 viewStateController.newViewState(imageNumber: index)
-                guard let view = layoutController.layouthierarchy() else { continue }           // TODO: is called from a background thread
+                guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }           // TODO: is called from a background thread
 
                 let data = view.pngData()
                 guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return }

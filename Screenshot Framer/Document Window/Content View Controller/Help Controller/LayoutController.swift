@@ -13,8 +13,6 @@ class LayoutController {
 
     // MARK: - Properties
 
-    let document: Document
-    let layerStateHistory: LayerStateHistory
     let viewStateController: ViewStateController
     let languageController: LanguageController
     var highlightLayer: Int = 0
@@ -24,9 +22,7 @@ class LayoutController {
 
     // MARK: Init
 
-    init(document: Document, layerStateHistory: LayerStateHistory, viewStateController: ViewStateController, languageController: LanguageController, fileController: FileController) {
-        self.document = document
-        self.layerStateHistory = layerStateHistory
+    init(viewStateController: ViewStateController, languageController: LanguageController, fileController: FileController) {
         self.viewStateController = viewStateController
         self.languageController = languageController
         self.fileController = fileController
@@ -35,15 +31,14 @@ class LayoutController {
 
     // MARK: - Public Functions
 
-    func layouthierarchy() -> NSView? {
-        let layoutableObjects = self.layerStateHistory.currentLayerState.layers
-        guard layoutableObjects.hasElements else { return nil }
+    func layouthierarchy(layers: [LayoutableObject]) -> NSView? {
+        guard layers.hasElements else { return nil }
 
-        let firstLayoutableObject = layoutableObjects[0]
+        let firstLayoutableObject = layers[0]
         let rootView = self.view(from: firstLayoutableObject)
         (rootView as? SSFView)?.backgroundColor = NSColor.lightGray
 
-        for object in layoutableObjects where object != layoutableObjects[0] {
+        for object in layers where object != layers[0] {
             let view: NSView
 
             if object.type == .text {
@@ -52,7 +47,7 @@ class LayoutController {
                 view = self.view(from: object)
             }
 
-            if self.shouldHighlightSelectedLayer && object == layoutableObjects[self.highlightLayer] {
+            if self.shouldHighlightSelectedLayer && object == layers[self.highlightLayer] {
                 view.wantsLayer = true
                 view.layer?.borderColor = NSColor.red.cgColor
                 view.layer?.borderWidth = 2.0

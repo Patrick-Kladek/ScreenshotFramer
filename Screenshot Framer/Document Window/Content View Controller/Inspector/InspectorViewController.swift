@@ -134,6 +134,7 @@ final class InspectorViewController: NSViewController {
         }
     }
 
+
     // MARK: - Actions
 
     @IBAction func stepperPressed(sender: NSStepper) {

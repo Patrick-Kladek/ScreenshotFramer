@@ -13,6 +13,12 @@
 		CD26F8421FCEFAC700449B4A /* InspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD26F8401FCEFAC700449B4A /* InspectorViewController.xib */; };
 		CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2EC1C91FD7F10800C17756 /* ContentViewController.swift */; };
 		CD2EC1CC1FD7F10800C17756 /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2EC1CA1FD7F10800C17756 /* ContentViewController.xib */; };
+		CD372B311FF8293E00D57586 /* ViewStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF501FDED20E00FB0F2F /* ViewStateController.swift */; };
+		CD372B321FF8433B00D57586 /* LanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF591FDFF86D00FB0F2F /* LanguageController.swift */; };
+		CD372B331FF843C000D57586 /* ExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5110A91FE7AAE300AEC595 /* ExportController.swift */; };
+		CD372B341FF843CF00D57586 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
+		CD372B351FF843F900D57586 /* LayoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF571FDFEE3600FB0F2F /* LayoutController.swift */; };
+		CD372B361FF8440B00D57586 /* SSFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */; };
 		CD50EF4D1FDE883200FB0F2F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4C1FDE883200FB0F2F /* Operations.swift */; };
 		CD50EF511FDED20E00FB0F2F /* ViewStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF501FDED20E00FB0F2F /* ViewStateController.swift */; };
 		CD50EF551FDFEB7600FB0F2F /* SSFTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF541FDFEB7600FB0F2F /* SSFTableView.swift */; };
@@ -30,6 +36,15 @@
 		CD5EE0551FCD9A1000AD2ED7 /* SSFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */; };
 		CD5EE05A1FCDA30600AD2ED7 /* LayoutableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0591FCDA30600AD2ED7 /* LayoutableObject.swift */; };
 		CD75DDA71FE916E80035952D /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
+		CD9395591FF6AC6D00D3D831 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9395581FF6AC6D00D3D831 /* main.swift */; };
+		CD93955E1FF6AE1A00D3D831 /* ConsoleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */; };
+		CD9395601FF6AEAB00D3D831 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD93955F1FF6AEAB00D3D831 /* Controller.swift */; };
+		CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83A1FCEE01800449B4A /* LayerState.swift */; };
+		CD9395621FF6B1ED00D3D831 /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
+		CD9395631FF6B26B00D3D831 /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
+		CD9395641FF6B26B00D3D831 /* LayoutableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE0591FCDA30600AD2ED7 /* LayoutableObject.swift */; };
+		CD9395651FF6B27A00D3D831 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */; };
+		CD9395661FF6B28600D3D831 /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAEE1FE1FED484500F4B1BA /* Sugar.swift */; };
 		CDAEE1FF1FED484500F4B1BA /* Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAEE1FE1FED484500F4B1BA /* Sugar.swift */; };
 		CDB6590B1FE16EE800430F20 /* UserDefaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */; };
 		CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */; };
@@ -58,6 +73,18 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		CD9395541FF6AC6D00D3D831 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		CD26F83A1FCEE01800449B4A /* LayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerState.swift; sourceTree = "<group>"; };
 		CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerStateHistory.swift; sourceTree = "<group>"; };
@@ -85,6 +112,10 @@
 		CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSFView.swift; sourceTree = "<group>"; };
 		CD5EE0591FCDA30600AD2ED7 /* LayoutableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutableObject.swift; sourceTree = "<group>"; };
 		CD75DDA61FE916E80035952D /* OutputConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputConfig.swift; sourceTree = "<group>"; };
+		CD9395561FF6AC6D00D3D831 /* Screenshot Framer CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Screenshot Framer CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD9395581FF6AC6D00D3D831 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
+		CD93955F1FF6AEAB00D3D831 /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		CDAEE1FE1FED484500F4B1BA /* Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sugar.swift; sourceTree = "<group>"; };
 		CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Keys.swift"; sourceTree = "<group>"; };
 		CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
@@ -102,6 +133,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		CD5EE0391FCD557200AD2ED7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD9395531FF6AC6D00D3D831 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -164,6 +202,7 @@
 			children = (
 				CD5EE03E1FCD557200AD2ED7 /* Screenshot Framer */,
 				CDFF69961FD827B800E652EE /* Screenshot Framer Tests */,
+				CD9395571FF6AC6D00D3D831 /* Screenshot Framer CLI */,
 				CD5EE03D1FCD557200AD2ED7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -173,6 +212,7 @@
 			children = (
 				CD5EE03C1FCD557200AD2ED7 /* Screenshot Framer.app */,
 				CDFF69951FD827B800E652EE /* Screenshot FramerTests.xctest */,
+				CD9395561FF6AC6D00D3D831 /* Screenshot Framer CLI */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,6 +272,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		CD9395571FF6AC6D00D3D831 /* Screenshot Framer CLI */ = {
+			isa = PBXGroup;
+			children = (
+				CD9395581FF6AC6D00D3D831 /* main.swift */,
+				CD93955F1FF6AEAB00D3D831 /* Controller.swift */,
+				CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */,
+			);
+			path = "Screenshot Framer CLI";
+			sourceTree = "<group>";
+		};
 		CDFF69961FD827B800E652EE /* Screenshot Framer Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +322,23 @@
 			productReference = CD5EE03C1FCD557200AD2ED7 /* Screenshot Framer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CD9395551FF6AC6D00D3D831 /* Screenshot Framer CLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot Framer CLI" */;
+			buildPhases = (
+				CD9395521FF6AC6D00D3D831 /* Sources */,
+				CD9395531FF6AC6D00D3D831 /* Frameworks */,
+				CD9395541FF6AC6D00D3D831 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Screenshot Framer CLI";
+			productName = "Screenshot Framer CLI";
+			productReference = CD9395561FF6AC6D00D3D831 /* Screenshot Framer CLI */;
+			productType = "com.apple.product-type.tool";
+		};
 		CDFF69941FD827B800E652EE /* Screenshot FramerTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDFF699E1FD827B800E652EE /* Build configuration list for PBXNativeTarget "Screenshot FramerTests" */;
@@ -309,6 +376,10 @@
 							};
 						};
 					};
+					CD9395551FF6AC6D00D3D831 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Manual;
+					};
 					CDFF69941FD827B800E652EE = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -331,6 +402,7 @@
 			targets = (
 				CD5EE03B1FCD557200AD2ED7 /* Screenshot Framer */,
 				CDFF69941FD827B800E652EE /* Screenshot FramerTests */,
+				CD9395551FF6AC6D00D3D831 /* Screenshot Framer CLI */,
 			);
 		};
 /* End PBXProject section */
@@ -406,6 +478,28 @@
 				CD50EF551FDFEB7600FB0F2F /* SSFTableView.swift in Sources */,
 				CDFF69A81FD8387D00E652EE /* DetailTableCellView.swift in Sources */,
 				CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD9395521FF6AC6D00D3D831 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD9395601FF6AEAB00D3D831 /* Controller.swift in Sources */,
+				CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */,
+				CD372B331FF843C000D57586 /* ExportController.swift in Sources */,
+				CD372B341FF843CF00D57586 /* FileController.swift in Sources */,
+				CD9395641FF6B26B00D3D831 /* LayoutableObject.swift in Sources */,
+				CD372B351FF843F900D57586 /* LayoutController.swift in Sources */,
+				CD9395591FF6AC6D00D3D831 /* main.swift in Sources */,
+				CD9395651FF6B27A00D3D831 /* NSColor+Hex.swift in Sources */,
+				CD9395661FF6B28600D3D831 /* Sugar.swift in Sources */,
+				CD93955E1FF6AE1A00D3D831 /* ConsoleIO.swift in Sources */,
+				CD9395631FF6B26B00D3D831 /* OutputConfig.swift in Sources */,
+				CD372B311FF8293E00D57586 /* ViewStateController.swift in Sources */,
+				CD9395621FF6B1ED00D3D831 /* LayerStateHistory.swift in Sources */,
+				CD372B321FF8433B00D57586 /* LanguageController.swift in Sources */,
+				CD372B361FF8440B00D57586 /* SSFView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +686,30 @@
 			};
 			name = Release;
 		};
+		CD93955A1FF6AC6D00D3D831 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		CD93955B1FF6AC6D00D3D831 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		CDFF699C1FD827B800E652EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -641,6 +759,15 @@
 			buildConfigurations = (
 				CD5EE0501FCD557200AD2ED7 /* Debug */,
 				CD5EE0511FCD557200AD2ED7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot Framer CLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD93955A1FF6AC6D00D3D831 /* Debug */,
+				CD93955B1FF6AC6D00D3D831 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

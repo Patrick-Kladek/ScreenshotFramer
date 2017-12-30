@@ -19,11 +19,12 @@ final class ContentViewController: NSViewController {
     var windowController: DocumentWindowController? { return self.view.window?.windowController as? DocumentWindowController }
     var inspectorViewController: InspectorViewController?
     let viewStateController = ViewStateController()
-    let layoutController: LayoutController
-    var languageController: LanguageController
     var fileController: FileController
-    let exportController: ExportController
     var progressWindowController: ProgressWindowController?
+
+    lazy var languageController = LanguageController(fileCapsule: self.document.fileCapsule)
+    lazy var exportController = ExportController(layerStateHistory: self.layerStateHistory, fileController: self.fileController, languageController: self.languageController)
+    lazy var layoutController = LayoutController(viewStateController: self.viewStateController, languageController: self.languageController, fileController: self.fileController)
 
 
     // MARK: - Interface Builder
@@ -43,14 +44,10 @@ final class ContentViewController: NSViewController {
     // MARK: - Lifecycle
 
     init(document: Document) {
-        let languageController = LanguageController(document: document)
-        let fileController = FileController(document: document)
+        let fileController = FileController(fileCapsule: document.fileCapsule)
 
         self.document = document
-        self.layoutController = LayoutController(document: self.document, layerStateHistory: document.layerStateHistory, viewStateController: self.viewStateController, languageController: languageController, fileController: fileController)
-        self.languageController = languageController
         self.fileController = fileController
-        self.exportController = ExportController(document: document, fileController: fileController, languageController: languageController)
 
         super.init(nibName: self.nibName, bundle: nil)
 
@@ -250,7 +247,7 @@ final class ContentViewController: NSViewController {
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
-        self.scrollView.documentView = self.layoutController.layouthierarchy()
+        self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
 
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
         self.textFieldFromImageNumber.integerValue = self.lastLayerState.outputConfig.fromImageNumber

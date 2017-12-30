@@ -13,9 +13,10 @@ final class Document: NSDocument {
 
     // MARK: - Properties
 
+    let fileCapsule = FileCapsule()
     private(set) var layerStateHistory = LayerStateHistory()
+    private var projectURL: URL? { return self.fileURL?.deletingLastPathComponent() }
     lazy var timeTravelWindowController = TimeTravelWindowController(layerStateHistory: self.layerStateHistory)
-    var documentRoot: URL? { return self.fileURL?.deletingLastPathComponent() }
 
 
     // MARK: - Lifecycle
@@ -62,6 +63,18 @@ final class Document: NSDocument {
         return true
     }
 
+    override func save(_ sender: Any?) {
+        self.save(withDelegate: self, didSave: #selector(Document.document(_:didSave:contextInfo:)), contextInfo: nil)
+    }
+
+    @objc
+    func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
+        guard didSave == true else { return }
+
+        self.fileCapsule.projectURL = self.projectURL
+    }
+
+
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         self.layerStateHistory.discardRedoHistory()
 
@@ -100,6 +113,8 @@ final class Document: NSDocument {
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
+        self.fileCapsule.projectURL = self.projectURL
+
         let decoder = JSONDecoder()
         let layers = try decoder.decode([LayerState].self, from: data)
         self.layerStateHistory = LayerStateHistory(layerStates: layers, delegate: self)
