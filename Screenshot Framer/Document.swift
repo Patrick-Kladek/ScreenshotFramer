@@ -80,11 +80,9 @@ final class Document: NSDocument {
 
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         self.layerStateHistory.discardRedoHistory()
-
-        if self.isDocumentEdited && self.fileURL != nil {
-            self.save(nil)
-        }
+        self.save(nil)
         self.close()
+        self.timeTravelWindowController.close()
     }
 
 
