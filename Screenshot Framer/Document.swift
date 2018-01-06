@@ -43,8 +43,8 @@ final class Document: NSDocument {
         let windowController = DocumentWindowController()
         self.addWindowController(windowController)
 
-        self.addWindowController(self.timeTravelWindowController)
         if UserDefaults.standard.showTimeTravelWindow {
+            self.addWindowController(self.timeTravelWindowController)
             self.showTimeTravelWindow(nil)
         }
     }
@@ -69,9 +69,12 @@ final class Document: NSDocument {
 
     @objc
     func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
-        guard didSave == true else { return }
-
-        self.fileCapsule.projectURL = self.projectURL
+        switch didSave {
+        case true:
+            self.fileCapsule.projectURL = self.projectURL
+        case false:
+            self.close()
+        }
     }
 
 
