@@ -10,6 +10,4 @@ import Foundation
 
 
 let controller = Controller(arguments: CommandLine.arguments)
-let status = controller.run()
-
-
+_ = controller.run()

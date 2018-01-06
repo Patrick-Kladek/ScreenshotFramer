@@ -308,7 +308,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "Screenshot Framer" */;
 			buildPhases = (
-				CDAEE1FC1FED46EE00F4B1BA /* ShellScript */,
+				CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */,
 				CD5EE0381FCD557200AD2ED7 /* Sources */,
 				CD5EE0391FCD557200AD2ED7 /* Frameworks */,
 				CD5EE03A1FCD557200AD2ED7 /* Resources */,
@@ -326,6 +326,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot Framer CLI" */;
 			buildPhases = (
+				CD71C0AE2000D270002A2550 /* Swift Lint */,
 				CD9395521FF6AC6D00D3D831 /* Sources */,
 				CD9395531FF6AC6D00D3D831 /* Frameworks */,
 				CD9395541FF6AC6D00D3D831 /* CopyFiles */,
@@ -433,13 +434,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		CDAEE1FC1FED46EE00F4B1BA /* ShellScript */ = {
+		CD71C0AE2000D270002A2550 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Swift Lint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)";
+		};
+		CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
