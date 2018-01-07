@@ -33,6 +33,7 @@ import Foundation
 
 enum OutputType {
     case error
+    case success
     case standard
 }
 
@@ -44,8 +45,10 @@ class ConsoleIO {
         switch to {
         case .standard:
             print("\u{001B}[;m\(message)")
+        case .success:
+            print("\u{001B}[0;32m\(message)\u{001B}[;m")
         case .error:
-            fputs("\u{001B}[0;31m\(message)\n", stderr)
+            fputs("\u{001B}[0;31m\(message)\u{001B}[;m\n", stderr)
         }
     }
 

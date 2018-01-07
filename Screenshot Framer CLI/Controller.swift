@@ -39,20 +39,32 @@ final class Controller {
             return .wrongArguments
         }
 
+        let fileManager = FileManager()
         let documentURL = URL(fileURLWithPath: self.arguments[2])
-        let fileCapsule = FileCapsule()
-        fileCapsule.projectURL = documentURL.deletingLastPathComponent()
 
-        guard let layerStateHistory = self.layerStateHistory(for: documentURL) else { return .readError }
+        var isDir: ObjCBool = false
+        fileManager.fileExists(atPath: documentURL.path, isDirectory: &isDir)
 
-        let fileController = FileController(fileCapsule: fileCapsule)
-        let languageController = LanguageController(fileCapsule: fileCapsule)
+        let projects: [URL]
+        if isDir.boolValue {
+            guard let contentOfDirectory = try? fileManager.contentsOfDirectory(at: documentURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants]) else { return .readError }
+            projects = contentOfDirectory.filter { $0.pathExtension == "frame" }
+        } else {
+            projects = [documentURL]
+        }
 
-        let exportController = ExportController(layerStateHistory: layerStateHistory, fileController: fileController, languageController: languageController)
-        exportController.delegate = self
-        exportController.saveAllImages()
+        var status: ExitStatus = .noError
+        for project in projects {
+            let exit = self.export(project: project)
+            if exit != .noError {
+                status = exit
+            }
+        }
 
-        return .noError
+        if status == .noError {
+            self.console.writeMessage("Export Successful", to: .standard)
+        }
+        return status
     }
 }
 
@@ -62,7 +74,7 @@ final class Controller {
 extension Controller: ExportControllerDelegate {
 
     func exportController(_ exportController: ExportController, didUpdateProgress progress: Double) {
-        self.console.writeMessage("export: \(progress * 100)%")
+        self.console.writeMessage("export: \(progress * 100)%", to: .success)
     }
 }
 
@@ -77,5 +89,24 @@ extension Controller {
         guard let layerStates = try? decoder.decode([LayerState].self, from: data) else { return nil }
 
         return LayerStateHistory(layerStates: layerStates, delegate: nil)
+    }
+
+    func export(project: URL) -> ExitStatus {
+        let fileCapsule = FileCapsule()
+        fileCapsule.projectURL = project.deletingLastPathComponent()
+
+        guard let layerStateHistory = self.layerStateHistory(for: project) else { return .readError }
+
+        let fileController = FileController(fileCapsule: fileCapsule)
+        let languageController = LanguageController(fileCapsule: fileCapsule)
+
+        let exportController = ExportController(layerStateHistory: layerStateHistory, fileController: fileController, languageController: languageController)
+        exportController.delegate = self
+
+        self.console.writeMessage("Project: \(project.lastPathComponent)")
+
+        exportController.saveAllImages()
+
+        return .noError
     }
 }
