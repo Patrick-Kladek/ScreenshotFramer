@@ -313,7 +313,7 @@ extension ContentViewController: ViewStateControllerDelegate {
 
 extension ContentViewController: ExportControllerDelegate {
 
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double) {
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String) {
         guard let progressWindowController = self.progressWindowController else { return }
 
         DispatchQueue.main.async {

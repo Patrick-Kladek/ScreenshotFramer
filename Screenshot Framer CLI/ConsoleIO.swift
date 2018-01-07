@@ -42,6 +42,11 @@ class ConsoleIO {
 
     // swiftlint:disable:next identifier_name
     func writeMessage(_ message: String, to: OutputType = .standard) {
+        if self.isDebuggerAttached() {
+            print(message)
+            return
+        }
+
         switch to {
         case .standard:
             print("\u{001B}[;m\(message)")
@@ -57,5 +62,26 @@ class ConsoleIO {
 
         writeMessage("usage:")
         writeMessage("\(executableName) -project <file>")
+    }
+}
+
+
+// MARK: - Private
+
+private extension ConsoleIO {
+
+    /**
+     *  detects if an debugger is attacted
+     *  code from https://stackoverflow.com/questions/33177182/detect-if-swift-app-is-being-run-from-xcode
+     *
+     *  - returns: true if a debugger is attacted or false if not
+     */
+    func isDebuggerAttached() -> Bool {
+        var info = kinfo_proc()
+        var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
+        var size = MemoryLayout<kinfo_proc>.stride
+        let junk = sysctl(&mib, UInt32(mib.count), &info, &size, nil, 0)
+        assert(junk == 0, "sysctl failed")
+        return (info.kp_proc.p_flag & P_TRACED) != 0
     }
 }
