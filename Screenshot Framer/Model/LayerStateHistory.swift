@@ -62,6 +62,7 @@ final class LayerStateHistory {
 
         let delta = (self.layerStates.count - 1) - self.currentStackPosition
         self.layerStates.removeLast(delta)
+        self.notifyLayerStateDidChange()
         return true
     }
 

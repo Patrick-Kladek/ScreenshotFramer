@@ -136,6 +136,12 @@
                                     <action selector="redo:" target="-1" id="oIA-Rs-6OD"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Discard Redo History" alternate="YES" keyEquivalent="Z" id="pPv-dr-6wb">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="discardRedoHistory:" target="-1" id="ptk-GV-W90"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="WRV-NI-Exz"/>
                             <menuItem title="Cut" keyEquivalent="x" id="uRl-iY-unG">
                                 <connections>
@@ -620,14 +626,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="jRa-eD-2VR"/>
-                            <menuItem title="Highlight Current Layer" id="Abr-H6-BQD">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Highlight Current Layer" keyEquivalent="l" id="Abr-H6-BQD">
                                 <connections>
                                     <action selector="toggleHighlightCurrentLayer:" target="-1" id="3RU-lt-6se"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show Time Travel" id="5Pd-5Y-YJM">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Show Time Travel" keyEquivalent="t" id="5Pd-5Y-YJM">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="showTimeTravelWindow:" target="-1" id="7aV-Az-VF0"/>
                                 </connections>

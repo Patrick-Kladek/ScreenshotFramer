@@ -96,9 +96,18 @@ final class Document: NSDocument {
         }
     }
 
+    @IBAction func discardRedoHistory(_ sender: AnyObject?) {
+        // Discussion: show warning
+        self.layerStateHistory.discardRedoHistory()
+    }
+
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(showTimeTravelWindow) {
             return self.timeTravelWindowController.window?.isVisible == false
+        }
+
+        if menuItem.action == #selector(discardRedoHistory) {
+            return self.layerStateHistory.canRedo
         }
 
         return super.validateMenuItem(menuItem)
