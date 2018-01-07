@@ -61,9 +61,6 @@ final class Controller {
             }
         }
 
-        if status == .noError {
-            self.console.writeMessage("Export Successful", to: .standard)
-        }
         return status
     }
 }
@@ -73,8 +70,8 @@ final class Controller {
 
 extension Controller: ExportControllerDelegate {
 
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double) {
-        self.console.writeMessage("export: \(progress * 100)%", to: .success)
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String) {
+        self.console.writeMessage("export: \(String(format: "%3.0f", progress * 100))%\t\(file)", to: .success)
     }
 }
 

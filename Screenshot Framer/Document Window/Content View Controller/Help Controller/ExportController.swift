@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol ExportControllerDelegate: class {
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double)
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String)
 }
 
 
@@ -74,7 +74,7 @@ final class ExportController {
 
                 currentStep += 1
                 let progress = Double(currentStep) / Double(totalSteps)
-                self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress)
+                self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress, file: url.pathComponents.suffix(2).joined(separator: "/"))
             }
         }
     }
