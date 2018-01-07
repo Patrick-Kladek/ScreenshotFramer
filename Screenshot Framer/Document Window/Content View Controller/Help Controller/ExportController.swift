@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol ExportControllerDelegate: class {
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String)
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String, layoutErrors: [LayoutError])
 }
 
 
@@ -37,20 +37,24 @@ final class ExportController {
 
     // MARK: - functions
 
-    func saveSingleImage(viewState: ViewState) {
+    @discardableResult
+    func saveSingleImage(viewState: ViewState) -> [LayoutError] {
         self.shouldCancel = false
 
         let viewStateController = ViewStateController(viewState: viewState)
         let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
-        guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { return }
+        guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { return [.noLayers] }
 
         let data = view.pngData()
-        guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return }
+        guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return [.noOutputFile] }
 
         try? data?.write(to: url, options: .atomic)
+
+        return layoutController.layoutErrors
     }
 
-    func saveAllImages() {
+    @discardableResult
+    func saveAllImages() -> [LayoutError] {
         self.shouldCancel = false
 
         let viewStateController = ViewStateController()
@@ -67,16 +71,20 @@ final class ExportController {
                 guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }           // TODO: is called from a background thread
 
                 let data = view.pngData()
-                guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return }
+                guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return [.noOutputFile] }
 
                 try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
                 try? data?.write(to: url, options: .atomic)
 
                 currentStep += 1
                 let progress = Double(currentStep) / Double(totalSteps)
-                self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress, file: url.pathComponents.suffix(2).joined(separator: "/"))
+                self.delegate?.exportController(self, didUpdateProgress: self.shouldCancel ? 1.0 : progress, file: url.pathComponents.suffix(2).joined(separator: "/"), layoutErrors: layoutController.layoutErrors)
+
+                if self.shouldCancel { break }
             }
         }
+
+        return layoutController.layoutErrors
     }
 
     func cancel() {

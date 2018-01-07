@@ -22,7 +22,7 @@ final class Controller {
 
     private let arguments: [String]
     private let console = ConsoleIO()
-
+    private var ignoreFontToBig = false
 
     // MARK: - Lifecycle
 
@@ -33,11 +33,15 @@ final class Controller {
     // MARK: - Functions
 
     func run() -> ExitStatus {
-        if self.arguments.count != 3 || self.arguments[1] != "-project" {
+        func parseParameterFailed() {
             self.console.writeMessage("Wrong Parameters", to: .error)
             self.console.printUsage()
-            return .wrongArguments
         }
+
+        self.ignoreFontToBig = self.arguments.filter { $0 == "-ignoreFontToBig" }.hasElements
+        guard let index = self.arguments.index(of: "-project") else { parseParameterFailed(); return .wrongArguments }
+        guard self.arguments.count >= index + 1 else { parseParameterFailed(); return .wrongArguments }
+
 
         let fileManager = FileManager()
         let documentURL = URL(fileURLWithPath: self.arguments[2])
@@ -70,8 +74,14 @@ final class Controller {
 
 extension Controller: ExportControllerDelegate {
 
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String) {
-        self.console.writeMessage("export: \(String(format: "%3.0f", progress * 100))%\t\(file)", to: .success)
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String, layoutErrors: [LayoutError]) {
+        var errors = layoutErrors
+
+        if self.ignoreFontToBig {
+            errors.remove(object: .fontToBig)
+        }
+
+        self.console.writeMessage("export: \(String(format: "%3.0f", progress * 100))%\t\(file)", to: errors.hasElements ? .error : .success)
     }
 }
 
@@ -102,7 +112,18 @@ extension Controller {
 
         self.console.writeMessage("Project: \(project.lastPathComponent)")
 
-        exportController.saveAllImages()
+        var exportErrors = exportController.saveAllImages()
+
+        if self.ignoreFontToBig {
+            exportErrors.remove(object: .fontToBig)
+        }
+
+        if exportErrors.hasElements {
+            self.console.writeMessage("Something went wrong while exporting. Please check the projects for detailed information", to: .error)
+            self.console.writeMessage("Here are the error codes:", to: .error)
+            self.console.writeMessage("\(exportErrors.map { $0.rawValue }.joined(separator: "\n"))")
+
+        }
 
         return .noError
     }

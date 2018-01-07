@@ -26,6 +26,9 @@ final class ContentViewController: NSViewController {
     lazy var exportController = ExportController(layerStateHistory: self.layerStateHistory, fileController: self.fileController, languageController: self.languageController)
     lazy var layoutController = LayoutController(viewStateController: self.viewStateController, languageController: self.languageController, fileController: self.fileController)
 
+    lazy var popover = NSPopover()
+    lazy var layoutWarningPopoverViewController = WarningPopoverViewController()
+
 
     // MARK: - Interface Builder
 
@@ -34,6 +37,7 @@ final class ContentViewController: NSViewController {
     @IBOutlet private var segmentedControl: NSSegmentedControl!
     @IBOutlet private var tableView: SSFTableView!
     @IBOutlet private var addMenu: NSMenu!
+    @IBOutlet private var layoutWarningButton: NSButton!
     @IBOutlet private var textFieldOutput: NSTextField!
     @IBOutlet private var textFieldFromImageNumber: NSTextField!
     @IBOutlet private var textFieldToImageNumber: NSTextField!
@@ -104,7 +108,7 @@ final class ContentViewController: NSViewController {
 
         switch action {
         case #selector(ContentViewController.undo):
-            return self.layerStateHistory.canUndo && self.lastLayerState.layers.count > 1       // ensure that background layer is still availible after undo
+            return self.layerStateHistory.canUndo && self.lastLayerState.layers.hasElements
         case #selector(ContentViewController.redo):
             return self.layerStateHistory.canRedo
 
@@ -147,19 +151,19 @@ final class ContentViewController: NSViewController {
         }
     }
 
-    @IBAction func addContent(_ sender: AnyObject?) {
+    @objc func addContent(_ sender: AnyObject?) {
         let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
         self.tableView.reloadDataKeepingSelection()
     }
 
-    @IBAction func addDevice(_ sender: AnyObject?) {
+    @objc func addDevice(_ sender: AnyObject?) {
         let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
         self.tableView.reloadDataKeepingSelection()
     }
 
-    @IBAction func addText(_ sender: AnyObject?) {
+    @objc func addText(_ sender: AnyObject?) {
         let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
         operation.apply()
         self.tableView.reloadDataKeepingSelection()
@@ -252,10 +256,23 @@ final class ContentViewController: NSViewController {
         operation.apply()
     }
 
+    /**
+     *  - Attention: for now this displays only the fontToBig warning
+     */
+    @IBAction func warningButtonPressed(_ sender: NSButton?) {
+        guard let sender = sender else { return }
+
+        self.popover.contentViewController = self.layoutWarningPopoverViewController
+        self.popover.animates = true
+        self.popover.behavior = .transient
+        self.popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.minX)
+    }
+
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
         self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
+        self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
         self.textFieldFromImageNumber.integerValue = self.lastLayerState.outputConfig.fromImageNumber
@@ -313,7 +330,7 @@ extension ContentViewController: ViewStateControllerDelegate {
 
 extension ContentViewController: ExportControllerDelegate {
 
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String) {
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String, layoutErrors: [LayoutError]) {
         guard let progressWindowController = self.progressWindowController else { return }
 
         DispatchQueue.main.async {

@@ -60,8 +60,9 @@ class ConsoleIO {
     func printUsage() {
         let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
 
-        writeMessage("usage:")
-        writeMessage("\(executableName) -project <file>")
+        self.writeMessage("usage:  \(executableName) -project <file>")
+        self.writeMessage("\toptional: -ignoreFontToBig")
+        self.writeMessage("")
     }
 }
 
