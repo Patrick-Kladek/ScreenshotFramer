@@ -38,13 +38,12 @@ final class Controller {
             self.console.printUsage()
         }
 
-        self.ignoreFontToBig = self.arguments.filter { $0 == "-ignoreFontToBig" }.hasElements
+        self.ignoreFontToBig = self.arguments.filter { $0.lowercased() == "-ignorefonttobig" }.hasElements
         guard let index = self.arguments.index(of: "-project") else { parseParameterFailed(); return .wrongArguments }
         guard self.arguments.count >= index + 1 else { parseParameterFailed(); return .wrongArguments }
 
-
         let fileManager = FileManager()
-        let documentURL = URL(fileURLWithPath: self.arguments[2])
+        let documentURL = URL(fileURLWithPath: self.arguments[index + 1])
 
         var isDir: ObjCBool = false
         fileManager.fileExists(atPath: documentURL.path, isDirectory: &isDir)
@@ -75,13 +74,7 @@ final class Controller {
 extension Controller: ExportControllerDelegate {
 
     func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String, layoutErrors: [LayoutError]) {
-        var errors = layoutErrors
-
-        if self.ignoreFontToBig {
-            errors.remove(object: .fontToBig)
-        }
-
-        self.console.writeMessage("export: \(String(format: "%3.0f", progress * 100))%\t\(file)", to: errors.hasElements ? .error : .success)
+        self.console.writeMessage("export: \(String(format: "%3.0f", progress * 100))%\t\(file)", to: self.checkedErrors(layoutErrors).hasElements ? .error : .success)
     }
 }
 
@@ -111,20 +104,24 @@ extension Controller {
         exportController.delegate = self
 
         self.console.writeMessage("Project: \(project.lastPathComponent)")
+        let exportErrors = exportController.saveAllImages()
 
-        var exportErrors = exportController.saveAllImages()
+        if self.checkedErrors(exportErrors).hasElements {
+            self.console.writeMessage("Something went wrong while exporting. Please check the projects for detailed information", to: .error)
+            self.console.writeMessage("Here are the error codes:", to: .error)
+            self.console.writeMessage("\(exportErrors.map { $0.rawValue }.joined(separator: "\n"))")
+        }
+
+        return .noError
+    }
+
+    func checkedErrors(_ errors: [LayoutError]) -> [LayoutError] {
+        var exportErrors = errors
 
         if self.ignoreFontToBig {
             exportErrors.remove(object: .fontToBig)
         }
 
-        if exportErrors.hasElements {
-            self.console.writeMessage("Something went wrong while exporting. Please check the projects for detailed information", to: .error)
-            self.console.writeMessage("Here are the error codes:", to: .error)
-            self.console.writeMessage("\(exportErrors.map { $0.rawValue }.joined(separator: "\n"))")
-
-        }
-
-        return .noError
+        return exportErrors
     }
 }

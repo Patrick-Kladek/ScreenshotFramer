@@ -25,9 +25,8 @@ final class ContentViewController: NSViewController {
     lazy var languageController = LanguageController(fileCapsule: self.document.fileCapsule)
     lazy var exportController = ExportController(layerStateHistory: self.layerStateHistory, fileController: self.fileController, languageController: self.languageController)
     lazy var layoutController = LayoutController(viewStateController: self.viewStateController, languageController: self.languageController, fileController: self.fileController)
-
-    lazy var popover = NSPopover()
     lazy var layoutWarningPopoverViewController = WarningPopoverViewController()
+    lazy var popover = NSPopover()
 
 
     // MARK: - Interface Builder
@@ -151,34 +150,6 @@ final class ContentViewController: NSViewController {
         }
     }
 
-    @objc func addContent(_ sender: AnyObject?) {
-        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
-    @objc func addDevice(_ sender: AnyObject?) {
-        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
-    @objc func addText(_ sender: AnyObject?) {
-        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
-    func removeLayoutableObject() {
-        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
-
-        let firstIndex = IndexSet(integer: self.tableView.selectedRow - 1)
-        self.tableView.selectRowIndexes(firstIndex, byExtendingSelection: false)
-
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
     @IBAction func toggleHighlightCurrentLayer(_ sender: AnyObject?) {
         self.layoutController.shouldHighlightSelectedLayer = !self.layoutController.shouldHighlightSelectedLayer
         self.viewStateController.newViewState(selectedLayer: self.tableView.selectedRow)
@@ -245,8 +216,8 @@ final class ContentViewController: NSViewController {
         }
     }
 
-    @IBAction func endEditingText(_ sender: NSTextField?) {
-        guard let textField = sender else { return }
+    @IBAction func endEditingText(_ sender: Any?) {
+        guard let textField = sender as? NSTextField else { return }
 
         let row = self.tableView.row(for: textField)
         guard row >= 0 else { return }
@@ -376,4 +347,33 @@ private extension ContentViewController {
         menuLocation.y += segmentedControl.bounds.size.height + 5.0
         self.addMenu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
     }
+
+    @objc func addContent(_ sender: AnyObject?) {
+        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @objc func addDevice(_ sender: AnyObject?) {
+        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @objc func addText(_ sender: AnyObject?) {
+        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @objc func removeLayoutableObject() {
+        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
+
+        let firstIndex = IndexSet(integer: self.tableView.selectedRow - 1)
+        self.tableView.selectRowIndexes(firstIndex, byExtendingSelection: false)
+
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
 }

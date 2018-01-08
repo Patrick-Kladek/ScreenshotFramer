@@ -55,7 +55,7 @@ class LayoutController {
 
     func layouthierarchy(layers: [LayoutableObject]) -> NSView? {
         self.layoutErrors = []
-        guard layers.hasElements else { self.layoutErrors.append(.noLayers); return nil }
+        guard layers.hasElements else { self.layoutErrors = [.noLayers]; return nil }
 
         let firstLayoutableObject = layers[0]
         let rootView = self.view(from: firstLayoutableObject)

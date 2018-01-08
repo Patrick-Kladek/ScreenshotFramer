@@ -93,9 +93,6 @@
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
-                                                                        <connections>
-                                                                            <action selector="endEditingText:" target="-2" id="4hT-k0-71t"/>
-                                                                        </connections>
                                                                     </textField>
                                                                 </subviews>
                                                                 <constraints>
