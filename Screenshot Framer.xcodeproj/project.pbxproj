@@ -118,7 +118,7 @@
 		CD71C0B02002ABA6002A2550 /* WarningPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningPopoverViewController.swift; sourceTree = "<group>"; };
 		CD71C0B12002ABA6002A2550 /* WarningPopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WarningPopoverViewController.xib; sourceTree = "<group>"; };
 		CD75DDA61FE916E80035952D /* OutputConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputConfig.swift; sourceTree = "<group>"; };
-		CD9395561FF6AC6D00D3D831 /* Screenshot Framer CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Screenshot Framer CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD9395561FF6AC6D00D3D831 /* Screenshot-Framer-CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Screenshot-Framer-CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9395581FF6AC6D00D3D831 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
 		CD93955F1FF6AEAB00D3D831 /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 			children = (
 				CD5EE03C1FCD557200AD2ED7 /* Screenshot Framer.app */,
 				CDFF69951FD827B800E652EE /* Screenshot FramerTests.xctest */,
-				CD9395561FF6AC6D00D3D831 /* Screenshot Framer CLI */,
+				CD9395561FF6AC6D00D3D831 /* Screenshot-Framer-CLI */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -338,9 +338,9 @@
 			productReference = CD5EE03C1FCD557200AD2ED7 /* Screenshot Framer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CD9395551FF6AC6D00D3D831 /* Screenshot Framer CLI */ = {
+		CD9395551FF6AC6D00D3D831 /* Screenshot-Framer-CLI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot Framer CLI" */;
+			buildConfigurationList = CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot-Framer-CLI" */;
 			buildPhases = (
 				CD71C0AE2000D270002A2550 /* Swift Lint */,
 				CD9395521FF6AC6D00D3D831 /* Sources */,
@@ -351,9 +351,9 @@
 			);
 			dependencies = (
 			);
-			name = "Screenshot Framer CLI";
+			name = "Screenshot-Framer-CLI";
 			productName = "Screenshot Framer CLI";
-			productReference = CD9395561FF6AC6D00D3D831 /* Screenshot Framer CLI */;
+			productReference = CD9395561FF6AC6D00D3D831 /* Screenshot-Framer-CLI */;
 			productType = "com.apple.product-type.tool";
 		};
 		CDFF69941FD827B800E652EE /* Screenshot FramerTests */ = {
@@ -419,7 +419,7 @@
 			targets = (
 				CD5EE03B1FCD557200AD2ED7 /* Screenshot Framer */,
 				CDFF69941FD827B800E652EE /* Screenshot FramerTests */,
-				CD9395551FF6AC6D00D3D831 /* Screenshot Framer CLI */,
+				CD9395551FF6AC6D00D3D831 /* Screenshot-Framer-CLI */,
 			);
 		};
 /* End PBXProject section */
@@ -799,7 +799,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot Framer CLI" */ = {
+		CD93955C1FF6AC6D00D3D831 /* Build configuration list for PBXNativeTarget "Screenshot-Framer-CLI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD93955A1FF6AC6D00D3D831 /* Debug */,
