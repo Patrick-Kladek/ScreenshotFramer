@@ -37,7 +37,7 @@ final class LayerStateHistory {
         self.append(initialState)
     }
 
-    init(layerStates: [LayerState], delegate: LayerStateHistoryDelegate) {
+    init(layerStates: [LayerState], delegate: LayerStateHistoryDelegate?) {
         self.layerStates = layerStates
         self.currentStackPosition = self.layerStates.count - 1
         self.delegate = delegate
@@ -62,6 +62,7 @@ final class LayerStateHistory {
 
         let delta = (self.layerStates.count - 1) - self.currentStackPosition
         self.layerStates.removeLast(delta)
+        self.notifyLayerStateDidChange()
         return true
     }
 

@@ -19,11 +19,14 @@ final class ContentViewController: NSViewController {
     var windowController: DocumentWindowController? { return self.view.window?.windowController as? DocumentWindowController }
     var inspectorViewController: InspectorViewController?
     let viewStateController = ViewStateController()
-    let layoutController: LayoutController
-    var languageController: LanguageController
     var fileController: FileController
-    let exportController: ExportController
     var progressWindowController: ProgressWindowController?
+
+    lazy var languageController = LanguageController(fileCapsule: self.document.fileCapsule)
+    lazy var exportController = ExportController(layerStateHistory: self.layerStateHistory, fileController: self.fileController, languageController: self.languageController)
+    lazy var layoutController = LayoutController(viewStateController: self.viewStateController, languageController: self.languageController, fileController: self.fileController)
+    lazy var layoutWarningPopoverViewController = WarningPopoverViewController()
+    lazy var popover = NSPopover()
 
 
     // MARK: - Interface Builder
@@ -33,6 +36,7 @@ final class ContentViewController: NSViewController {
     @IBOutlet private var segmentedControl: NSSegmentedControl!
     @IBOutlet private var tableView: SSFTableView!
     @IBOutlet private var addMenu: NSMenu!
+    @IBOutlet private var layoutWarningButton: NSButton!
     @IBOutlet private var textFieldOutput: NSTextField!
     @IBOutlet private var textFieldFromImageNumber: NSTextField!
     @IBOutlet private var textFieldToImageNumber: NSTextField!
@@ -43,14 +47,10 @@ final class ContentViewController: NSViewController {
     // MARK: - Lifecycle
 
     init(document: Document) {
-        let languageController = LanguageController(document: document)
-        let fileController = FileController(document: document)
+        let fileController = FileController(fileCapsule: document.fileCapsule)
 
         self.document = document
-        self.layoutController = LayoutController(document: self.document, layerStateHistory: document.layerStateHistory, viewStateController: self.viewStateController, languageController: languageController, fileController: fileController)
-        self.languageController = languageController
         self.fileController = fileController
-        self.exportController = ExportController(document: document, fileController: fileController, languageController: languageController)
 
         super.init(nibName: self.nibName, bundle: nil)
 
@@ -107,7 +107,7 @@ final class ContentViewController: NSViewController {
 
         switch action {
         case #selector(ContentViewController.undo):
-            return self.layerStateHistory.canUndo && self.lastLayerState.layers.count > 1       // ensure that background layer is still availible after undo
+            return self.layerStateHistory.canUndo && self.lastLayerState.layers.hasElements
         case #selector(ContentViewController.redo):
             return self.layerStateHistory.canRedo
 
@@ -150,34 +150,6 @@ final class ContentViewController: NSViewController {
         }
     }
 
-    @IBAction func addContent(_ sender: AnyObject?) {
-        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
-    @IBAction func addDevice(_ sender: AnyObject?) {
-        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
-    @IBAction func addText(_ sender: AnyObject?) {
-        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
-    func removeLayoutableObject() {
-        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
-
-        let firstIndex = IndexSet(integer: self.tableView.selectedRow - 1)
-        self.tableView.selectRowIndexes(firstIndex, byExtendingSelection: false)
-
-        operation.apply()
-        self.tableView.reloadDataKeepingSelection()
-    }
-
     @IBAction func toggleHighlightCurrentLayer(_ sender: AnyObject?) {
         self.layoutController.shouldHighlightSelectedLayer = !self.layoutController.shouldHighlightSelectedLayer
         self.viewStateController.newViewState(selectedLayer: self.tableView.selectedRow)
@@ -203,11 +175,19 @@ final class ContentViewController: NSViewController {
             operation.apply()
 
         case self.textFieldFromImageNumber:
+            guard self.textFieldFromImageNumber.integerValue <= self.textFieldToImageNumber.integerValue else {
+                self.reloadLayout()
+                return
+            }
             self.updateEnabledStateOfControls()
             let operation = UpdateFromImageNuberOperation(layerStateHistory: self.layerStateHistory, fromImageNumber: self.textFieldFromImageNumber.integerValue)
             operation.apply()
 
         case self.textFieldToImageNumber:
+            guard self.textFieldFromImageNumber.integerValue <= self.textFieldToImageNumber.integerValue else {
+                self.reloadLayout()
+                return
+            }
             self.updateEnabledStateOfControls()
             let operation = UpdateToImageNuberOperation(layerStateHistory: self.layerStateHistory, toImageNumber: self.textFieldToImageNumber.integerValue)
             operation.apply()
@@ -236,8 +216,8 @@ final class ContentViewController: NSViewController {
         }
     }
 
-    @IBAction func endEditingText(_ sender: NSTextField?) {
-        guard let textField = sender else { return }
+    @IBAction func endEditingText(_ sender: Any?) {
+        guard let textField = sender as? NSTextField else { return }
 
         let row = self.tableView.row(for: textField)
         guard row >= 0 else { return }
@@ -247,10 +227,23 @@ final class ContentViewController: NSViewController {
         operation.apply()
     }
 
+    /**
+     *  - Attention: for now this displays only the fontToBig warning
+     */
+    @IBAction func warningButtonPressed(_ sender: NSButton?) {
+        guard let sender = sender else { return }
+
+        self.popover.contentViewController = self.layoutWarningPopoverViewController
+        self.popover.animates = true
+        self.popover.behavior = .transient
+        self.popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.minX)
+    }
+
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
-        self.scrollView.documentView = self.layoutController.layouthierarchy()
+        self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
+        self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
         self.textFieldFromImageNumber.integerValue = self.lastLayerState.outputConfig.fromImageNumber
@@ -308,7 +301,7 @@ extension ContentViewController: ViewStateControllerDelegate {
 
 extension ContentViewController: ExportControllerDelegate {
 
-    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double) {
+    func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String, layoutErrors: [LayoutError]) {
         guard let progressWindowController = self.progressWindowController else { return }
 
         DispatchQueue.main.async {
@@ -354,4 +347,33 @@ private extension ContentViewController {
         menuLocation.y += segmentedControl.bounds.size.height + 5.0
         self.addMenu.popUp(positioning: nil, at: menuLocation, in: segmentedControl)
     }
+
+    @objc func addContent(_ sender: AnyObject?) {
+        let operation = AddContentOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @objc func addDevice(_ sender: AnyObject?) {
+        let operation = AddDeviceOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @objc func addText(_ sender: AnyObject?) {
+        let operation = AddTextOperation(layerStateHistory: self.layerStateHistory)
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
+    @objc func removeLayoutableObject() {
+        let operation = RemoveLayerOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.tableView.selectedRow)
+
+        let firstIndex = IndexSet(integer: self.tableView.selectedRow - 1)
+        self.tableView.selectRowIndexes(firstIndex, byExtendingSelection: false)
+
+        operation.apply()
+        self.tableView.reloadDataKeepingSelection()
+    }
+
 }

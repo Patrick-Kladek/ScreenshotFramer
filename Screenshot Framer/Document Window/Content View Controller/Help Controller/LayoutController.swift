@@ -8,25 +8,43 @@
 
 import Cocoa
 
+enum LayoutError: String {
+    case none = """
+                - No errors
+                  Everything went fine
+                """
+    case noLayers = """
+                    - No layers present.
+                      Check your project file and make sure it contains at least one layer
+                    """
+    case fontToBig = """
+                     - The font of one label is too big. This often happens in a different language than you design.
+                       Check all languages in your project and decrease the font size or increase the frame of the label
+                       The font is decresed on affected labels so the contents fit on screen.
+                       You can ignore this warning with the '-ignoreFontToBig' flag
+                     """
+    case noOutputFile = """
+                        - You forgot to specify an output path or entered an incorrect one.
+                          The default path is: 'Export/$language/iPhone XXX-$image framed.png'
+                        """
+}
+
 
 class LayoutController {
 
     // MARK: - Properties
 
-    let document: Document
-    let layerStateHistory: LayerStateHistory
     let viewStateController: ViewStateController
     let languageController: LanguageController
     var highlightLayer: Int = 0
     var shouldHighlightSelectedLayer = false
     var fileController: FileController
+    private(set) var layoutErrors: [LayoutError] = []
 
 
     // MARK: Init
 
-    init(document: Document, layerStateHistory: LayerStateHistory, viewStateController: ViewStateController, languageController: LanguageController, fileController: FileController) {
-        self.document = document
-        self.layerStateHistory = layerStateHistory
+    init(viewStateController: ViewStateController, languageController: LanguageController, fileController: FileController) {
         self.viewStateController = viewStateController
         self.languageController = languageController
         self.fileController = fileController
@@ -35,15 +53,15 @@ class LayoutController {
 
     // MARK: - Public Functions
 
-    func layouthierarchy() -> NSView? {
-        let layoutableObjects = self.layerStateHistory.currentLayerState.layers
-        guard layoutableObjects.hasElements else { return nil }
+    func layouthierarchy(layers: [LayoutableObject]) -> NSView? {
+        self.layoutErrors = []
+        guard layers.hasElements else { self.layoutErrors = [.noLayers]; return nil }
 
-        let firstLayoutableObject = layoutableObjects[0]
+        let firstLayoutableObject = layers[0]
         let rootView = self.view(from: firstLayoutableObject)
         (rootView as? SSFView)?.backgroundColor = NSColor.lightGray
 
-        for object in layoutableObjects where object != layoutableObjects[0] {
+        for object in layers where object != layers[0] {
             let view: NSView
 
             if object.type == .text {
@@ -52,7 +70,7 @@ class LayoutController {
                 view = self.view(from: object)
             }
 
-            if self.shouldHighlightSelectedLayer && object == layoutableObjects[self.highlightLayer] {
+            if self.shouldHighlightSelectedLayer && object == layers[self.highlightLayer] {
                 view.wantsLayer = true
                 view.layer?.borderColor = NSColor.red.cgColor
                 view.layer?.borderWidth = 2.0
@@ -93,7 +111,10 @@ private extension LayoutController {
             textField.textColor = color
         }
 
-        self.limitFontSize(for: textField)
+        if self.limitFontSize(for: textField) {
+            self.layoutErrors.append(.fontToBig)
+        }
+
         return textField
     }
 

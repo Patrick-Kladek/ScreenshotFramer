@@ -13,9 +13,10 @@ final class Document: NSDocument {
 
     // MARK: - Properties
 
+    let fileCapsule = FileCapsule()
     private(set) var layerStateHistory = LayerStateHistory()
+    private var projectURL: URL? { return self.fileURL?.deletingLastPathComponent() }
     lazy var timeTravelWindowController = TimeTravelWindowController(layerStateHistory: self.layerStateHistory)
-    var documentRoot: URL? { return self.fileURL?.deletingLastPathComponent() }
 
 
     // MARK: - Lifecycle
@@ -42,8 +43,8 @@ final class Document: NSDocument {
         let windowController = DocumentWindowController()
         self.addWindowController(windowController)
 
-        self.addWindowController(self.timeTravelWindowController)
         if UserDefaults.standard.showTimeTravelWindow {
+            self.addWindowController(self.timeTravelWindowController)
             self.showTimeTravelWindow(nil)
         }
     }
@@ -62,13 +63,26 @@ final class Document: NSDocument {
         return true
     }
 
+    override func save(_ sender: Any?) {
+        self.save(withDelegate: self, didSave: #selector(Document.document(_:didSave:contextInfo:)), contextInfo: nil)
+    }
+
+    @objc
+    func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
+        switch didSave {
+        case true:
+            self.fileCapsule.projectURL = self.projectURL
+        case false:
+            self.close()
+        }
+    }
+
+
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         self.layerStateHistory.discardRedoHistory()
-
-        if self.isDocumentEdited && self.fileURL != nil {
-            self.save(nil)
-        }
+        self.save(nil)
         self.close()
+        self.timeTravelWindowController.close()
     }
 
 
@@ -82,9 +96,18 @@ final class Document: NSDocument {
         }
     }
 
+    @IBAction func discardRedoHistory(_ sender: AnyObject?) {
+        // Discussion: show warning
+        self.layerStateHistory.discardRedoHistory()
+    }
+
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(showTimeTravelWindow) {
             return self.timeTravelWindowController.window?.isVisible == false
+        }
+
+        if menuItem.action == #selector(discardRedoHistory) {
+            return self.layerStateHistory.canRedo
         }
 
         return super.validateMenuItem(menuItem)
@@ -100,6 +123,8 @@ final class Document: NSDocument {
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
+        self.fileCapsule.projectURL = self.projectURL
+
         let decoder = JSONDecoder()
         let layers = try decoder.decode([LayerState].self, from: data)
         self.layerStateHistory = LayerStateHistory(layerStates: layers, delegate: self)

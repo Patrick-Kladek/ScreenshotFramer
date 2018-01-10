@@ -11,6 +11,7 @@
                 <outlet property="buttonSave" destination="tAW-Cr-EAJ" id="pfU-BL-Jgr"/>
                 <outlet property="buttonSaveAll" destination="dxm-LX-Mdn" id="sAM-5G-vlU"/>
                 <outlet property="inspectorPlaceholder" destination="slX-x1-2Hr" id="5YM-u0-GFc"/>
+                <outlet property="layoutWarningButton" destination="KWD-aN-L9S" id="gw2-Yi-zwi"/>
                 <outlet property="scrollView" destination="O0C-Q5-AWh" id="UpB-Ws-4t6"/>
                 <outlet property="segmentedControl" destination="hmg-Jg-ukQ" id="w4B-dQ-MX2"/>
                 <outlet property="tableView" destination="m2P-9G-URw" id="qCr-PO-tkA"/>
@@ -92,9 +93,6 @@
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
-                                                                        <connections>
-                                                                            <action selector="endEditingText:" target="-2" id="4hT-k0-71t"/>
-                                                                        </connections>
                                                                     </textField>
                                                                 </subviews>
                                                                 <constraints>
@@ -242,6 +240,20 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KWD-aN-L9S">
+                                    <rect key="frame" x="193" y="155" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="F6U-Hf-Yaw"/>
+                                        <constraint firstAttribute="height" constant="24" id="lkp-f6-kZd"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSCaution" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="LfO-y1-mjd">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="warningButtonPressed:" target="-2" id="q2L-dn-kGf"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="rqd-2b-Uwz" firstAttribute="leading" secondItem="hmg-Jg-ukQ" secondAttribute="leading" id="128-Vd-2m3"/>
@@ -254,11 +266,13 @@
                                 <constraint firstItem="pL1-dp-sqK" firstAttribute="baseline" secondItem="406-m8-eNM" secondAttribute="baseline" id="7ps-r4-z2i"/>
                                 <constraint firstItem="KGD-QO-68c" firstAttribute="leading" secondItem="RMb-WP-rgZ" secondAttribute="leading" id="9Gr-bl-a4s"/>
                                 <constraint firstItem="pL1-dp-sqK" firstAttribute="leading" secondItem="406-m8-eNM" secondAttribute="trailing" constant="8" id="DjV-Bt-AyD"/>
+                                <constraint firstItem="PbT-SF-U1c" firstAttribute="top" secondItem="KWD-aN-L9S" secondAttribute="bottom" constant="8" id="DoJ-2S-vEd"/>
                                 <constraint firstItem="406-m8-eNM" firstAttribute="leading" secondItem="RMb-WP-rgZ" secondAttribute="leading" id="EoJ-fV-OqM"/>
                                 <constraint firstAttribute="trailing" secondItem="kcc-rK-wzh" secondAttribute="trailing" id="Grq-dI-hCc"/>
                                 <constraint firstAttribute="bottom" secondItem="tAW-Cr-EAJ" secondAttribute="bottom" constant="20" id="KT8-hV-VBv"/>
                                 <constraint firstItem="tAW-Cr-EAJ" firstAttribute="leading" secondItem="V5e-jM-e5B" secondAttribute="leading" constant="20" id="OSy-S7-KDF"/>
                                 <constraint firstItem="521-6H-ajq" firstAttribute="leading" secondItem="PbT-SF-U1c" secondAttribute="leading" id="PT8-sI-UBK"/>
+                                <constraint firstItem="KWD-aN-L9S" firstAttribute="trailing" secondItem="PbT-SF-U1c" secondAttribute="trailing" id="PZR-0n-niL"/>
                                 <constraint firstAttribute="trailing" secondItem="slX-x1-2Hr" secondAttribute="trailing" id="R7a-Dq-VE5"/>
                                 <constraint firstItem="521-6H-ajq" firstAttribute="top" secondItem="PbT-SF-U1c" secondAttribute="bottom" constant="8" id="TN2-WH-g5q"/>
                                 <constraint firstItem="pL1-dp-sqK" firstAttribute="top" secondItem="521-6H-ajq" secondAttribute="bottom" constant="12" id="UhM-o1-9aU"/>
@@ -320,6 +334,7 @@
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSCaution" width="32" height="32"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>

@@ -8,18 +8,29 @@
 
 import Foundation
 
+/**
+ * This class stores properties that are not known on init
+ * projectURL ist only set after a new document is saved
+ * most classes need the projectURL property but not directly
+ * on init but later eg export
+ */
+final class FileCapsule {
+
+    var projectURL: URL?
+}
+
 
 final class FileController {
 
     // MARK: - Properties
 
-    let document: Document
+    let fileCapsule: FileCapsule
 
 
     // MARK: Lifecycle
 
-    init(document: Document) {
-        self.document = document
+    init(fileCapsule: FileCapsule) {
+        self.fileCapsule = fileCapsule
     }
 
 
@@ -31,7 +42,7 @@ final class FileController {
         var file = object.file.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)
 
-        let absoluteURL = self.document.documentRoot?.appendingPathComponent(file)
+        let absoluteURL = self.fileCapsule.projectURL?.appendingPathComponent(file)
         return absoluteURL
     }
 
@@ -44,7 +55,7 @@ final class FileController {
     }
 
     func outputURL(for layerState: LayerState, viewState: ViewState) -> URL? {
-        guard let base = self.document.documentRoot else { return nil }
+        guard let base = self.fileCapsule.projectURL else { return nil }
         var file = layerState.outputConfig.output.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)
 

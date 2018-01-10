@@ -13,13 +13,13 @@ final class LanguageController {
 
     // MARK: - Properties
 
-    let document: Document
+    let fileCapsule: FileCapsule
 
 
     // MARK: Init
 
-    init(document: Document) {
-        self.document = document
+    init(fileCapsule: FileCapsule) {
+        self.fileCapsule = fileCapsule
     }
 
 
@@ -27,8 +27,8 @@ final class LanguageController {
 
     func allLanguages() -> [String] {
         let fileManager = FileManager()
-        guard let url = self.document.documentRoot else { return [] }
-        guard let contents = try? fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions.skipsSubdirectoryDescendants) else { return [] }
+        guard let projectURL = self.fileCapsule.projectURL else { return [] }
+        guard let contents = try? fileManager.contentsOfDirectory(at: projectURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else { return [] }
 
         let allLanguages = Set(contents.filter { file in
             var isDir = ObjCBool(false)
