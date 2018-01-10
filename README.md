@@ -55,6 +55,29 @@ In the screenshot below the file is: `$language/iPhone SE-$image.png`. This is a
 
 ![](Documentation/Usage.png)
 
+### From the Command Line
+
+* You can either Install `Screenshot Framer` on your computer by copying it to `/usr/local/bin` and run following command
+
+``` bash
+cd ~/Developer/MyProject/Screenshots
+Screenshot-Framer-CLI -project "./iPhone SE.frame" 
+```
+
+* To create screenshots for all devices simply pass the whole directory instead of a file
+
+```bash
+cd ~/Developer/MyProject/Screenshots
+Screenshot-Framer-CLI -project .
+```
+
+* You can also copy `Screenshot Framer` to your repository and run it from there
+
+```bash
+cd ~/Developer/MyProject/Screenshots
+./Screenshot-Framer-CLI -project .
+```
+
 ### Known Limitations & Bugs
 Please keep in mind that this tool was made to automate screenshots for a very specific need, so it might not fit yours. If you find bugs please create an issue first. Pull Requests are very welcome, but we also reserve the right to not merge them, if they don't take the tool into a direction we need. Therefore it's best to first open an issue and discuss your plans, before jumping right in and implementing it.
 
