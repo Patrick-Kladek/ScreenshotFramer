@@ -61,7 +61,7 @@ In the screenshot below the file is: `$language/iPhone SE-$image.png`. This is a
 
 ``` bash
 cd ~/Developer/MyProject/Screenshots
- Screenshot-Framer-CLI -project "./iPhone SE.frame" 
+Screenshot-Framer-CLI -project "./iPhone SE.frame" 
 ```
 
 * To create screenshots for all devices simply pass the whole directory instead of a file
