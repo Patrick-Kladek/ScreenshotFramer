@@ -9,6 +9,11 @@
 import Cocoa
 
 
+protocol InspectorViewControllerDelegate: class {
+    func inspector(_ inspector: InspectorViewController, requestRotation rotation: CGFloat, of index: Int)
+}
+
+
 final class InspectorViewController: NSViewController {
 
     // MARK: - Properties
@@ -17,6 +22,7 @@ final class InspectorViewController: NSViewController {
     private let languageController: LanguageController
 
     let viewStateController: ViewStateController
+    weak var delegate: InspectorViewControllerDelegate?
     var selectedRow: Int = -1 {
         didSet {
             self.updateUI()
@@ -44,6 +50,9 @@ final class InspectorViewController: NSViewController {
 
     @IBOutlet private var textFieldHeight: NSTextField!
     @IBOutlet private var stepperHeight: NSStepper!
+
+    @IBOutlet private var textFieldRotation: NSTextField!
+    @IBOutlet private var sliderRotation: NSSlider!
 
     @IBOutlet private var textFieldFont: NSTextField!
     @IBOutlet private var textFieldFontSize: NSTextField!
@@ -90,6 +99,9 @@ final class InspectorViewController: NSViewController {
         self.textFieldHeight.doubleValue = Double(layoutableObject.frame.size.height)
         self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
 
+        self.textFieldRotation.objectValue = layoutableObject.rotation
+        self.sliderRotation.objectValue = self.textFieldRotation.objectValue
+
         self.textFieldFile.stringValue = layoutableObject.file
 
         if let fontString = layoutableObject.font {
@@ -111,6 +123,14 @@ final class InspectorViewController: NSViewController {
             self.textFieldFontSize.isEnabled = false
             self.stepperFontSize.isEnabled = false
             self.colorWell.isEnabled = false
+        }
+
+        if layoutableObject.type == .background {
+            self.textFieldRotation.isEnabled = false
+            self.sliderRotation.isEnabled = false
+        } else {
+            self.textFieldRotation.isEnabled = true
+            self.sliderRotation.isEnabled = true
         }
 
         if let color = layoutableObject.color {
@@ -158,6 +178,16 @@ final class InspectorViewController: NSViewController {
         }
     }
 
+    @IBAction func sliderDidChangeValue(sender: NSSlider) {
+        self.textFieldRotation.objectValue = sender.objectValue
+        self.coalesceCalls(to: #selector(rotateLayer), interval: 1)
+
+        // Note this is a workaround because live rotation is laggy/not possible
+        // if the whole image is generated every time. Therefore the existing image
+        // is rotated and after a 1 sec delay the operation is saved.
+        self.delegate?.inspector(self, requestRotation: CGFloat(sender.doubleValue), of: self.selectedRow)
+    }
+
     @IBAction func textFieldChanged(sender: NSTextField) {
         switch sender {
         case self.textFieldFile:
@@ -176,6 +206,9 @@ final class InspectorViewController: NSViewController {
 
         case self.textFieldFontSize:
             self.updateFontSize()
+
+        case self.textFieldRotation:
+            self.rotateLayer()
 
         default:
             self.updateFrame()
@@ -217,6 +250,12 @@ private extension InspectorViewController {
     func updateFontSize() {
         let fontSize = CGFloat(self.textFieldFontSize.floatValue)
         let operation = UpdateFontSizeOperation(layerStateHistory: self.layerStateHistory, fontSize: fontSize, indexOfLayer: self.selectedRow)
+        operation.apply()
+    }
+
+    @objc func rotateLayer() {
+        let rotation = CGFloat(self.textFieldRotation.doubleValue)
+        let operation = UpdateRotationOperation(layerStateHistory: self.layerStateHistory, rotation: rotation, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 }

@@ -149,10 +149,12 @@ private extension LayoutController {
             imageView.image = NSImage(contentsOf: url)
             imageView.imageScaling = .scaleAxesIndependently
             imageView.layer?.shouldRasterize = true
+            imageView.frameCenterRotation = object.rotation ?? 0
             return imageView
         } else {
             let view = SSFView(frame: object.frame)
             view.backgroundColor = NSColor.red
+            view.frameCenterRotation = object.rotation ?? 0
             return view
         }
     }

@@ -90,6 +90,27 @@ final class UpdateFrameOperation: OperationProtocol {
 }
 
 
+final class UpdateRotationOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let rotation: CGFloat
+
+    init(layerStateHistory: LayerStateHistory, rotation: CGFloat, indexOfLayer: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.rotation = rotation
+        self.indexOfLayer = indexOfLayer
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(rotation: self.rotation, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class UpdateFileOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory

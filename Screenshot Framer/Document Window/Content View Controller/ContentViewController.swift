@@ -88,6 +88,7 @@ final class ContentViewController: NSViewController {
 
         inspector.updateUI()
         self.inspectorViewController = inspector
+        self.inspectorViewController?.delegate = self
 
         self.reloadLayout()
     }
@@ -324,6 +325,20 @@ extension ContentViewController: ProgressWindowControllerDelegate {
 
     func progressWindowControllerDidRequestCancel(_ windowController: ProgressWindowController) {
         self.exportController.cancel()
+    }
+}
+
+// MARK: - Inspector Delegate
+
+extension ContentViewController: InspectorViewControllerDelegate {
+
+    func inspector(_ inspector: InspectorViewController, requestRotation rotation: CGFloat, of index: Int) {
+        guard let views = self.scrollView.documentView?.subviews else { return }
+
+        let view = views[index - 1]
+        view.frameCenterRotation = rotation
+        view.needsDisplay = true
+        view.display()
     }
 }
 

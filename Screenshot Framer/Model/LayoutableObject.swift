@@ -24,6 +24,7 @@ struct LayoutableObject: Codable {
     var type: LayoutableObjectType
     var title: String
     var frame: CGRect
+    var rotation: CGFloat?
     var file: String
     var isRoot: Bool = false
     var font: String?
@@ -33,10 +34,11 @@ struct LayoutableObject: Codable {
 
     // MARK: - Lifecycle
 
-    init(type: LayoutableObjectType, title: String = "Layer", frame: CGRect = .zero, file: String = "", isRoot: Bool = false) {
+    init(type: LayoutableObjectType, title: String = "Layer", frame: CGRect = .zero, rotation: CGFloat = 0, file: String = "", isRoot: Bool = false) {
         self.type = type
         self.title = title
         self.frame = frame
+        self.rotation = rotation
         self.file = file
         self.isRoot = isRoot
     }
@@ -54,6 +56,7 @@ struct LayoutableObject: Codable {
 
         let frameString = try container.decode(String.self, forKey: .frame)
         self.frame = NSRectFromString(frameString)
+        self.rotation = try container.decodeIfPresent(CGFloat.self, forKey: .rotation)
 
         self.font = try? container.decode(String.self, forKey: .font)
         self.fontSize = try? container.decode(CGFloat.self, forKey: .fontSize)
@@ -73,6 +76,7 @@ struct LayoutableObject: Codable {
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)
+        try container.encode(self.rotation, forKey: .rotation)
 
         try container.encode(self.font, forKey: .font)
         try container.encode(self.fontSize, forKey: .fontSize)
@@ -99,6 +103,7 @@ private extension LayoutableObject {
         case type = "type"
         case title = "title"
         case frame = "frame"
+        case rotation = "rotation"
         case file = "file"
         case root = "isRoot"
         case font = "font"
