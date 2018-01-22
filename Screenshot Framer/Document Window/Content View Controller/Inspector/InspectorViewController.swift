@@ -9,8 +9,12 @@
 import Cocoa
 
 
+/// These Methods are called frequently and therefore only modify exiting layers
 protocol InspectorViewControllerDelegate: class {
-    func inspector(_ inspector: InspectorViewController, requestRotation rotation: CGFloat, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestRotation newRotation: CGFloat, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestNewFrame newFrame: CGRect, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestNewFont newFont: NSFont?, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestNewColor newColor: NSColor, of index: Int)
 }
 
 
@@ -20,6 +24,24 @@ final class InspectorViewController: NSViewController {
 
     private let layerStateHistory: LayerStateHistory
     private let languageController: LanguageController
+    private var frameInInspector: CGRect {
+        get {
+            return CGRect(x: self.textFieldX.doubleValue,
+                          y: self.textFieldY.doubleValue,
+                          width: self.textFieldWidth.doubleValue,
+                          height: self.textFieldHeight.doubleValue)
+        }
+        set {
+            self.textFieldX.doubleValue = Double(newValue.origin.x)
+            self.stepperX.doubleValue = self.textFieldX.doubleValue
+            self.textFieldY.doubleValue = Double(newValue.origin.y)
+            self.stepperY.doubleValue = self.textFieldY.doubleValue
+            self.textFieldWidth.doubleValue = Double(newValue.size.width)
+            self.stepperWidth.doubleValue = self.textFieldWidth.doubleValue
+            self.textFieldHeight.doubleValue = Double(newValue.size.height)
+            self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
+        }
+    }
 
     let viewStateController: ViewStateController
     weak var delegate: InspectorViewControllerDelegate?
@@ -28,7 +50,6 @@ final class InspectorViewController: NSViewController {
             self.updateUI()
         }
     }
-
 
     // MARK: - Interface Builder
 
@@ -90,14 +111,7 @@ final class InspectorViewController: NSViewController {
         self.textFieldY.isEnabled = layoutableObject.isRoot == false
         self.stepperY.isEnabled = layoutableObject.isRoot == false
 
-        self.textFieldX.doubleValue = Double(layoutableObject.frame.origin.x)
-        self.stepperX.doubleValue = self.textFieldX.doubleValue
-        self.textFieldY.doubleValue = Double(layoutableObject.frame.origin.y)
-        self.stepperY.doubleValue = self.textFieldY.doubleValue
-        self.textFieldWidth.doubleValue = Double(layoutableObject.frame.size.width)
-        self.stepperWidth.doubleValue = self.textFieldWidth.doubleValue
-        self.textFieldHeight.doubleValue = Double(layoutableObject.frame.size.height)
-        self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
+        self.frameInInspector = layoutableObject.frame
 
         self.textFieldRotation.objectValue = layoutableObject.rotation
         self.sliderRotation.objectValue = self.textFieldRotation.objectValue
@@ -171,20 +185,29 @@ final class InspectorViewController: NSViewController {
             self.viewStateController.newViewState(imageNumber: imageNumber)
 
         case self.stepperFontSize:
-            self.updateFontSize()
+            self.coalesceCalls(to: #selector(updateFontSize), interval: 0.5)
+            let layer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+            var fontName = layer.font ?? "Helvetica Neue"
+            if fontName.isEmpty {
+                fontName = "Helvetica Neue"
+            }
+
+            let font = NSFont(name: fontName, size: CGFloat(self.stepperFontSize.doubleValue))
+            self.delegate?.inspector(self, requestNewFont: font, of: self.selectedRow)
 
         default:
-            self.updateFrame()
+            self.coalesceCalls(to: #selector(updateFrame), interval: 0.5)
+            self.delegate?.inspector(self, requestNewFrame: self.frameInInspector, of: self.selectedRow)
         }
     }
 
     @IBAction func sliderDidChangeValue(sender: NSSlider) {
         self.textFieldRotation.objectValue = sender.objectValue
-        self.coalesceCalls(to: #selector(rotateLayer), interval: 1)
+        self.coalesceCalls(to: #selector(rotateLayer), interval: 0.5)
 
         // Note this is a workaround because live rotation is laggy/not possible
         // if the whole image is generated every time. Therefore the existing image
-        // is rotated and after a 1 sec delay the operation is saved.
+        // is rotated and if after a 1 sec no change happend, the operation is saved.
         self.delegate?.inspector(self, requestRotation: CGFloat(sender.doubleValue), of: self.selectedRow)
     }
 
@@ -224,11 +247,7 @@ final class InspectorViewController: NSViewController {
     @IBAction func colorWellDidUpdateColor(sender: NSColorWell) {
         let color = sender.color
         self.coalesceCalls(to: #selector(applyColor), interval: 0.5, object: color)
-    }
-
-    @objc func applyColor(_ color: NSColor) {
-        let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
-        operation.apply()
+        self.delegate?.inspector(self, requestNewColor: color, of: self.selectedRow)
     }
 }
 
@@ -237,17 +256,17 @@ final class InspectorViewController: NSViewController {
 
 private extension InspectorViewController {
 
-    func updateFrame() {
-        let frame = CGRect(x: self.textFieldX.doubleValue,
-                           y: self.textFieldY.doubleValue,
-                           width: self.textFieldWidth.doubleValue,
-                           height: self.textFieldHeight.doubleValue)
-
+    @objc func updateFrame() {
+//        let frame = CGRect(x: self.textFieldX.doubleValue,
+//                           y: self.textFieldY.doubleValue,
+//                           width: self.textFieldWidth.doubleValue,
+//                           height: self.textFieldHeight.doubleValue)
+        let frame = self.frameInInspector
         let operation = UpdateFrameOperation(layerStateHistory: self.layerStateHistory, frame: frame, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 
-    func updateFontSize() {
+    @objc func updateFontSize() {
         let fontSize = CGFloat(self.textFieldFontSize.floatValue)
         let operation = UpdateFontSizeOperation(layerStateHistory: self.layerStateHistory, fontSize: fontSize, indexOfLayer: self.selectedRow)
         operation.apply()
@@ -256,6 +275,11 @@ private extension InspectorViewController {
     @objc func rotateLayer() {
         let rotation = CGFloat(self.textFieldRotation.doubleValue)
         let operation = UpdateRotationOperation(layerStateHistory: self.layerStateHistory, rotation: rotation, indexOfLayer: self.selectedRow)
+        operation.apply()
+    }
+
+    @objc func applyColor(_ color: NSColor) {
+        let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 }

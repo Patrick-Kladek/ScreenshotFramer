@@ -332,13 +332,42 @@ extension ContentViewController: ProgressWindowControllerDelegate {
 
 extension ContentViewController: InspectorViewControllerDelegate {
 
-    func inspector(_ inspector: InspectorViewController, requestRotation rotation: CGFloat, of index: Int) {
+    func inspector(_ inspector: InspectorViewController, requestRotation newRotation: CGFloat, of index: Int) {
+        guard index > 0 else { return }
         guard let views = self.scrollView.documentView?.subviews else { return }
 
         let view = views[index - 1]
-        view.frameCenterRotation = rotation
+        view.frameCenterRotation = newRotation
         view.needsDisplay = true
         view.display()
+    }
+
+    func inspector(_ inspector: InspectorViewController, requestNewFrame newFrame: CGRect, of index: Int) {
+        guard let documentView = self.scrollView.documentView else { return }
+
+        if index == 0 {
+            documentView.frame = newFrame
+            return
+        }
+
+        let view = documentView.subviews[index]
+        view.frame = newFrame
+    }
+
+    func inspector(_ inspector: InspectorViewController, requestNewFont newFont: NSFont?, of index: Int) {
+        guard index > 0 else { return }
+        guard let views = self.scrollView.documentView?.subviews else { return }
+        guard let textField = views[index - 1] as? NSTextField else { return }
+
+        textField.font = newFont
+    }
+
+    func inspector(_ inspector: InspectorViewController, requestNewColor newColor: NSColor, of index: Int) {
+        guard index > 0 else { return }
+        guard let views = self.scrollView.documentView?.subviews else { return }
+        guard let textField = views[index - 1] as? NSTextField else { return }
+
+        textField.textColor = newColor
     }
 }
 
