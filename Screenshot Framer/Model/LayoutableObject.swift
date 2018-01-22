@@ -58,10 +58,10 @@ struct LayoutableObject: Codable {
         self.frame = NSRectFromString(frameString)
         self.rotation = try container.decodeIfPresent(CGFloat.self, forKey: .rotation)
 
-        self.font = try? container.decode(String.self, forKey: .font)
-        self.fontSize = try? container.decode(CGFloat.self, forKey: .fontSize)
+        self.font = try container.decodeIfPresent(String.self, forKey: .font)
+        self.fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize)
 
-        if let colorHex = try? container.decode(String.self, forKey: .color) {
+        if let colorHex = try container.decodeIfPresent(String.self, forKey: .color) {
             self.color = NSColor(hex: colorHex)
         }
     }
@@ -76,11 +76,11 @@ struct LayoutableObject: Codable {
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)
-        try container.encode(self.rotation, forKey: .rotation)
+        try container.encodeIfPresent(self.rotation, forKey: .rotation)
 
-        try container.encode(self.font, forKey: .font)
-        try container.encode(self.fontSize, forKey: .fontSize)
-        try container.encode(self.color?.hexString(), forKey: .color)
+        try container.encodeIfPresent(self.font, forKey: .font)
+        try container.encodeIfPresent(self.fontSize, forKey: .fontSize)
+        try container.encodeIfPresent(self.color?.hexString(), forKey: .color)
     }
 }
 
