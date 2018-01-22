@@ -251,18 +251,12 @@
 		CD5EE0571FCDA20400AD2ED7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CD5EE0461FCD557200AD2ED7 /* Assets.xcassets */,
-				CDFF69A91FD849E300E652EE /* CenterClipView.swift */,
-				CDE9C3531FEBDBD100168B40 /* Document Icon.icns */,
+				CDFA12EF200E149700E99BC6 /* Code */,
 				CD5EE04C1FCD557200AD2ED7 /* Framer.entitlements */,
 				CD5EE04B1FCD557200AD2ED7 /* Info.plist */,
+				CD5EE0461FCD557200AD2ED7 /* Assets.xcassets */,
+				CDE9C3531FEBDBD100168B40 /* Document Icon.icns */,
 				CD5EE0481FCD557200AD2ED7 /* MainMenu.xib */,
-				CDB659101FE3F00000430F20 /* MNCoalescing.swift */,
-				CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */,
-				CD50EF541FDFEB7600FB0F2F /* SSFTableView.swift */,
-				CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */,
-				CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */,
-				CDAEE1FE1FED484500F4B1BA /* Sugar.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -296,6 +290,20 @@
 				CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */,
 			);
 			path = "Screenshot Framer CLI";
+			sourceTree = "<group>";
+		};
+		CDFA12EF200E149700E99BC6 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				CDFF69A91FD849E300E652EE /* CenterClipView.swift */,
+				CDB659101FE3F00000430F20 /* MNCoalescing.swift */,
+				CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */,
+				CD50EF541FDFEB7600FB0F2F /* SSFTableView.swift */,
+				CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */,
+				CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */,
+				CDAEE1FE1FED484500F4B1BA /* Sugar.swift */,
+			);
+			path = Code;
 			sourceTree = "<group>";
 		};
 		CDFF69961FD827B800E652EE /* Screenshot Framer Tests */ = {
