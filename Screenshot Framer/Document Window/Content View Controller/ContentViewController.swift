@@ -88,6 +88,7 @@ final class ContentViewController: NSViewController {
 
         inspector.updateUI()
         self.inspectorViewController = inspector
+        self.inspectorViewController?.delegate = self
 
         self.reloadLayout()
     }
@@ -99,6 +100,8 @@ final class ContentViewController: NSViewController {
         if self.document.fileURL == nil {
             self.document.save(self)
         }
+
+        self.zoomToFit(nil)
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -111,14 +114,13 @@ final class ContentViewController: NSViewController {
         case #selector(ContentViewController.redo):
             return self.layerStateHistory.canRedo
 
-        case #selector(ContentViewController.addContent):
-            return true
-        case #selector(ContentViewController.addDevice):
-            return true
-        case #selector(ContentViewController.addText):
+        case #selector(ContentViewController.addContent),
+             #selector(ContentViewController.addDevice),
+             #selector(ContentViewController.addText):
             return true
 
-        case #selector(ContentViewController.toggleHighlightCurrentLayer):
+        case #selector(ContentViewController.toggleHighlightCurrentLayer),
+             #selector(ContentViewController.zoomToFit):
             return true
 
         default:
@@ -239,6 +241,22 @@ final class ContentViewController: NSViewController {
         self.popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.minX)
     }
 
+    /**
+     *  - Attenttion: uses animation when sender != nil. Therefore animates when called from UI elements
+     */
+    @IBAction func zoomToFit(_ sender: Any?) {
+        guard var frame = self.scrollView.documentView?.frame else { return }
+
+        frame.size.width += 40
+        frame.size.height += 40
+
+        if sender != nil {
+            self.scrollView.animator().magnify(toFit: frame)
+        } else {
+            self.scrollView.magnify(toFit: frame)
+        }
+    }
+
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
@@ -324,6 +342,49 @@ extension ContentViewController: ProgressWindowControllerDelegate {
 
     func progressWindowControllerDidRequestCancel(_ windowController: ProgressWindowController) {
         self.exportController.cancel()
+    }
+}
+
+// MARK: - Inspector Delegate
+
+extension ContentViewController: InspectorViewControllerDelegate {
+
+    func inspector(_ inspector: InspectorViewController, requestRotation newRotation: CGFloat, of index: Int) {
+        guard index > 0 else { return }
+        guard let views = self.scrollView.documentView?.subviews else { return }
+
+        let view = views[index - 1]
+        view.frameCenterRotation = newRotation
+        view.needsDisplay = true
+        view.display()
+    }
+
+    func inspector(_ inspector: InspectorViewController, requestNewFrame newFrame: CGRect, of index: Int) {
+        guard let documentView = self.scrollView.documentView else { return }
+
+        if index == 0 {
+            documentView.frame = newFrame
+            return
+        }
+
+        let view = documentView.subviews[index - 1]
+        view.frame = newFrame
+    }
+
+    func inspector(_ inspector: InspectorViewController, requestNewFont newFont: NSFont?, of index: Int) {
+        guard index > 0 else { return }
+        guard let views = self.scrollView.documentView?.subviews else { return }
+        guard let textField = views[index - 1] as? NSTextField else { return }
+
+        textField.font = newFont
+    }
+
+    func inspector(_ inspector: InspectorViewController, requestNewColor newColor: NSColor, of index: Int) {
+        guard index > 0 else { return }
+        guard let views = self.scrollView.documentView?.subviews else { return }
+        guard let textField = views[index - 1] as? NSTextField else { return }
+
+        textField.textColor = newColor
     }
 }
 

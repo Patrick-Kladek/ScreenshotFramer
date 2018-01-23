@@ -50,6 +50,16 @@ struct LayerState: Codable {
         return LayerState(title: "Update Frame \(title(of: frame))", layers: layers, outputConfig: self.outputConfig)
     }
 
+    func updating(rotation: CGFloat, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+        guard layers[index].rotation != rotation else { return nil }
+
+        layers[index].rotation = rotation
+        return LayerState(title: "Update Rotation " + String(format: "%.2f°", rotation), layers: layers, outputConfig: self.outputConfig)
+    }
+
     func updating(title: String, index: Int) -> LayerState? {
         var layers = self.layers
 

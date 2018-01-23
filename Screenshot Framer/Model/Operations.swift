@@ -90,6 +90,27 @@ final class UpdateFrameOperation: OperationProtocol {
 }
 
 
+final class UpdateRotationOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let rotation: CGFloat
+
+    init(layerStateHistory: LayerStateHistory, rotation: CGFloat, indexOfLayer: Int) {
+        self.layerStateHistory = layerStateHistory
+        self.rotation = rotation
+        self.indexOfLayer = indexOfLayer
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(rotation: self.rotation, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class UpdateFileOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -227,7 +248,7 @@ class AddLayerOperation: OperationProtocol {
     }
 
     func apply() {
-        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: .zero, file: "", isRoot: false)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: .zero, file: "")
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
@@ -238,7 +259,7 @@ final class AddBackgroundOperation: AddLayerOperation {
     override var type: LayoutableObjectType { return .background }
 
     override func apply() {
-        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: true)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "")
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }

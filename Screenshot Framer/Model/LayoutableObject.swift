@@ -24,8 +24,8 @@ struct LayoutableObject: Codable {
     var type: LayoutableObjectType
     var title: String
     var frame: CGRect
+    var rotation: CGFloat?
     var file: String
-    var isRoot: Bool = false
     var font: String?
     var fontSize: CGFloat?
     var color: NSColor?
@@ -33,12 +33,12 @@ struct LayoutableObject: Codable {
 
     // MARK: - Lifecycle
 
-    init(type: LayoutableObjectType, title: String = "Layer", frame: CGRect = .zero, file: String = "", isRoot: Bool = false) {
+    init(type: LayoutableObjectType, title: String = "Layer", frame: CGRect = .zero, rotation: CGFloat = 0, file: String = "") {
         self.type = type
         self.title = title
         self.frame = frame
+        self.rotation = rotation
         self.file = file
-        self.isRoot = isRoot
     }
 
 
@@ -50,15 +50,15 @@ struct LayoutableObject: Codable {
         self.type = try container.decode(LayoutableObjectType.self, forKey: .type)
         self.title = try container.decode(String.self, forKey: .title)
         self.file = try container.decode(String.self, forKey: .file)
-        self.isRoot = try container.decode(Bool.self, forKey: .root)
 
         let frameString = try container.decode(String.self, forKey: .frame)
         self.frame = NSRectFromString(frameString)
+        self.rotation = try container.decodeIfPresent(CGFloat.self, forKey: .rotation)
 
-        self.font = try? container.decode(String.self, forKey: .font)
-        self.fontSize = try? container.decode(CGFloat.self, forKey: .fontSize)
+        self.font = try container.decodeIfPresent(String.self, forKey: .font)
+        self.fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize)
 
-        if let colorHex = try? container.decode(String.self, forKey: .color) {
+        if let colorHex = try container.decodeIfPresent(String.self, forKey: .color) {
             self.color = NSColor(hex: colorHex)
         }
     }
@@ -69,14 +69,14 @@ struct LayoutableObject: Codable {
         try container.encode(self.type, forKey: .type)
         try container.encode(self.title, forKey: .title)
         try container.encode(self.file, forKey: .file)
-        try container.encode(self.isRoot, forKey: .root)
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)
+        try container.encodeIfPresent(self.rotation, forKey: .rotation)
 
-        try container.encode(self.font, forKey: .font)
-        try container.encode(self.fontSize, forKey: .fontSize)
-        try container.encode(self.color?.hexString(), forKey: .color)
+        try container.encodeIfPresent(self.font, forKey: .font)
+        try container.encodeIfPresent(self.fontSize, forKey: .fontSize)
+        try container.encodeIfPresent(self.color?.hexString(), forKey: .color)
     }
 }
 
@@ -99,6 +99,7 @@ private extension LayoutableObject {
         case type = "type"
         case title = "title"
         case frame = "frame"
+        case rotation = "rotation"
         case file = "file"
         case root = "isRoot"
         case font = "font"

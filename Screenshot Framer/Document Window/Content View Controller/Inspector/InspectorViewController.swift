@@ -9,20 +9,67 @@
 import Cocoa
 
 
+/// These Methods are called frequently and therefore only modify exiting layers
+protocol InspectorViewControllerDelegate: class {
+    func inspector(_ inspector: InspectorViewController, requestRotation newRotation: CGFloat, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestNewFrame newFrame: CGRect, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestNewFont newFont: NSFont?, of index: Int)
+    func inspector(_ inspector: InspectorViewController, requestNewColor newColor: NSColor, of index: Int)
+}
+
+
 final class InspectorViewController: NSViewController {
 
     // MARK: - Properties
 
     private let layerStateHistory: LayerStateHistory
     private let languageController: LanguageController
+    private var frameInInspector: CGRect {
+        get {
+            return CGRect(x: self.textFieldX.doubleValue,
+                          y: self.textFieldY.doubleValue,
+                          width: self.textFieldWidth.doubleValue,
+                          height: self.textFieldHeight.doubleValue)
+        }
+        set {
+            self.textFieldX.doubleValue = Double(newValue.origin.x)
+            self.stepperX.doubleValue = self.textFieldX.doubleValue
+            self.textFieldY.doubleValue = Double(newValue.origin.y)
+            self.stepperY.doubleValue = self.textFieldY.doubleValue
+            self.textFieldWidth.doubleValue = Double(newValue.size.width)
+            self.stepperWidth.doubleValue = self.textFieldWidth.doubleValue
+            self.textFieldHeight.doubleValue = Double(newValue.size.height)
+            self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
+        }
+    }
+    private var rotationInInspector: CGFloat? {
+        get {
+            return self.textFieldRotation.objectValue as? CGFloat
+        }
+        set {
+            self.textFieldRotation.objectValue = newValue
+            self.sliderRotation.objectValue = self.textFieldRotation.objectValue
+        }
+    }
+    private var fontSizeInInspector: CGFloat? {
+        get {
+            return CGFloat(self.textFieldFontSize.doubleValue)
+        }
+        set {
+            guard let newValue = newValue else { return }
 
+            self.textFieldFontSize.doubleValue = Double(newValue)
+            self.stepperFontSize.doubleValue = self.textFieldFontSize.doubleValue
+        }
+    }
+
+    weak var delegate: InspectorViewControllerDelegate?
     let viewStateController: ViewStateController
     var selectedRow: Int = -1 {
         didSet {
             self.updateUI()
         }
     }
-
 
     // MARK: - Interface Builder
 
@@ -44,6 +91,9 @@ final class InspectorViewController: NSViewController {
 
     @IBOutlet private var textFieldHeight: NSTextField!
     @IBOutlet private var stepperHeight: NSStepper!
+
+    @IBOutlet private var textFieldRotation: NSTextField!
+    @IBOutlet private var sliderRotation: NSSlider!
 
     @IBOutlet private var textFieldFont: NSTextField!
     @IBOutlet private var textFieldFontSize: NSTextField!
@@ -68,62 +118,47 @@ final class InspectorViewController: NSViewController {
 
     // MARK: - Update Methods
 
-    // swiftlint:disable:next function_body_length
     func updateUI() {
         guard self.selectedRow >= 0 else { return }
         guard self.layerStateHistory.currentLayerState.layers.count - 1 >= self.selectedRow else { return }
         guard self.layerStateHistory.currentLayerState.layers.hasElements else { return }
 
+        self.updateEnabledState()
         let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
-
-        self.textFieldX.isEnabled = layoutableObject.isRoot == false
-        self.stepperX.isEnabled = layoutableObject.isRoot == false
-        self.textFieldY.isEnabled = layoutableObject.isRoot == false
-        self.stepperY.isEnabled = layoutableObject.isRoot == false
-
-        self.textFieldX.doubleValue = Double(layoutableObject.frame.origin.x)
-        self.stepperX.doubleValue = self.textFieldX.doubleValue
-        self.textFieldY.doubleValue = Double(layoutableObject.frame.origin.y)
-        self.stepperY.doubleValue = self.textFieldY.doubleValue
-        self.textFieldWidth.doubleValue = Double(layoutableObject.frame.size.width)
-        self.stepperWidth.doubleValue = self.textFieldWidth.doubleValue
-        self.textFieldHeight.doubleValue = Double(layoutableObject.frame.size.height)
-        self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
-
+        self.frameInInspector = layoutableObject.frame
+        self.rotationInInspector = layoutableObject.rotation
         self.textFieldFile.stringValue = layoutableObject.file
+        self.textFieldFont.stringValue = layoutableObject.font ?? ""
+        self.fontSizeInInspector = layoutableObject.fontSize
+        self.colorWell.color = layoutableObject.color ?? .white
 
-        if let fontString = layoutableObject.font {
-            self.textFieldFont.stringValue = fontString
-        }
+        self.updateLanguages()
+    }
 
-        if let fontSize = layoutableObject.fontSize {
-            self.textFieldFontSize.doubleValue = Double(fontSize)
-            self.stepperFontSize.doubleValue = self.textFieldFontSize.doubleValue
-        }
+    func updateEnabledState() {
+        let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+        var isEnabled = layoutableObject.type != .background
+        self.textFieldX.isEnabled = isEnabled
+        self.stepperX.isEnabled = isEnabled
+        self.textFieldY.isEnabled = isEnabled
+        self.stepperY.isEnabled = isEnabled
+        self.textFieldRotation.isEnabled = isEnabled
+        self.sliderRotation.isEnabled = isEnabled
 
-        if layoutableObject.type == .text {
-            self.textFieldFont.isEnabled = true
-            self.textFieldFontSize.isEnabled = true
-            self.stepperFontSize.isEnabled = true
-            self.colorWell.isEnabled = true
-        } else {
-            self.textFieldFont.isEnabled = false
-            self.textFieldFontSize.isEnabled = false
-            self.stepperFontSize.isEnabled = false
-            self.colorWell.isEnabled = false
-        }
+        isEnabled = layoutableObject.type == .text
+        self.textFieldFont.isEnabled = isEnabled
+        self.textFieldFontSize.isEnabled = isEnabled
+        self.stepperFontSize.isEnabled = isEnabled
+        self.colorWell.isEnabled = isEnabled
+    }
 
-        if let color = layoutableObject.color {
-            self.colorWell.color = color
-        } else {
-            self.colorWell.color = NSColor.white
-        }
-
-
+    func updateLanguages() {
         let selectedLanguage = self.languages.titleOfSelectedItem
-        self.languages.removeAllItems()
         let allLanguages = self.languageController.allLanguages().sorted()
+
+        self.languages.removeAllItems()
         self.languages.addItems(withTitles: allLanguages)
+
         if selectedLanguage != nil {
             self.languages.selectItem(withTitle: selectedLanguage!)
         } else {
@@ -151,11 +186,30 @@ final class InspectorViewController: NSViewController {
             self.viewStateController.newViewState(imageNumber: imageNumber)
 
         case self.stepperFontSize:
-            self.updateFontSize()
+            self.coalesceCalls(to: #selector(updateFontSize), interval: 0.5)
+            let layer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+            var fontName = layer.font ?? "Helvetica Neue"
+            if fontName.isEmpty {
+                fontName = "Helvetica Neue"
+            }
+
+            let font = NSFont(name: fontName, size: CGFloat(self.stepperFontSize.doubleValue))
+            self.delegate?.inspector(self, requestNewFont: font, of: self.selectedRow)
 
         default:
-            self.updateFrame()
+            self.coalesceCalls(to: #selector(updateFrame), interval: 0.5)
+            self.delegate?.inspector(self, requestNewFrame: self.frameInInspector, of: self.selectedRow)
         }
+    }
+
+    @IBAction func sliderDidChangeValue(sender: NSSlider) {
+        self.textFieldRotation.objectValue = sender.objectValue
+        self.coalesceCalls(to: #selector(rotateLayer), interval: 0.5)
+
+        // Note this is a workaround because live rotation is laggy/not possible
+        // if the whole image is generated every time. Therefore the existing image
+        // is rotated and if after a 1 sec no change happend, the operation is saved.
+        self.delegate?.inspector(self, requestRotation: CGFloat(sender.doubleValue), of: self.selectedRow)
     }
 
     @IBAction func textFieldChanged(sender: NSTextField) {
@@ -177,6 +231,9 @@ final class InspectorViewController: NSViewController {
         case self.textFieldFontSize:
             self.updateFontSize()
 
+        case self.textFieldRotation:
+            self.rotateLayer()
+
         default:
             self.updateFrame()
         }
@@ -191,11 +248,7 @@ final class InspectorViewController: NSViewController {
     @IBAction func colorWellDidUpdateColor(sender: NSColorWell) {
         let color = sender.color
         self.coalesceCalls(to: #selector(applyColor), interval: 0.5, object: color)
-    }
-
-    @objc func applyColor(_ color: NSColor) {
-        let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
-        operation.apply()
+        self.delegate?.inspector(self, requestNewColor: color, of: self.selectedRow)
     }
 }
 
@@ -204,19 +257,30 @@ final class InspectorViewController: NSViewController {
 
 private extension InspectorViewController {
 
-    func updateFrame() {
-        let frame = CGRect(x: self.textFieldX.doubleValue,
-                           y: self.textFieldY.doubleValue,
-                           width: self.textFieldWidth.doubleValue,
-                           height: self.textFieldHeight.doubleValue)
-
+    @objc func updateFrame() {
+//        let frame = CGRect(x: self.textFieldX.doubleValue,
+//                           y: self.textFieldY.doubleValue,
+//                           width: self.textFieldWidth.doubleValue,
+//                           height: self.textFieldHeight.doubleValue)
+        let frame = self.frameInInspector
         let operation = UpdateFrameOperation(layerStateHistory: self.layerStateHistory, frame: frame, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 
-    func updateFontSize() {
+    @objc func updateFontSize() {
         let fontSize = CGFloat(self.textFieldFontSize.floatValue)
         let operation = UpdateFontSizeOperation(layerStateHistory: self.layerStateHistory, fontSize: fontSize, indexOfLayer: self.selectedRow)
+        operation.apply()
+    }
+
+    @objc func rotateLayer() {
+        let rotation = CGFloat(self.textFieldRotation.doubleValue)
+        let operation = UpdateRotationOperation(layerStateHistory: self.layerStateHistory, rotation: rotation, indexOfLayer: self.selectedRow)
+        operation.apply()
+    }
+
+    @objc func applyColor(_ color: NSColor) {
+        let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
         operation.apply()
     }
 }
