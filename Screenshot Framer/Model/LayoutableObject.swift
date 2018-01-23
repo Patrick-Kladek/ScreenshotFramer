@@ -26,7 +26,6 @@ struct LayoutableObject: Codable {
     var frame: CGRect
     var rotation: CGFloat?
     var file: String
-    var isRoot: Bool = false
     var font: String?
     var fontSize: CGFloat?
     var color: NSColor?
@@ -34,13 +33,12 @@ struct LayoutableObject: Codable {
 
     // MARK: - Lifecycle
 
-    init(type: LayoutableObjectType, title: String = "Layer", frame: CGRect = .zero, rotation: CGFloat = 0, file: String = "", isRoot: Bool = false) {
+    init(type: LayoutableObjectType, title: String = "Layer", frame: CGRect = .zero, rotation: CGFloat = 0, file: String = "") {
         self.type = type
         self.title = title
         self.frame = frame
         self.rotation = rotation
         self.file = file
-        self.isRoot = isRoot
     }
 
 
@@ -52,7 +50,6 @@ struct LayoutableObject: Codable {
         self.type = try container.decode(LayoutableObjectType.self, forKey: .type)
         self.title = try container.decode(String.self, forKey: .title)
         self.file = try container.decode(String.self, forKey: .file)
-        self.isRoot = try container.decode(Bool.self, forKey: .root)
 
         let frameString = try container.decode(String.self, forKey: .frame)
         self.frame = NSRectFromString(frameString)
@@ -72,7 +69,6 @@ struct LayoutableObject: Codable {
         try container.encode(self.type, forKey: .type)
         try container.encode(self.title, forKey: .title)
         try container.encode(self.file, forKey: .file)
-        try container.encode(self.isRoot, forKey: .root)
 
         let frameString = NSStringFromRect(self.frame)
         try container.encode(frameString, forKey: .frame)

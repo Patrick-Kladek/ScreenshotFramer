@@ -42,9 +42,29 @@ final class InspectorViewController: NSViewController {
             self.stepperHeight.doubleValue = self.textFieldHeight.doubleValue
         }
     }
+    private var rotationInInspector: CGFloat? {
+        get {
+            return self.textFieldRotation.objectValue as? CGFloat
+        }
+        set {
+            self.textFieldRotation.objectValue = newValue
+            self.sliderRotation.objectValue = self.textFieldRotation.objectValue
+        }
+    }
+    private var fontSizeInInspector: CGFloat? {
+        get {
+            return CGFloat(self.textFieldFontSize.doubleValue)
+        }
+        set {
+            guard let newValue = newValue else { return }
 
-    let viewStateController: ViewStateController
+            self.textFieldFontSize.doubleValue = Double(newValue)
+            self.stepperFontSize.doubleValue = self.textFieldFontSize.doubleValue
+        }
+    }
+
     weak var delegate: InspectorViewControllerDelegate?
+    let viewStateController: ViewStateController
     var selectedRow: Int = -1 {
         didSet {
             self.updateUI()
@@ -98,66 +118,47 @@ final class InspectorViewController: NSViewController {
 
     // MARK: - Update Methods
 
-    // swiftlint:disable:next function_body_length
     func updateUI() {
         guard self.selectedRow >= 0 else { return }
         guard self.layerStateHistory.currentLayerState.layers.count - 1 >= self.selectedRow else { return }
         guard self.layerStateHistory.currentLayerState.layers.hasElements else { return }
 
+        self.updateEnabledState()
         let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
-
-        self.textFieldX.isEnabled = layoutableObject.isRoot == false
-        self.stepperX.isEnabled = layoutableObject.isRoot == false
-        self.textFieldY.isEnabled = layoutableObject.isRoot == false
-        self.stepperY.isEnabled = layoutableObject.isRoot == false
-
         self.frameInInspector = layoutableObject.frame
-
-        self.textFieldRotation.objectValue = layoutableObject.rotation
-        self.sliderRotation.objectValue = self.textFieldRotation.objectValue
-
+        self.rotationInInspector = layoutableObject.rotation
         self.textFieldFile.stringValue = layoutableObject.file
+        self.textFieldFont.stringValue = layoutableObject.font ?? ""
+        self.fontSizeInInspector = layoutableObject.fontSize
+        self.colorWell.color = layoutableObject.color ?? .white
 
-        if let fontString = layoutableObject.font {
-            self.textFieldFont.stringValue = fontString
-        }
+        self.updateLanguages()
+    }
 
-        if let fontSize = layoutableObject.fontSize {
-            self.textFieldFontSize.doubleValue = Double(fontSize)
-            self.stepperFontSize.doubleValue = self.textFieldFontSize.doubleValue
-        }
+    func updateEnabledState() {
+        let layoutableObject = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+        var isEnabled = layoutableObject.type != .background
+        self.textFieldX.isEnabled = isEnabled
+        self.stepperX.isEnabled = isEnabled
+        self.textFieldY.isEnabled = isEnabled
+        self.stepperY.isEnabled = isEnabled
+        self.textFieldRotation.isEnabled = isEnabled
+        self.sliderRotation.isEnabled = isEnabled
 
-        if layoutableObject.type == .text {
-            self.textFieldFont.isEnabled = true
-            self.textFieldFontSize.isEnabled = true
-            self.stepperFontSize.isEnabled = true
-            self.colorWell.isEnabled = true
-        } else {
-            self.textFieldFont.isEnabled = false
-            self.textFieldFontSize.isEnabled = false
-            self.stepperFontSize.isEnabled = false
-            self.colorWell.isEnabled = false
-        }
+        isEnabled = layoutableObject.type == .text
+        self.textFieldFont.isEnabled = isEnabled
+        self.textFieldFontSize.isEnabled = isEnabled
+        self.stepperFontSize.isEnabled = isEnabled
+        self.colorWell.isEnabled = isEnabled
+    }
 
-        if layoutableObject.type == .background {
-            self.textFieldRotation.isEnabled = false
-            self.sliderRotation.isEnabled = false
-        } else {
-            self.textFieldRotation.isEnabled = true
-            self.sliderRotation.isEnabled = true
-        }
-
-        if let color = layoutableObject.color {
-            self.colorWell.color = color
-        } else {
-            self.colorWell.color = NSColor.white
-        }
-
-
+    func updateLanguages() {
         let selectedLanguage = self.languages.titleOfSelectedItem
-        self.languages.removeAllItems()
         let allLanguages = self.languageController.allLanguages().sorted()
+
+        self.languages.removeAllItems()
         self.languages.addItems(withTitles: allLanguages)
+
         if selectedLanguage != nil {
             self.languages.selectItem(withTitle: selectedLanguage!)
         } else {

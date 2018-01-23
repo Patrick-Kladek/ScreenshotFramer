@@ -248,7 +248,7 @@ class AddLayerOperation: OperationProtocol {
     }
 
     func apply() {
-        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: .zero, file: "", isRoot: false)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: .zero, file: "")
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
@@ -259,7 +259,7 @@ final class AddBackgroundOperation: AddLayerOperation {
     override var type: LayoutableObjectType { return .background }
 
     override func apply() {
-        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: true)
+        let layer = LayoutableObject(type: self.type, title: self.type.rawValue, frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "")
         let newLayerState = self.layerStateHistory.currentLayerState.addingLayer(layer)
         self.layerStateHistory.append(newLayerState)
     }
