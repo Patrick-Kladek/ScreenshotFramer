@@ -637,6 +637,11 @@
                                     <action selector="showTimeTravelWindow:" target="-1" id="7aV-Az-VF0"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Zoom To Fit" keyEquivalent="0" id="c6u-nT-NSH">
+                                <connections>
+                                    <action selector="zoomToFit:" target="-1" id="q9k-NF-q8v"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>

@@ -100,6 +100,8 @@ final class ContentViewController: NSViewController {
         if self.document.fileURL == nil {
             self.document.save(self)
         }
+
+        self.zoomToFit(nil)
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -112,14 +114,13 @@ final class ContentViewController: NSViewController {
         case #selector(ContentViewController.redo):
             return self.layerStateHistory.canRedo
 
-        case #selector(ContentViewController.addContent):
-            return true
-        case #selector(ContentViewController.addDevice):
-            return true
-        case #selector(ContentViewController.addText):
+        case #selector(ContentViewController.addContent),
+             #selector(ContentViewController.addDevice),
+             #selector(ContentViewController.addText):
             return true
 
-        case #selector(ContentViewController.toggleHighlightCurrentLayer):
+        case #selector(ContentViewController.toggleHighlightCurrentLayer),
+             #selector(ContentViewController.zoomToFit):
             return true
 
         default:
@@ -238,6 +239,22 @@ final class ContentViewController: NSViewController {
         self.popover.animates = true
         self.popover.behavior = .transient
         self.popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.minX)
+    }
+
+    /**
+     *  - Attenttion: uses animation when sender != nil. Therefore animates when called from UI elements
+     */
+    @IBAction func zoomToFit(_ sender: Any?) {
+        guard var frame = self.scrollView.documentView?.frame else { return }
+
+        frame.size.width += 40
+        frame.size.height += 40
+
+        if sender != nil {
+            self.scrollView.animator().magnify(toFit: frame)
+        } else {
+            self.scrollView.magnify(toFit: frame)
+        }
     }
 
     func reloadLayout() {
