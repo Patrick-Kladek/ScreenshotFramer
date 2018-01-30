@@ -41,6 +41,7 @@ final class ExportController {
     func saveSingleImage(viewState: ViewState) -> [LayoutError] {
         self.shouldCancel = false
 
+        let fileManager = FileManager()
         let viewStateController = ViewStateController(viewState: viewState)
         let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
         guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { return [.noLayers] }
@@ -48,6 +49,7 @@ final class ExportController {
         let data = view.pngData()
         guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return [.noOutputFile] }
 
+        try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
         try? data?.write(to: url, options: .atomic)
 
         return layoutController.layoutErrors
