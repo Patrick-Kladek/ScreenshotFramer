@@ -16,7 +16,7 @@ It's super simple: Screenshot Framer simply puts pictures on top of each other (
 
 ### Preparation
 - First check out the repository and build the app. Alternatively you can download the precompiled app [here](https://github.com/IdeasOnCanvas/ScreenshotFramer/releases).
-- Next open the Sample Project or create your own project structure. When you are using Fastlane's snapshot tool you can reuse that folder structure and only add missing files.
+- Next open the Sample Project or create your own project structure. When you are using [fastlane](https://fastlane.tools)'s snapshot tool you can reuse that folder structure and only add missing files.
 
 ![](Documentation/File%20Structure.png)
 
@@ -27,7 +27,7 @@ This folder allows you to specify background images for your screenshots, if you
 If you want your screenshots framed in a device, you may use any image here. You can for example [download Apple's device images](https://developer.apple.com/app-store/marketing/guidelines/#images) and copy them into this folder.
 
 ##### Localized Image Folders
-(en-US, de-DE, ...) are generated using Fastlane snapshot or you may also copy them into this folder. Important is that you have a strings file in this folder called `screenshots.strings`.
+(en-US, de-DE, ...) are generated using _fastlane snapshot_ or you may also copy them into this folder. Important is that you have a strings file in this folder called `screenshots.strings`.
 
 ```
 "1" = "It Starts With a Thought";
