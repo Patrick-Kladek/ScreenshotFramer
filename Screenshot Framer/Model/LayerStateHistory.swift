@@ -24,7 +24,7 @@ final class LayerStateHistory {
 
     /**
      *  returns the current LayerState based on undo (currentStackPosition)
-     *  Warning: Ensure that at least one object is availible
+     *  Warning: Ensure that at least one object is available
      */
     var currentLayerState: LayerState {
         return self.layerStates[self.currentStackPosition]

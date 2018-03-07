@@ -208,7 +208,7 @@ final class InspectorViewController: NSViewController {
 
         // Note this is a workaround because live rotation is laggy/not possible
         // if the whole image is generated every time. Therefore the existing image
-        // is rotated and if after a 1 sec no change happend, the operation is saved.
+        // is rotated and if after a 1 sec no change happened, the operation is saved.
         self.delegate?.inspector(self, requestRotation: CGFloat(sender.doubleValue), of: self.selectedRow)
     }
 
