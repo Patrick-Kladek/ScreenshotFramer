@@ -129,14 +129,22 @@ private extension LayoutController {
         let string = textField.stringValue as NSString
         var limited = false
 
-        var size = string.size(withAttributes: [NSAttributedStringKey.font: NSFont(name: font.fontName, size: fontSize)!])
+        func calculateStringSize(withFont font: NSFont) -> CGSize {
+            return string.boundingRect(
+                with: CGSize(width: frame.width, height: CGFloat.greatestFiniteMagnitude),
+                options: [.usesLineFragmentOrigin],
+                attributes: [NSAttributedStringKey.font: font],
+                context: nil).size
+        }
+
+        var size = calculateStringSize(withFont: NSFont(name: font.fontName, size: fontSize)!)
         while (size.width >= frame.width || size.height >= frame.height) && fontSize > kMinFontSize {
             limited = true
             fontSize -= 0.5
             let newFontSize = CGFloat(fontSize)
             guard let newFont = NSFont(name: font.fontName, size: newFontSize) else { return limited }
 
-            size = string.size(withAttributes: [NSAttributedStringKey.font: newFont])
+            size = calculateStringSize(withFont: newFont)
             textField.font = newFont
         }
         return limited
