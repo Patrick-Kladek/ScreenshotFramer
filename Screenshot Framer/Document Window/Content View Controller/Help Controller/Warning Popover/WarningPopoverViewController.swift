@@ -11,7 +11,7 @@ import Cocoa
 class WarningPopoverViewController: NSViewController {
 
     init() {
-        super.init(nibName: self.nibName, bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {

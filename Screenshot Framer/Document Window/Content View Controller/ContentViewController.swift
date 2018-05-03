@@ -52,7 +52,7 @@ final class ContentViewController: NSViewController {
         self.document = document
         self.fileController = fileController
 
-        super.init(nibName: self.nibName, bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         self.viewStateController.delegate = self
         self.exportController.delegate = self
