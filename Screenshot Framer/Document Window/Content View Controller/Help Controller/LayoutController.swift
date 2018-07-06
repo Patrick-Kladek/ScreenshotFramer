@@ -130,11 +130,8 @@ private extension LayoutController {
         var limited = false
 
         func calculateStringSize(withFont font: NSFont) -> CGSize {
-            return string.boundingRect(
-                with: CGSize(width: frame.width, height: CGFloat.greatestFiniteMagnitude),
-                options: [.usesLineFragmentOrigin],
-                attributes: [NSAttributedStringKey.font: font],
-                context: nil).size
+            textField.font = font
+            return textField.sizeThatFits(CGSize(width: frame.width, height: CGFloat.greatestFiniteMagnitude))
         }
 
         var size = calculateStringSize(withFont: NSFont(name: font.fontName, size: fontSize)!)
@@ -145,7 +142,6 @@ private extension LayoutController {
             guard let newFont = NSFont(name: font.fontName, size: newFontSize) else { return limited }
 
             size = calculateStringSize(withFont: newFont)
-            textField.font = newFont
         }
         return limited
     }
