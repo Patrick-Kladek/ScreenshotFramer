@@ -115,6 +115,16 @@ final class InspectorViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        let fromImageNumber = self.layerStateHistory.currentLayerState.outputConfig.fromImageNumber
+        guard fromImageNumber > 0 else { return }
+
+        self.textFieldImageNumber.integerValue = fromImageNumber
+        self.viewStateController.newViewState(imageNumber: fromImageNumber)
+    }
+
 
     // MARK: - Update Methods
 
