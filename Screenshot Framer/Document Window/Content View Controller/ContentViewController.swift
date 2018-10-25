@@ -369,7 +369,7 @@ extension ContentViewController: InspectorViewControllerDelegate {
             return
         }
 
-        let view = documentView.subviews[index - 1]
+        let view = documentView.subviews[index]
         view.frame = newFrame
     }
 
