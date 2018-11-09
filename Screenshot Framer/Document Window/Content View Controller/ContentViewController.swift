@@ -124,7 +124,7 @@ final class ContentViewController: NSViewController {
             return true
 
         default:
-            return super.validateMenuItem(menuItem)
+            return false
         }
     }
 
