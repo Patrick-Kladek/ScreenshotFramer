@@ -66,7 +66,7 @@ final class ContentViewController: NSViewController {
     // MARK: - Overrides
 
     override var nibName: NSNib.Name? {
-        return NSNib.Name(rawValue: String(describing: type(of: self)))
+        return String(describing: type(of: self))
     }
 
     override var acceptsFirstResponder: Bool {
@@ -77,7 +77,7 @@ final class ContentViewController: NSViewController {
         super.viewDidLoad()
 
         let inspector = InspectorViewController(layerStateHistory: self.document.layerStateHistory, selectedRow: 0, viewStateController: viewStateController, languageController: languageController)
-        self.addChildViewController(inspector)
+        self.addChild(inspector)
         self.inspectorPlaceholder.addSubview(inspector.view)
 
         NSLayoutConstraint.activate([
@@ -104,7 +104,7 @@ final class ContentViewController: NSViewController {
         self.zoomToFit(nil)
     }
 
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         self.updateMenuItem(menuItem)
         guard let action = menuItem.action else { return false }
 
