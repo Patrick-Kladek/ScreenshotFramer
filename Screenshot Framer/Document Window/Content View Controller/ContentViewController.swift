@@ -355,7 +355,7 @@ extension ContentViewController: InspectorViewControllerDelegate {
         guard index > 0 else { return }
         guard let views = self.scrollView.documentView?.subviews else { return }
 
-        let view = views[index - 1]
+        let view = views[index]
         view.frameCenterRotation = newRotation
         view.needsDisplay = true
         view.display()
@@ -376,7 +376,7 @@ extension ContentViewController: InspectorViewControllerDelegate {
     func inspector(_ inspector: InspectorViewController, requestNewFont newFont: NSFont?, of index: Int) {
         guard index > 0 else { return }
         guard let views = self.scrollView.documentView?.subviews else { return }
-        guard let textField = views[index - 1] as? NSTextField else { return }
+        guard let textField = views[index] as? NSTextField else { return }
 
         textField.font = newFont
     }
@@ -384,7 +384,7 @@ extension ContentViewController: InspectorViewControllerDelegate {
     func inspector(_ inspector: InspectorViewController, requestNewColor newColor: NSColor, of index: Int) {
         guard index > 0 else { return }
         guard let views = self.scrollView.documentView?.subviews else { return }
-        guard let textField = views[index - 1] as? NSTextField else { return }
+        guard let textField = views[index] as? NSTextField else { return }
 
         textField.textColor = newColor
     }
