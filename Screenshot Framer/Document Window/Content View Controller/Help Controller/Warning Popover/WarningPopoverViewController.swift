@@ -21,6 +21,6 @@ class WarningPopoverViewController: NSViewController {
     // MARK: - Overrides
 
     override var nibName: NSNib.Name? {
-        return NSNib.Name(rawValue: String(describing: type(of: self)))
+        return String(describing: type(of: self))
     }
 }

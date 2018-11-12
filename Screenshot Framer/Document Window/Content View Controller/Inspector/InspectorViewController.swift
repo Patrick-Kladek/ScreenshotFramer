@@ -108,7 +108,7 @@ final class InspectorViewController: NSViewController {
         self.selectedRow = selectedRow
         self.viewStateController = viewStateController
         self.languageController = languageController
-        super.init(nibName: NSNib.Name(rawValue: String(describing: type(of: self))), bundle: nil)
+        super.init(nibName: String(describing: type(of: self)), bundle: nil)
     }
 
     required init?(coder: NSCoder) {

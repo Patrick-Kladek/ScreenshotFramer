@@ -19,7 +19,7 @@ class ScreenshotFramerTests: XCTestCase {
         self.layerStateHistory = LayerStateHistory()
 
         let layerState = LayerState(title: "First Operation",
-                                    layers: [LayoutableObject(type: .background, title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "", isRoot: true)],
+                                    layers: [LayoutableObject(type: .background, title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "")],
                                     outputConfig: OutputConfig(output: "", fromImageNumber: 1, toImageNumber: 5))
         self.layerStateHistory.append(layerState)
     }
@@ -30,7 +30,7 @@ class ScreenshotFramerTests: XCTestCase {
     }
 
     func testAddLayerState() {
-        let newLayer = LayoutableObject(type: .device, title: "Device Frame", frame: CGRect(x: 100, y: 100, width: 600, height: 800), file: "iPhone X", isRoot: false)
+        let newLayer = LayoutableObject(type: .device, title: "Device Frame", frame: CGRect(x: 100, y: 100, width: 600, height: 800), file: "iPhone X")
 
         let currentLayerState = self.layerStateHistory.currentLayerState
         _ = currentLayerState.addingLayer(newLayer)
