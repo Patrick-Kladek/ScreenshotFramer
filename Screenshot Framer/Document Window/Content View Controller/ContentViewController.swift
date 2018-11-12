@@ -9,7 +9,7 @@
 import Cocoa
 
 
-final class ContentViewController: NSViewController {
+final class ContentViewController: NSViewController, NSMenuItemValidation {
 
     // MARK: - Properties
 
