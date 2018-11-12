@@ -34,7 +34,7 @@ final class LanguageController {
             var isDir = ObjCBool(false)
             fileManager.fileExists(atPath: file.path, isDirectory: &isDir)
             return isDir.boolValue
-        }.flatMap { $0.lastPathComponent }) as Set<String>
+        }.compactMap { $0.lastPathComponent }) as Set<String>
 
         let blackList: Set = ["backgrounds", "device_frames", "Export"]
         return Array(allLanguages.subtracting(blackList))

@@ -1,0 +1,4 @@
+framework module SwiftLintFramework {
+    header "SwiftLintFramework-Swift.h"
+    requires objc
+}

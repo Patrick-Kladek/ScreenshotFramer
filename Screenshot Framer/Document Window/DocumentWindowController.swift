@@ -14,7 +14,7 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate {
     // MARK: - Overrides
 
     override var windowNibName: NSNib.Name? {
-        return NSNib.Name(rawValue: String(describing: type(of: self)))
+        return String(describing: type(of: self))
     }
 
     override func windowDidLoad() {
