@@ -115,6 +115,16 @@ final class InspectorViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        let fromImageNumber = self.layerStateHistory.currentLayerState.outputConfig.fromImageNumber
+        guard fromImageNumber > 0 else { return }
+
+        self.textFieldImageNumber.integerValue = fromImageNumber
+        self.viewStateController.newViewState(imageNumber: fromImageNumber)
+    }
+
 
     // MARK: - Update Methods
 
@@ -253,15 +263,11 @@ final class InspectorViewController: NSViewController {
 }
 
 
-// MARK: Private
+// MARK: - Private
 
 private extension InspectorViewController {
 
     @objc func updateFrame() {
-//        let frame = CGRect(x: self.textFieldX.doubleValue,
-//                           y: self.textFieldY.doubleValue,
-//                           width: self.textFieldWidth.doubleValue,
-//                           height: self.textFieldHeight.doubleValue)
         let frame = self.frameInInspector
         let operation = UpdateFrameOperation(layerStateHistory: self.layerStateHistory, frame: frame, indexOfLayer: self.selectedRow)
         operation.apply()
@@ -274,7 +280,7 @@ private extension InspectorViewController {
     }
 
     @objc func rotateLayer() {
-        let rotation = CGFloat(self.textFieldRotation.doubleValue)
+        let rotation = CGFloat(self.textFieldRotation.doubleValue.normalizeAngle)
         let operation = UpdateRotationOperation(layerStateHistory: self.layerStateHistory, rotation: rotation, indexOfLayer: self.selectedRow)
         operation.apply()
     }
@@ -282,5 +288,22 @@ private extension InspectorViewController {
     @objc func applyColor(_ color: NSColor) {
         let operation = UpdateTextColorOperation(layerStateHistory: self.layerStateHistory, color: color, indexOfLayer: self.selectedRow)
         operation.apply()
+    }
+}
+
+// MARK: - Helper
+
+private extension Double {
+
+    var normalizeAngle: Double {
+        return self.normalizeValue(self, start: 0.0, end: 360.0)
+    }
+
+    /// from https://stackoverflow.com/a/2021986
+    func normalizeValue(_ value: Double, start: Double, end: Double) -> Double {
+        let width = end - start
+        let offsetValue = value - start
+
+        return (offsetValue - (floor(offsetValue / width) * width)) + start
     }
 }
