@@ -24,7 +24,7 @@ It's super simple: Screenshot Framer simply puts pictures on top of each other (
 This folder allows you to specify background images for your screenshots, if you don't want to go all-white.
 
 ##### device_frames
-If you want your screenshots framed in a device, you may use any image here. You can for example [download Apple's device images](https://developer.apple.com/app-store/marketing/guidelines/#images) and copy them into this folder.
+If you want your screenshots framed in a device, you may use any image here. You can for example [download Apple's device images](https://developer.apple.com/app-store/marketing/guidelines/#images) or [Facebook's Device Assets](https://facebook.design/devices) and copy them into this folder.
 
 ##### Localized Image Folders
 (en-US, de-DE, ...) are generated using _fastlane snapshot_ or you may also copy them into this folder. Important is that you have a strings file in this folder called `screenshots.strings`.
