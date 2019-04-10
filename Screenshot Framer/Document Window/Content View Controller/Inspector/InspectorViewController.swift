@@ -179,6 +179,12 @@ final class InspectorViewController: NSViewController {
         }
     }
 
+    func updateUIFromViewState() {
+        self.textFieldImageNumber.integerValue = self.viewStateController.viewState.imageNumber
+        self.stepperImageNumber.integerValue = self.textFieldImageNumber.integerValue
+        self.languages.stringValue = self.viewStateController.viewState.language
+    }
+
 
     // MARK: - Actions
 

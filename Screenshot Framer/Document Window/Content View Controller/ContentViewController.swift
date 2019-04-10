@@ -123,6 +123,16 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
              #selector(ContentViewController.zoomToFit):
             return true
 
+        case #selector(ContentViewController.previousImage):
+            guard let inspectorViewController = inspectorViewController else { return true }
+
+            return inspectorViewController.viewStateController.viewState.imageNumber > self.textFieldFromImageNumber.integerValue
+
+        case #selector(ContentViewController.nextImage):
+            guard let inspectorViewController = inspectorViewController else { return true }
+
+            return inspectorViewController.viewStateController.viewState.imageNumber < self.textFieldToImageNumber.integerValue
+
         default:
             return false
         }
@@ -257,9 +267,20 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         }
     }
 
+    @IBAction func previousImage(_ sender: Any?) {
+        let currentImage = self.inspectorViewController?.viewStateController.viewState.imageNumber ?? 0
+        self.inspectorViewController?.viewStateController.newViewState(imageNumber: currentImage - 1)
+    }
+
+    @IBAction func nextImage(_ sender: Any?) {
+        let currentImage = self.inspectorViewController?.viewStateController.viewState.imageNumber ?? 0
+        self.inspectorViewController?.viewStateController.newViewState(imageNumber: currentImage + 1)
+    }
+
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
+        self.inspectorViewController?.updateUIFromViewState()
         self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
         self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
