@@ -104,6 +104,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.zoomToFit(nil)
     }
 
+    //swiftlint:disable:next cyclomatic_complexity
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         self.updateMenuItem(menuItem)
         guard let action = menuItem.action else { return false }
@@ -132,6 +133,9 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
             guard let inspectorViewController = inspectorViewController else { return true }
 
             return inspectorViewController.viewStateController.viewState.imageNumber < self.textFieldToImageNumber.integerValue
+
+        case #selector(ContentViewController.preview):
+            return true
 
         default:
             return false
@@ -275,6 +279,13 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
     @IBAction func nextImage(_ sender: Any?) {
         let currentImage = self.inspectorViewController?.viewStateController.viewState.imageNumber ?? 0
         self.inspectorViewController?.viewStateController.newViewState(imageNumber: currentImage + 1)
+    }
+
+    @IBAction func preview(_ sender: Any?) {
+        guard let displayName = self.document.displayName else { return }
+
+        let name = (displayName as NSString).deletingPathExtension
+        self.exportController.preview(viewState: self.viewStateController.viewState, name: name)
     }
 
     func reloadLayout() {

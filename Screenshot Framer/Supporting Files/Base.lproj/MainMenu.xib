@@ -643,6 +643,12 @@
                                     <action selector="zoomToFit:" target="-1" id="q9k-NF-q8v"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Preview" keyEquivalent="p" id="VVR-5R-xye">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="preview:" target="-1" id="zpL-dz-abY"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Previous" keyEquivalent="" id="vcZ-73-Kqp">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
