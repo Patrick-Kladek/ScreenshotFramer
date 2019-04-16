@@ -649,6 +649,12 @@
                                     <action selector="preview:" target="-1" id="zpL-dz-abY"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Preview Languages" alternate="YES" keyEquivalent="p" id="7S7-Be-20K">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="previewLanguages:" target="-1" id="UDW-1s-fYV"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Previous" keyEquivalent="" id="vcZ-73-Kqp">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>

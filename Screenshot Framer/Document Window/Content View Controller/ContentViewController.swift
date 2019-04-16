@@ -134,7 +134,8 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
 
             return inspectorViewController.viewStateController.viewState.imageNumber < self.textFieldToImageNumber.integerValue
 
-        case #selector(ContentViewController.preview):
+        case #selector(ContentViewController.preview),
+             #selector(ContentViewController.previewLanguages):
             return true
 
         default:
@@ -286,6 +287,13 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
 
         let name = (displayName as NSString).deletingPathExtension
         self.exportController.preview(viewState: self.viewStateController.viewState, name: name)
+    }
+
+    @IBAction func previewLanguages(_ sender: Any?) {
+        guard let displayName = self.document.displayName else { return }
+
+        let name = (displayName as NSString).deletingPathExtension
+        self.exportController.previewLanguages(viewState: self.viewStateController.viewState, name: name)
     }
 
     func reloadLayout() {
