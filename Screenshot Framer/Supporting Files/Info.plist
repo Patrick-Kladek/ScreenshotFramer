@@ -14,13 +14,15 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>Document Icon</string>
 			<key>CFBundleTypeName</key>
-			<string>DocumentType</string>
+			<string>Screenshot Framer Project</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>????</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<integer>0</integer>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
