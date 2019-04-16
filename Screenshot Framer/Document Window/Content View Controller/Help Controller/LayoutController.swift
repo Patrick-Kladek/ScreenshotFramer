@@ -97,7 +97,7 @@ private extension LayoutController {
         textField.backgroundColor = NSColor.clear
         textField.isBezeled = false
         textField.isEditable = false
-        textField.alignment = .center
+        textField.alignment = object.textAlignment ?? .center
 
         if let text = text {
             textField.stringValue = text

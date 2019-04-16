@@ -105,6 +105,15 @@ struct LayerState: Codable {
         return LayerState(title: "Updating Color", layers: layers, outputConfig: self.outputConfig)
     }
 
+    func updating(alignment: NSTextAlignment, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].textAlignment = alignment
+        return LayerState(title: "Updating Text Alignment", layers: layers, outputConfig: self.outputConfig)
+    }
+
 
     // MARK: - Output Config
 
