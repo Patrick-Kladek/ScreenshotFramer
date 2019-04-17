@@ -25,20 +25,20 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="775" height="737"/>
+            <rect key="frame" x="0.0" y="0.0" width="775" height="759"/>
             <subviews>
                 <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qGY-TZ-89B">
-                    <rect key="frame" x="0.0" y="0.0" width="775" height="737"/>
+                    <rect key="frame" x="0.0" y="0.0" width="775" height="759"/>
                     <subviews>
                         <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" minMagnification="0.10000000000000001" usesPredominantAxisScrolling="NO" id="O0C-Q5-AWh">
-                            <rect key="frame" x="0.0" y="0.0" width="485" height="737"/>
+                            <rect key="frame" x="0.0" y="0.0" width="485" height="759"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <clipView key="contentView" id="MQh-pm-viu" customClass="CenterClipView" customModule="Screenshot_Framer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="485" height="737"/>
+                                <rect key="frame" x="0.0" y="0.0" width="485" height="759"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Zg-xE-S2A">
-                                        <rect key="frame" x="0.0" y="0.0" width="470" height="722"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="470" height="744"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </view>
                                 </subviews>
@@ -54,11 +54,11 @@
                             </scroller>
                         </scrollView>
                         <customView id="V5e-jM-e5B">
-                            <rect key="frame" x="486" y="0.0" width="289" height="737"/>
+                            <rect key="frame" x="486" y="0.0" width="289" height="759"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <subviews>
                                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcc-rK-wzh">
-                                    <rect key="frame" x="0.0" y="587" width="289" height="150"/>
+                                    <rect key="frame" x="0.0" y="609" width="289" height="150"/>
                                     <clipView key="contentView" id="NkH-PV-FH7">
                                         <rect key="frame" x="0.0" y="0.0" width="289" height="150"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,7 +129,7 @@
                                     </scroller>
                                 </scrollView>
                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hmg-Jg-ukQ">
-                                    <rect key="frame" x="6" y="556" width="71" height="24"/>
+                                    <rect key="frame" x="6" y="578" width="71" height="24"/>
                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="AOr-rf-cYo">
                                         <font key="font" metaFont="system"/>
                                         <segments>
@@ -142,9 +142,9 @@
                                     </connections>
                                 </segmentedControl>
                                 <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slX-x1-2Hr">
-                                    <rect key="frame" x="0.0" y="179" width="289" height="371"/>
+                                    <rect key="frame" x="0.0" y="179" width="289" height="393"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="371" id="SCT-j3-l6Y"/>
+                                        <constraint firstAttribute="height" constant="393" id="SCT-j3-l6Y"/>
                                     </constraints>
                                 </customView>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tAW-Cr-EAJ">

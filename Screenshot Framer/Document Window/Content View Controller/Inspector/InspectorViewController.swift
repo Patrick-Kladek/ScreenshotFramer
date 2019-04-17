@@ -100,6 +100,7 @@ final class InspectorViewController: NSViewController {
     @IBOutlet private var stepperFontSize: NSStepper!
     @IBOutlet private var colorWell: NSColorWell!
     @IBOutlet private var alignmentSegment: NSSegmentedControl!
+    @IBOutlet private var verticallyCenteredCheckbox: NSButton!
 
 
     // MARK: - Lifecycle
@@ -143,6 +144,7 @@ final class InspectorViewController: NSViewController {
         self.fontSizeInInspector = layoutableObject.fontSize
         self.colorWell.color = layoutableObject.color ?? .white
         self.alignmentSegment.selectSegment(withTag: layoutableObject.textAlignment?.segmentTag ?? 1)   // default to center
+        self.verticallyCenteredCheckbox.state = (layoutableObject.verticallyCentered ?? false) ? .on : .off
 
         self.updateLanguages()
     }
@@ -275,6 +277,14 @@ final class InspectorViewController: NSViewController {
         let alignment = NSTextAlignment(segmentTag: tag)
 
         let operation = UpdateTextAlignmentOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.selectedRow, alignment: alignment)
+        operation.apply()
+    }
+
+    @IBAction func checkboxDidChange(sender: NSButton) {
+        guard sender == self.verticallyCenteredCheckbox else { return }
+
+        let state = self.verticallyCenteredCheckbox.state == .on ? true : false
+        let operation = UpdateVerticallyCenteredTextOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.selectedRow, verticallyCentered: state)
         operation.apply()
     }
 }

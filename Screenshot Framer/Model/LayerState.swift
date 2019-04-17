@@ -114,6 +114,15 @@ struct LayerState: Codable {
         return LayerState(title: "Updating Text Alignment", layers: layers, outputConfig: self.outputConfig)
     }
 
+    func updating(verticallyCentered: Bool, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].verticallyCentered = verticallyCentered
+        return LayerState(title: "Updating Vertical Alignment", layers: layers, outputConfig: self.outputConfig)
+    }
+
 
     // MARK: - Output Config
 

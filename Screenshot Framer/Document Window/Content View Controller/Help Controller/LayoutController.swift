@@ -92,7 +92,10 @@ private extension LayoutController {
         let absoluteURL = self.fileController.absoluteURL(for: object, viewState: viewState)
         let text = self.fileController.localizedTitle(from: absoluteURL, viewState: viewState)
 
+        let cell = VerticallyCenteredTextFieldCell(textCell: "textfield")
+        cell.verticallyCentered = object.verticallyCentered ?? false
         let textField = NSTextField(frame: object.frame)
+        textField.cell = cell
         textField.textColor = NSColor.white
         textField.backgroundColor = NSColor.clear
         textField.isBezeled = false

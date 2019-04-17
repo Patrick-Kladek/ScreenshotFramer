@@ -30,6 +30,7 @@ struct LayoutableObject: Codable {
     var fontSize: CGFloat?
     var color: NSColor?
     var textAlignment: NSTextAlignment?
+    var verticallyCentered: Bool?
 
 
     // MARK: - Lifecycle
@@ -65,6 +66,7 @@ struct LayoutableObject: Codable {
         if let alignment = try container.decodeIfPresent(String.self, forKey: .textAlignment) {
             self.textAlignment = NSTextAlignment(string: alignment)
         }
+        self.verticallyCentered = try container.decodeIfPresent(Bool.self, forKey: .verticallyCentered)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -82,6 +84,7 @@ struct LayoutableObject: Codable {
         try container.encodeIfPresent(self.fontSize, forKey: .fontSize)
         try container.encodeIfPresent(self.color?.hexString(), forKey: .color)
         try container.encodeIfPresent(self.textAlignment?.stringRepresentation, forKey: .textAlignment)
+        try container.encodeIfPresent(self.verticallyCentered, forKey: .verticallyCentered)
     }
 }
 
@@ -94,6 +97,8 @@ extension LayoutableObject: Equatable {
         return  lhs.type == rhs.type && lhs.title == rhs.title && lhs.frame == rhs.frame
     }
 }
+
+// MARK: - Private
 
 private extension NSTextAlignment {
 
@@ -128,9 +133,6 @@ private extension NSTextAlignment {
     }
 }
 
-
-// MARK: - Private
-
 private extension LayoutableObject {
 
     private enum CodingKeys: String, CodingKey {
@@ -144,5 +146,6 @@ private extension LayoutableObject {
         case fontSize = "fontSize"
         case color = "color"
         case textAlignment = "textAlignment"
+        case verticallyCentered = "verticallyCentered"
     }
 }

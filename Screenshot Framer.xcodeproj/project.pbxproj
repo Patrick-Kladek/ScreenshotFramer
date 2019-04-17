@@ -54,6 +54,8 @@
 		CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */; };
 		CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659101FE3F00000430F20 /* MNCoalescing.swift */; };
 		CDB659131FE4268200430F20 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
+		CDD324602266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */; };
+		CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */; };
 		CDE9C3541FEBDBD100168B40 /* Document Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CDE9C3531FEBDBD100168B40 /* Document Icon.icns */; };
 		CDE9C3551FEBEBCE00168B40 /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
 		CDE9C3561FEBEBD300168B40 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4C1FDE883200FB0F2F /* Operations.swift */; };
@@ -127,6 +129,7 @@
 		CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		CDB659101FE3F00000430F20 /* MNCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCoalescing.swift; sourceTree = "<group>"; };
 		CDB659121FE4268200430F20 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
+		CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextFieldCell.swift; sourceTree = "<group>"; };
 		CDE9C3531FEBDBD100168B40 /* Document Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Document Icon.icns"; sourceTree = "<group>"; };
 		CDFF69951FD827B800E652EE /* Screenshot FramerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Screenshot FramerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDFF69971FD827B800E652EE /* ScreenshotFramerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotFramerTests.swift; sourceTree = "<group>"; };
@@ -302,6 +305,7 @@
 				CD5EE0541FCD9A1000AD2ED7 /* SSFView.swift */,
 				CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */,
 				CDAEE1FE1FED484500F4B1BA /* Sugar.swift */,
+				CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -498,6 +502,7 @@
 			files = (
 				CD2EC1CB1FD7F10800C17756 /* ContentViewController.swift in Sources */,
 				CD5110AA1FE7AAE300AEC595 /* ExportController.swift in Sources */,
+				CDD324602266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				CDFF69A51FD834AE00E652EE /* TimeTravelWindowController.swift in Sources */,
 				CD5EE05A1FCDA30600AD2ED7 /* LayoutableObject.swift in Sources */,
 				CDB6590B1FE16EE800430F20 /* UserDefaults+Keys.swift in Sources */,
@@ -531,6 +536,7 @@
 			files = (
 				CD9395601FF6AEAB00D3D831 /* Controller.swift in Sources */,
 				CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */,
+				CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				CD372B331FF843C000D57586 /* ExportController.swift in Sources */,
 				CD372B341FF843CF00D57586 /* FileController.swift in Sources */,
 				CD9395641FF6B26B00D3D831 /* LayoutableObject.swift in Sources */,
