@@ -3,18 +3,18 @@
 let VCS_TYPE			= "git"
 let VCS_BASENAME		= "ScreenshotFramer"
 let VCS_UUID:			String?	= "bbe2397b961b6e54b179b29a6a8431389237c96b"
-let VCS_NUM:			Int		= 146
-let VCS_DATE			= "2019-04-23T10:27:10Z"
+let VCS_NUM:			Int		= 147
+let VCS_DATE			= "2019-04-23T14:32:18Z"
 let VCS_BRANCH:			String	= "enhancement/homebrew"
 let VCS_TAG:			String?	= "v1.0"
 let VCS_TAG_OPENPGP:	String?	= nil
-let VCS_TICK:			Int?	= 43
+let VCS_TICK:			Int?	= 44
 let VCS_EXTRA:		String?	= nil
 
-let VCS_ACTION_STAMP:	String?	= "2019-04-23T10:27:10Z!patrick.kladek@outlook.com"
-let VCS_FULL_HASH:		String	= "86342c02b911d29795f405676f8085aa5005e925"
+let VCS_ACTION_STAMP:	String?	= "2019-04-23T14:32:18Z!patrick.kladek@outlook.com"
+let VCS_FULL_HASH:		String	= "c732908ce16b71d0c73f0793f3c31b068e89fe4a"
 let VCS_COMMIT_OPENPGP:	String?	= nil
-let VCS_SHORT_HASH:		String	= "86342c0"
+let VCS_SHORT_HASH:		String	= "c732908"
 
 let VCS_WC_MODIFIED:	Bool	= true
 

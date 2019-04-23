@@ -545,7 +545,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\n# This script drives autorevision so that you end up with two\n# `autorevision.h` files; one for including in the program and one for\n# populating values in the `info.plist` file (some of which are user\n# visible).\n# The cache file is generated in a repo and is read from\n# unconditionally when building from a tarball.\n# This script is meant to called from within Xcode, some of the\n# variables are defined in the environment there.\n\n# Config\nexport PATH=${PATH}:/sw/bin:/usr/local/bin:/usr/local/git/bin\n\n# This header file uses a slightly different format and a customized\n# cache suitable for use with an info.plist file.\ninfoPlistOutput=\"${OBJROOT}/autorevisionInfo.h\"\ncustomCacheOutput=\"${OBJROOT}/autorevision.tmp\"\n\n# This is a header suitable for including is your code.\n# The one that actually gets included is only updated when something\n# changes to prevent needless rebuilding.\nswiftOutput=\"${SRCROOT}/Screenshot Framer CLI/autorevision.swift\"\nswiftTempOutput=\"${OBJROOT}/autorevision.h\"\n\n# This is what needs to be in a tarball to make things work.\ncacheOutput=\"${SRCROOT}/autorevision.cache\"\n\n# Autorevision Path\nautorevisionPath=\"${SRCROOT}/autorevision-1.21/autorevision.sh\"\n\necho \"customCacheOutput:\" $customCacheOutput\necho \"infoPlistOutput:  \" $infoPlistOutput\n\n# Output the autorevision cache.\nif ! $autorevisionPath -o \"${cacheOutput}\" -t sh; then\nexit ${?}\nfi\n\n###\n# This section does some manipulations to make the output pretty for\n# use in the info.plist\n\n# Source the cache to allow for value manipulation.\n. \"${cacheOutput}\"\n\nif [ ! \"${VCS_TICK}\" = \"0\" ]; then\n# If we are not exactly on a tag make the branch look better and use the value for the tag too.\nN_VCS_BRANCH=\"$(echo \"${VCS_BRANCH}\" | sed -e 's:remotes/:remote/:' -e 's:master:Master:')\"\nsed -e \"s:${VCS_BRANCH}:${N_VCS_BRANCH}:\" -e \"s:${VCS_TAG}:${N_VCS_BRANCH}:\" \"${cacheOutput}\" > \"${customCacheOutput}\"\nelse\n# When exactly on a tag make the value suitable for users.\n# The following tag prefix formats are recognized and striped:\n# v1.0 | v/1.0 = 1.0\n# The following tag suffix formats are transformed:\n# 1.0_beta6 = 1.0 Beta 6 || 1.0_rc6 = 1.0 RC 6\nN_VCS_TAG=\"$(echo \"${VCS_TAG}\" | sed -e 's:^v/::' -e 's:^v::' -e 's:_beta: Beta :' -e 's:_rc: RC :')\"\nsed -e \"s:${VCS_TAG}:${N_VCS_TAG}:\" \"${cacheOutput}\" > \"${customCacheOutput}\"\nfi\n\n# Output for src/autorevision.h.\n$autorevisionPath -f -o \"${cacheOutput}\" -t swift > \"${swiftTempOutput}\"\nif [ ! -f \"${swiftOutput}\" ] || ! cmp -s \"${swiftTempOutput}\" \"${swiftOutput}\"; then\n# Only copy `src/autorevision.h` in if there have been changes.\ncp -a \"${swiftTempOutput}\" \"${swiftOutput}\"\nfi\n\n# Output for info.plist prepossessing.\n#$autorevisionPath -f -o \"${customCacheOutput}\" -t xcode > \"${infoPlistOutput}\"\n\nexit ${?}\n";
+			shellScript = "#!/bin/sh\n\n# This script drives autorevision so that you end up with two\n# `autorevision.h` files; one for including in the program and one for\n# populating values in the `info.plist` file (some of which are user\n# visible).\n# This script is meant to called from within Xcode, some of the\n# variables are defined in the environment there.\n\n# Config\nexport PATH=${PATH}:/sw/bin:/usr/local/bin:/usr/local/git/bin\n\n# Autorevision Path\nautorevisionPath=\"${SRCROOT}/autorevision-1.21/autorevision.sh\"\n\n# Swift output\nswiftOutput=\"${SRCROOT}/Screenshot Framer CLI/autorevision.swift\"\n\n# Output the swift file\n$autorevisionPath -t swift > \"${swiftOutput}\"\n\n\n\n# Info.plist output\ninfoPlistOutput=\"${SRCROOT}/Screenshot Framer/Supporting Files/autorevision.h\"\n\n# Output the info plist file\n$autorevisionPath -t h > \"${infoPlistOutput}\"\n\n\n\n# Finished\nexit ${?}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -785,7 +785,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Screenshot Framer/Supporting Files/Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
-				INFOPLIST_PREFIX_HEADER = "$(SRCROOT)/autorevision.h";
+				INFOPLIST_PREFIX_HEADER = "$(SRCROOT)/Screenshot Framer/Supporting Files/autorevision.h";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
@@ -805,7 +805,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Screenshot Framer/Supporting Files/Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
-				INFOPLIST_PREFIX_HEADER = "$(SRCROOT)/autorevision.h";
+				INFOPLIST_PREFIX_HEADER = "$(SRCROOT)/Screenshot Framer/Supporting Files/autorevision.h";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
