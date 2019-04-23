@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1024" height="1024">
+	<defs>
+		<marker refX="100" refY="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" se_type="rightarrow" orient="auto" markerUnits="strokeWidth" id="arrow">
+			<path stroke-width="10" stroke="black" fill="black" d="m 100,50 l -100,40 l 0,-40 l 0,-40 z" />
+		</marker>
+	</defs>
+	<g fill-opacity="0">
+		<g fill-opacity="1">
+			<circle r="150" cy="257" cx="464" fill="white" stroke="black" stroke-width="3" />
+			<text y="187" font-size="6" font-family="Source Sans Pro">
+				<tspan x="375">#define VCS_TYPE&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_TYPE@"</tspan>
+				<tspan x="375" dy="10">#define VCS_BASENAME&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_BASENAME@"</tspan>
+				<tspan x="375" dy="10">#define VCS_UUID&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_UUID@"</tspan>
+				<tspan x="375" dy="10">#define VCS_NUM&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;@VCS_NUM@</tspan>
+				<tspan x="375" dy="10">#define VCS_DATE&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_DATE@"</tspan>
+				<tspan x="375" dy="10">#define VCS_BRANCH&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_BRANCH@"</tspan>
+				<tspan x="375" dy="10">#define VCS_TAG&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_TAG@"</tspan>
+				<tspan x="375" dy="10">#define VCS_TICK&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;@VCS_TICK@</tspan>
+				<tspan x="375" dy="20">#define VCS_FULL_HASH&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_FULL_HASH@"</tspan>
+				<tspan x="375" dy="10">#define VCS_SHORT_HASH&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"@VCS_SHORT_HASH@"</tspan>
+				<tspan x="375" dy="20">#define VCS_WC_MODIFIED&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;@VCS_WC_MODIFIED@</tspan>
+			</text>
+		</g>
+		<g stroke="black" stroke-width="3" fill-opacity="1">
+			<g id="center">
+				<circle cx="60" cy="512" r="15" fill="red" />
+				<line x1="75" y1="512" x2="195" y2="512"  marker-end="url(#arrow)" />
+				<circle cx="210" cy="512" r="15" fill="red" />
+				<line x1="225" y1="512" x2="345" y2="512"  marker-end="url(#arrow)" />
+				<circle cx="360" cy="512" r="15" fill="red" />
+				<line x1="375" y1="512" x2="495" y2="512"  marker-end="url(#arrow)" />
+				<circle cx="510" cy="512" r="15" fill="red" />
+				<line x1="525" y1="512" x2="645" y2="512"  marker-end="url(#arrow)" />
+				<circle cx="660" cy="512" r="15" fill="red" />
+				<line x1="675" y1="512" x2="795" y2="512"  marker-end="url(#arrow)" />
+				<circle cx="810" cy="512" r="15" fill="red" />
+				<line x1="825" y1="512" x2="945" y2="512"  marker-end="url(#arrow)" />
+				<circle cx="960" cy="512" r="15" fill="blue" />
+			</g>
+			<g id="upper">
+				<path fill-opacity="0" d="m 375,512 l 10,0 c 25,0 50,-27 50,-54 l 0,-20 c 0,-27 25,-54 50,-54 l 10,0"  marker-end="url(#arrow)" />
+				<circle cx="510" cy="384" r="15" fill="yellow" />
+				<line x1="525" y1="384" x2="645" y2="384"  marker-end="url(#arrow)" />
+				<circle cx="660" cy="384" r="15" fill="blue" />
+			</g>
+			<g id="lower">
+				<path fill-opacity="0" d="m 225,512 l 10,0 c 25,0 50,27 50,54 l 0,20 c 0,27 25,54 50,54 l 10,0"  marker-end="url(#arrow)" />
+				<circle cx="360" cy="640" r="15" fill="red" />
+				<line x1="375" y1="640" x2="495" y2="640"  marker-end="url(#arrow)" />
+				<circle cx="510" cy="640" r="15" fill="blue" />
+			</g>
+		</g>
+	</g>
+</svg>

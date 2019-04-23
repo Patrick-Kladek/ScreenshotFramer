@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+APPNAME = 'projectname'
+VERSION = '1.0' # This will be overwritten later.
+
+
+def configure(bld):
+    # This makes sure that autorevision exists before we call it.
+    bld.find_program('autorevision', var='AUTOREVISION')
+
+
+def options(bld):
+    pass
+
+
+def arv(bld):
+    # The cache file build is in its own function so it can be easily
+    # included everywhere it needs to be.
+    from waflib import ConfigSet
+    # Get the path to autorevision found in configuration.
+    try:
+        env = ConfigSet.ConfigSet('build/c4che/_cache.py')
+    except (OSError, IOError):
+        bld.fatal('Project is not configured')
+
+    # This is where the cache file is made and VERSION is rewritten.
+    global VERSION
+    VERSION = bld.cmd_and_log("%s -s VCS_TAG -o %s/autorevision.cache " % (env.get_flat('AUTOREVISION'), bld.path.abspath()), cwd=bld.path.abspath()).strip()
+
+
+def dist(bld):
+    # Make sure that the cache file is in the tarball.
+    arv(bld)
+
+
+def build(bld):
+    # Make sure that the cache file is built first.
+    arv(bld)
+    # Here we let waf know about the autorevision.cache file.
+    autorevision_cache_node = bld.path.find_or_declare('autorevision.cache')
+
+    # This is where the autorevision.json file is made.
+    bld(
+        rule='${AUTOREVISION} -f -t json -o ${SRC[0].abspath()} > ${TGT}',
+        source=autorevision_cache_node,
+        target='autorevision.json')
+
+    # This is where the autorevision.h file is made.
+    bld(
+        rule='${AUTOREVISION} -f -t h -o ${SRC[0].abspath()} > ${TGT}',
+        source=autorevision_cache_node,
+        target='autorevision.h')
+
+
+def test(bld):
+    # A simple sanity check.
+    arv(bld)

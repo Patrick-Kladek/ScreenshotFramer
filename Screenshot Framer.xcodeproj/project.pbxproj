@@ -6,6 +6,20 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		CDDB614C226F30A50053DEDE /* Version */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CDDB614D226F30A60053DEDE /* Build configuration list for PBXAggregateTarget "Version" */;
+			buildPhases = (
+				CDDB6154226F30E70053DEDE /* Copy Version from Git to Source */,
+			);
+			dependencies = (
+			);
+			name = Version;
+			productName = Version;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		CD26F83B1FCEE01800449B4A /* LayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83A1FCEE01800449B4A /* LayerState.swift */; };
 		CD26F83D1FCEEB1C00449B4A /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
@@ -56,6 +70,7 @@
 		CDB659131FE4268200430F20 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
 		CDD324602266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */; };
 		CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */; };
+		CDE4190A226F46A700316B68 /* autorevision.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE41909226F46A700316B68 /* autorevision.swift */; };
 		CDE9C3541FEBDBD100168B40 /* Document Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CDE9C3531FEBDBD100168B40 /* Document Icon.icns */; };
 		CDE9C3551FEBEBCE00168B40 /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
 		CDE9C3561FEBEBD300168B40 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD50EF4C1FDE883200FB0F2F /* Operations.swift */; };
@@ -70,6 +85,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CD6B0736226F4CB900DDCC2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD5EE0341FCD557200AD2ED7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDDB614C226F30A50053DEDE;
+			remoteInfo = Version;
+		};
+		CD6B0738226F52A900DDCC2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD5EE0341FCD557200AD2ED7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDDB614C226F30A50053DEDE;
+			remoteInfo = Version;
+		};
 		CDFF699A1FD827B800E652EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CD5EE0341FCD557200AD2ED7 /* Project object */;
@@ -130,6 +159,7 @@
 		CDB659101FE3F00000430F20 /* MNCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCoalescing.swift; sourceTree = "<group>"; };
 		CDB659121FE4268200430F20 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextFieldCell.swift; sourceTree = "<group>"; };
+		CDE41909226F46A700316B68 /* autorevision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = autorevision.swift; sourceTree = "<group>"; };
 		CDE9C3531FEBDBD100168B40 /* Document Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Document Icon.icns"; sourceTree = "<group>"; };
 		CDFF69951FD827B800E652EE /* Screenshot FramerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Screenshot FramerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDFF69971FD827B800E652EE /* ScreenshotFramerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotFramerTests.swift; sourceTree = "<group>"; };
@@ -288,6 +318,7 @@
 		CD9395571FF6AC6D00D3D831 /* Screenshot Framer CLI */ = {
 			isa = PBXGroup;
 			children = (
+				CDE41909226F46A700316B68 /* autorevision.swift */,
 				CD9395581FF6AC6D00D3D831 /* main.swift */,
 				CD93955F1FF6AEAB00D3D831 /* Controller.swift */,
 				CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */,
@@ -344,6 +375,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD6B0739226F52A900DDCC2E /* PBXTargetDependency */,
 			);
 			name = "Screenshot Framer";
 			productName = Framer;
@@ -362,6 +394,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD6B0737226F4CB900DDCC2E /* PBXTargetDependency */,
 			);
 			name = "Screenshot-Framer-CLI";
 			productName = "Screenshot Framer CLI";
@@ -409,6 +442,10 @@
 					CD9395551FF6AC6D00D3D831 = {
 						CreatedOnToolsVersion = 9.2;
 					};
+					CDDB614C226F30A50053DEDE = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					CDFF69941FD827B800E652EE = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1010;
@@ -432,6 +469,7 @@
 				CD5EE03B1FCD557200AD2ED7 /* Screenshot Framer */,
 				CDFF69941FD827B800E652EE /* Screenshot FramerTests */,
 				CD9395551FF6AC6D00D3D831 /* Screenshot-Framer-CLI */,
+				CDDB614C226F30A50053DEDE /* Version */,
 			);
 		};
 /* End PBXProject section */
@@ -475,7 +513,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)";
+			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
 		};
 		CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -490,6 +528,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
+		};
+		CDDB6154226F30E70053DEDE /* Copy Version from Git to Source */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Version from Git to Source";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\n# This script drives autorevision so that you end up with two\n# `autorevision.h` files; one for including in the program and one for\n# populating values in the `info.plist` file (some of which are user\n# visible).\n# The cache file is generated in a repo and is read from\n# unconditionally when building from a tarball.\n# This script is meant to called from within Xcode, some of the\n# variables are defined in the environment there.\n\n# Config\nexport PATH=${PATH}:/sw/bin:/usr/local/bin:/usr/local/git/bin\n\n# This header file uses a slightly different format and a customized\n# cache suitable for use with an info.plist file.\ninfoPlistOutput=\"${OBJROOT}/autorevisionInfo.h\"\ncustomCacheOutput=\"${OBJROOT}/autorevision.tmp\"\n\n# This is a header suitable for including is your code.\n# The one that actually gets included is only updated when something\n# changes to prevent needless rebuilding.\nswiftOutput=\"${SRCROOT}/Screenshot Framer CLI/autorevision.swift\"\nswiftTempOutput=\"${OBJROOT}/autorevision.h\"\n\n# This is what needs to be in a tarball to make things work.\ncacheOutput=\"${SRCROOT}/autorevision.cache\"\n\n# Autorevision Path\nautorevisionPath=\"${SRCROOT}/autorevision-1.21/autorevision.sh\"\n\necho \"customCacheOutput:\" $customCacheOutput\necho \"infoPlistOutput:  \" $infoPlistOutput\n\n# Output the autorevision cache.\nif ! $autorevisionPath -o \"${cacheOutput}\" -t sh; then\nexit ${?}\nfi\n\n###\n# This section does some manipulations to make the output pretty for\n# use in the info.plist\n\n# Source the cache to allow for value manipulation.\n. \"${cacheOutput}\"\n\nif [ ! \"${VCS_TICK}\" = \"0\" ]; then\n# If we are not exactly on a tag make the branch look better and use the value for the tag too.\nN_VCS_BRANCH=\"$(echo \"${VCS_BRANCH}\" | sed -e 's:remotes/:remote/:' -e 's:master:Master:')\"\nsed -e \"s:${VCS_BRANCH}:${N_VCS_BRANCH}:\" -e \"s:${VCS_TAG}:${N_VCS_BRANCH}:\" \"${cacheOutput}\" > \"${customCacheOutput}\"\nelse\n# When exactly on a tag make the value suitable for users.\n# The following tag prefix formats are recognized and striped:\n# v1.0 | v/1.0 = 1.0\n# The following tag suffix formats are transformed:\n# 1.0_beta6 = 1.0 Beta 6 || 1.0_rc6 = 1.0 RC 6\nN_VCS_TAG=\"$(echo \"${VCS_TAG}\" | sed -e 's:^v/::' -e 's:^v::' -e 's:_beta: Beta :' -e 's:_rc: RC :')\"\nsed -e \"s:${VCS_TAG}:${N_VCS_TAG}:\" \"${cacheOutput}\" > \"${customCacheOutput}\"\nfi\n\n# Output for src/autorevision.h.\n$autorevisionPath -f -o \"${cacheOutput}\" -t swift > \"${swiftTempOutput}\"\nif [ ! -f \"${swiftOutput}\" ] || ! cmp -s \"${swiftTempOutput}\" \"${swiftOutput}\"; then\n# Only copy `src/autorevision.h` in if there have been changes.\ncp -a \"${swiftTempOutput}\" \"${swiftOutput}\"\nfi\n\n# Output for info.plist prepossessing.\n#$autorevisionPath -f -o \"${customCacheOutput}\" -t xcode > \"${infoPlistOutput}\"\n\nexit ${?}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -532,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDE4190A226F46A700316B68 /* autorevision.swift in Sources */,
 				CD9395601FF6AEAB00D3D831 /* Controller.swift in Sources */,
 				CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */,
 				CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */,
@@ -569,6 +626,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CD6B0737226F4CB900DDCC2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDDB614C226F30A50053DEDE /* Version */;
+			targetProxy = CD6B0736226F4CB900DDCC2E /* PBXContainerItemProxy */;
+		};
+		CD6B0739226F52A900DDCC2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDDB614C226F30A50053DEDE /* Version */;
+			targetProxy = CD6B0738226F52A900DDCC2E /* PBXContainerItemProxy */;
+		};
 		CDFF699B1FD827B800E652EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CD5EE03B1FCD557200AD2ED7 /* Screenshot Framer */;
@@ -717,6 +784,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Screenshot Framer/Supporting Files/Info.plist";
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "$(SRCROOT)/autorevision.h";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -734,6 +804,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Screenshot Framer/Supporting Files/Info.plist";
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "$(SRCROOT)/autorevision.h";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -759,6 +832,22 @@
 				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		CDDB614E226F30A60053DEDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CDDB614F226F30A60053DEDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -820,6 +909,15 @@
 			buildConfigurations = (
 				CD93955A1FF6AC6D00D3D831 /* Debug */,
 				CD93955B1FF6AC6D00D3D831 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDDB614D226F30A60053DEDE /* Build configuration list for PBXAggregateTarget "Version" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDDB614E226F30A60053DEDE /* Debug */,
+				CDDB614F226F30A60053DEDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

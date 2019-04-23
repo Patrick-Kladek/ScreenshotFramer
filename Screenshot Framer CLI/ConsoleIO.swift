@@ -64,6 +64,19 @@ class ConsoleIO {
         self.writeMessage("\toptional: -ignoreFontToBig")
         self.writeMessage("")
     }
+
+    func printVersion() {
+        self.writeMessage("Screenshot Framer CLI: Create localized App Store screenshots")
+        self.writeMessage("Brought to you by IdeasOnCanvas GmbH, the creator of MindNode for iOS, macOS & watchOS.")
+        self.writeMessage("https://github.com/IdeasOnCanvas/ScreenshotFramer")
+        self.writeMessage("")
+        self.writeMessage("       Version: \(VCS_TAG ?? "0.0")")
+        self.writeMessage("        Branch: \(VCS_BRANCH)")
+        self.writeMessage("   Commit Hash: \(VCS_FULL_HASH)")
+        self.writeMessage("   Commit Time: \(VCS_DATE)")
+        self.writeMessage("")
+        self.writeMessage("")
+    }
 }
 
 

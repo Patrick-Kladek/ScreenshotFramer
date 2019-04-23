@@ -38,6 +38,10 @@ final class Controller {
             self.console.printUsage()
         }
 
+        if self.arguments.filter({ $0.lowercased() == "-v" || $0.lowercased() == "-version" }).hasElements {
+            self.console.printVersion()
+        }
+
         self.ignoreFontToBig = self.arguments.filter { $0.lowercased() == "-ignorefonttobig" }.hasElements
         guard let index = self.arguments.index(of: "-project") else { parseParameterFailed(); return .wrongArguments }
         guard self.arguments.count >= index + 1 else { parseParameterFailed(); return .wrongArguments }
