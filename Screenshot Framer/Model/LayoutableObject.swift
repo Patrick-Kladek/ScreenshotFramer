@@ -114,6 +114,9 @@ private extension NSTextAlignment {
             return "natural"
         case .right:
             return "right"
+        @unknown default:
+            // Fallback to center if new case is added in future
+            return "center"
         }
     }
 
