@@ -35,7 +35,7 @@ final class ExportController {
     }
 
 
-    // MARK: - functions
+    // MARK: - ExportController
 
     @discardableResult
     func saveSingleImage(viewState: ViewState) -> [LayoutError] {
@@ -165,6 +165,8 @@ final class ExportController {
         self.shouldCancel = true
     }
 }
+
+// MARK: - Private
 
 private extension ExportController {
 

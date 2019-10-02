@@ -15,15 +15,13 @@ final class LanguageController {
 
     let fileCapsule: FileCapsule
 
-
-    // MARK: Init
+    // MARK: - Lifecycle
 
     init(fileCapsule: FileCapsule) {
         self.fileCapsule = fileCapsule
     }
 
-
-    // MARK: Functions
+    // MARK: - LanguageController
 
     func allLanguages() -> [String] {
         let fileManager = FileManager()
