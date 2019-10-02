@@ -28,3 +28,20 @@ extension Array where Element: Equatable {
         }
     }
 }
+
+
+extension Array where Element == String {
+
+    func subtracting(_ blacklist: Array, caseSensitive: Bool) -> Array {
+        var newValues: [String] = []
+
+        for element in self {
+            if blacklist.contains(where: { (caseSensitive ? $0 : $0.lowercased()) == (caseSensitive ? element : element.lowercased()) }) == false {
+                // No match in blacklist -> add item
+                newValues.append(element)
+            }
+        }
+
+        return newValues
+    }
+}

@@ -30,13 +30,13 @@ final class LanguageController {
         guard let projectURL = self.fileCapsule.projectURL else { return [] }
         guard let contents = try? fileManager.contentsOfDirectory(at: projectURL, includingPropertiesForKeys: nil, options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles]) else { return [] }
 
-        let allLanguages = Set(contents.filter { file in
+        let allLanguages = contents.filter { file in
             var isDir = ObjCBool(false)
             fileManager.fileExists(atPath: file.path, isDirectory: &isDir)
             return isDir.boolValue
-        }.compactMap { $0.lastPathComponent }) as Set<String>
+        }.compactMap { $0.lastPathComponent }
 
-        let blackList: Set = ["backgrounds", "device_frames", "Export"]
-        return Array(allLanguages.subtracting(blackList))
+        let blackList = ["backgrounds", "device_frames", "export"]
+        return allLanguages.subtracting(blackList, caseSensitive: false)
     }
 }
