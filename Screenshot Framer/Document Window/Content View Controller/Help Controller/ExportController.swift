@@ -89,6 +89,78 @@ final class ExportController {
         return layoutController.layoutErrors
     }
 
+    func preview(viewState: ViewState, name: String) {
+        let firstImageNumber = self.lastLayerState.outputConfig.fromImageNumber
+        let numberOfImages = self.lastLayerState.outputConfig.toImageNumber - firstImageNumber
+        let frame = CGRect(x: 0,
+                           y: 0,
+                           width: self.lastLayerState.layers.first!.frame.width * CGFloat(numberOfImages + 1),
+                           height: self.lastLayerState.layers.first!.frame.height)
+        let view = NSView(frame: frame)
+
+        let viewState = ViewState(selectedLayer: 0, imageNumber: 0, language: viewState.language)
+        let tempViewStateController = ViewStateController(viewState: viewState)
+        let tempLayoutController = LayoutController(viewStateController: tempViewStateController, languageController: self.languageController, fileController: self.fileController)
+
+        for currentImageNumber in 0...numberOfImages {
+            tempViewStateController.newViewState(imageNumber: currentImageNumber + firstImageNumber)
+
+            guard let image = tempLayoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }
+
+            let offsetX = image.frame.width * CGFloat(currentImageNumber)
+            image.frame = image.frame.offsetBy(dx: offsetX, dy: 0)
+            view.addSubview(image)
+        }
+
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Preview \(name).png")
+
+        do {
+            try view.pngData()?.write(to: tempURL)
+        } catch {
+            let alert = NSAlert(error: error)
+            alert.runModal()
+        }
+
+        NSWorkspace.shared.open(tempURL)
+    }
+
+    func previewLanguages(viewState: ViewState, name: String) {
+        let tempLanguageController = LanguageController(fileCapsule: self.fileController.fileCapsule)
+        let allLanguages = tempLanguageController.allLanguages()
+        let numberOfImages = allLanguages.count
+        let frame = CGRect(x: 0,
+                           y: 0,
+                           width: self.lastLayerState.layers.first!.frame.width * CGFloat(numberOfImages),
+                           height: self.lastLayerState.layers.first!.frame.height)
+        let view = NSView(frame: frame)
+
+        let viewState = ViewState(selectedLayer: 0, imageNumber: viewState.imageNumber, language: "")
+        let tempViewStateController = ViewStateController(viewState: viewState)
+        let tempLayoutController = LayoutController(viewStateController: tempViewStateController, languageController: self.languageController, fileController: self.fileController)
+
+        for currentImageNumber in 0...numberOfImages - 1 {
+            let language = allLanguages[currentImageNumber]
+            tempViewStateController.newViewState(language: language)
+
+            guard let image = tempLayoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }
+
+            let offsetX = image.frame.width * CGFloat(currentImageNumber)
+            image.frame = image.frame.offsetBy(dx: offsetX, dy: 0)
+            view.addSubview(image)
+        }
+
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Preview Languages of \(name).png")
+
+        do {
+            try view.pngData()?.write(to: tempURL)
+        } catch {
+            let alert = NSAlert(error: error)
+            alert.runModal()
+        }
+
+        NSWorkspace.shared.open(tempURL)
+    }
+
     func cancel() {
         self.shouldCancel = true
     }

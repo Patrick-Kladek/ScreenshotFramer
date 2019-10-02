@@ -99,6 +99,8 @@ final class InspectorViewController: NSViewController {
     @IBOutlet private var textFieldFontSize: NSTextField!
     @IBOutlet private var stepperFontSize: NSStepper!
     @IBOutlet private var colorWell: NSColorWell!
+    @IBOutlet private var alignmentSegment: NSSegmentedControl!
+    @IBOutlet private var verticallyCenteredCheckbox: NSButton!
 
 
     // MARK: - Lifecycle
@@ -141,6 +143,8 @@ final class InspectorViewController: NSViewController {
         self.textFieldFont.stringValue = layoutableObject.font ?? ""
         self.fontSizeInInspector = layoutableObject.fontSize
         self.colorWell.color = layoutableObject.color ?? .white
+        self.alignmentSegment.selectSegment(withTag: layoutableObject.textAlignment?.segmentTag ?? 1)   // default to center
+        self.verticallyCenteredCheckbox.state = (layoutableObject.verticallyCentered ?? false) ? .on : .off
 
         self.updateLanguages()
     }
@@ -160,6 +164,7 @@ final class InspectorViewController: NSViewController {
         self.textFieldFontSize.isEnabled = isEnabled
         self.stepperFontSize.isEnabled = isEnabled
         self.colorWell.isEnabled = isEnabled
+        self.alignmentSegment.isEnabled = isEnabled
     }
 
     func updateLanguages() {
@@ -177,6 +182,12 @@ final class InspectorViewController: NSViewController {
 
             self.viewStateController.newViewState(language: selectedLanguage)
         }
+    }
+
+    func updateUIFromViewState() {
+        self.textFieldImageNumber.integerValue = self.viewStateController.viewState.imageNumber
+        self.stepperImageNumber.integerValue = self.textFieldImageNumber.integerValue
+        self.languages.stringValue = self.viewStateController.viewState.language
     }
 
 
@@ -260,6 +271,22 @@ final class InspectorViewController: NSViewController {
         self.coalesceCalls(to: #selector(applyColor), interval: 0.5, object: color)
         self.delegate?.inspector(self, requestNewColor: color, of: self.selectedRow)
     }
+
+    @IBAction func segmentDidChange(sender: NSSegmentedControl) {
+        let tag = sender.selectedSegment
+        let alignment = NSTextAlignment(segmentTag: tag)
+
+        let operation = UpdateTextAlignmentOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.selectedRow, alignment: alignment)
+        operation.apply()
+    }
+
+    @IBAction func checkboxDidChange(sender: NSButton) {
+        guard sender == self.verticallyCenteredCheckbox else { return }
+
+        let state = self.verticallyCenteredCheckbox.state == .on ? true : false
+        let operation = UpdateVerticallyCenteredTextOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.selectedRow, verticallyCentered: state)
+        operation.apply()
+    }
 }
 
 
@@ -305,5 +332,40 @@ private extension Double {
         let offsetValue = value - start
 
         return (offsetValue - (floor(offsetValue / width) * width)) + start
+    }
+}
+
+private extension NSTextAlignment {
+
+    var segmentTag: Int {
+        switch self {
+        case .left:
+            return 0
+        case .center:
+            return 1
+        case .right:
+            return 2
+        case .justified,
+             .natural:
+            return 3
+        @unknown default:
+            // Fallback to center if new case is added in future
+            return 1
+        }
+    }
+
+    init(segmentTag: Int) {
+        switch segmentTag {
+        case 0:
+            self = .left
+        case 1:
+            self = .center
+        case 2:
+            self = .right
+        case 3:
+            self = .justified
+        default:
+            self = .center
+        }
     }
 }

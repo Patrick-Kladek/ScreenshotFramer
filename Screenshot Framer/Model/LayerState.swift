@@ -34,7 +34,7 @@ struct LayerState: Codable {
 
     func removingLayer(_ layer: LayoutableObject) -> LayerState {
         var layers = self.layers
-        guard let index = layers.index(of: layer) else { return self }
+        guard let index = layers.firstIndex(of: layer) else { return self }
 
         layers.remove(at: index)
         return LayerState(title: "Remove \(layer.title)", layers: layers, outputConfig: self.outputConfig)
@@ -103,6 +103,24 @@ struct LayerState: Codable {
 
         layers[index].color = color
         return LayerState(title: "Updating Color", layers: layers, outputConfig: self.outputConfig)
+    }
+
+    func updating(alignment: NSTextAlignment, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].textAlignment = alignment
+        return LayerState(title: "Updating Text Alignment", layers: layers, outputConfig: self.outputConfig)
+    }
+
+    func updating(verticallyCentered: Bool, index: Int) -> LayerState? {
+        var layers = self.layers
+
+        guard index < layers.count else { return nil }
+
+        layers[index].verticallyCentered = verticallyCentered
+        return LayerState(title: "Updating Vertical Alignment", layers: layers, outputConfig: self.outputConfig)
     }
 
 

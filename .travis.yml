@@ -2,7 +2,7 @@ language: objective-c
 
 xcode_project: Screenshot Framer.xcodeproj
 xcode_scheme: Screenshot Framer
-osx_image: xcode9.2
+osx_image: xcode10.3
 
 script:
-- xcodebuild clean build -project "Screenshot Framer.xcodeproj" -scheme "Screenshot Framer"
+- xcodebuild clean build -project "Screenshot Framer.xcodeproj" -scheme "Screenshot Framer" -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO

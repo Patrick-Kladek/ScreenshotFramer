@@ -29,6 +29,8 @@ struct LayoutableObject: Codable {
     var font: String?
     var fontSize: CGFloat?
     var color: NSColor?
+    var textAlignment: NSTextAlignment?
+    var verticallyCentered: Bool?
 
 
     // MARK: - Lifecycle
@@ -61,6 +63,10 @@ struct LayoutableObject: Codable {
         if let colorHex = try container.decodeIfPresent(String.self, forKey: .color) {
             self.color = NSColor(hex: colorHex)
         }
+        if let alignment = try container.decodeIfPresent(String.self, forKey: .textAlignment) {
+            self.textAlignment = NSTextAlignment(string: alignment)
+        }
+        self.verticallyCentered = try container.decodeIfPresent(Bool.self, forKey: .verticallyCentered)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -77,6 +83,8 @@ struct LayoutableObject: Codable {
         try container.encodeIfPresent(self.font, forKey: .font)
         try container.encodeIfPresent(self.fontSize, forKey: .fontSize)
         try container.encodeIfPresent(self.color?.hexString(), forKey: .color)
+        try container.encodeIfPresent(self.textAlignment?.stringRepresentation, forKey: .textAlignment)
+        try container.encodeIfPresent(self.verticallyCentered, forKey: .verticallyCentered)
     }
 }
 
@@ -90,8 +98,43 @@ extension LayoutableObject: Equatable {
     }
 }
 
-
 // MARK: - Private
+
+private extension NSTextAlignment {
+
+    var stringRepresentation: String {
+        switch self {
+        case .center:
+            return "center"
+        case .justified:
+            return "justified"
+        case .left:
+            return "left"
+        case .natural:
+            return "natural"
+        case .right:
+            return "right"
+        @unknown default:
+            // Fallback to center if new case is added in future
+            return "center"
+        }
+    }
+
+    init(string: String) {
+        switch string {
+        case "left":
+            self = .left
+        case "right":
+            self = .right
+        case "justified":
+            self = .justified
+        case "natural":
+            self = .natural
+        default:
+            self = .center
+        }
+    }
+}
 
 private extension LayoutableObject {
 
@@ -105,5 +148,7 @@ private extension LayoutableObject {
         case font = "font"
         case fontSize = "fontSize"
         case color = "color"
+        case textAlignment = "textAlignment"
+        case verticallyCentered = "verticallyCentered"
     }
 }

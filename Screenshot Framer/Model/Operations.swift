@@ -15,6 +15,48 @@ protocol OperationProtocol {
 }
 
 
+final class UpdateVerticallyCenteredTextOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let verticallyCentered: Bool
+
+    init(layerStateHistory: LayerStateHistory, indexOfLayer: Int, verticallyCentered: Bool) {
+        self.layerStateHistory = layerStateHistory
+        self.indexOfLayer = indexOfLayer
+        self.verticallyCentered = verticallyCentered
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(verticallyCentered: self.verticallyCentered, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
+final class UpdateTextAlignmentOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let indexOfLayer: Int
+    let alignment: NSTextAlignment
+
+    init(layerStateHistory: LayerStateHistory, indexOfLayer: Int, alignment: NSTextAlignment) {
+        self.layerStateHistory = layerStateHistory
+        self.indexOfLayer = indexOfLayer
+        self.alignment = alignment
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        guard let newLayerState = lastLayerState.updating(alignment: self.alignment, index: self.indexOfLayer) else { return }
+
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class UpdateOutputOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory
@@ -137,7 +179,6 @@ final class UpdateTitleOperation: OperationProtocol {
     let layerStateHistory: LayerStateHistory
     let indexOfLayer: Int
     let title: String
-
 
     init(layerStateHistory: LayerStateHistory, indexOfLayer: Int, title: String) {
         self.layerStateHistory = layerStateHistory

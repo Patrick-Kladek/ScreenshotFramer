@@ -104,6 +104,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.zoomToFit(nil)
     }
 
+    //swiftlint:disable:next cyclomatic_complexity
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         self.updateMenuItem(menuItem)
         guard let action = menuItem.action else { return false }
@@ -121,6 +122,20 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
 
         case #selector(ContentViewController.toggleHighlightCurrentLayer),
              #selector(ContentViewController.zoomToFit):
+            return true
+
+        case #selector(ContentViewController.previousImage):
+            guard let inspectorViewController = inspectorViewController else { return true }
+
+            return inspectorViewController.viewStateController.viewState.imageNumber > self.textFieldFromImageNumber.integerValue
+
+        case #selector(ContentViewController.nextImage):
+            guard let inspectorViewController = inspectorViewController else { return true }
+
+            return inspectorViewController.viewStateController.viewState.imageNumber < self.textFieldToImageNumber.integerValue
+
+        case #selector(ContentViewController.preview),
+             #selector(ContentViewController.previewLanguages):
             return true
 
         default:
@@ -257,9 +272,34 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         }
     }
 
+    @IBAction func previousImage(_ sender: Any?) {
+        let currentImage = self.inspectorViewController?.viewStateController.viewState.imageNumber ?? 0
+        self.inspectorViewController?.viewStateController.newViewState(imageNumber: currentImage - 1)
+    }
+
+    @IBAction func nextImage(_ sender: Any?) {
+        let currentImage = self.inspectorViewController?.viewStateController.viewState.imageNumber ?? 0
+        self.inspectorViewController?.viewStateController.newViewState(imageNumber: currentImage + 1)
+    }
+
+    @IBAction func preview(_ sender: Any?) {
+        guard let displayName = self.document.displayName else { return }
+
+        let name = (displayName as NSString).deletingPathExtension
+        self.exportController.preview(viewState: self.viewStateController.viewState, name: name)
+    }
+
+    @IBAction func previewLanguages(_ sender: Any?) {
+        guard let displayName = self.document.displayName else { return }
+
+        let name = (displayName as NSString).deletingPathExtension
+        self.exportController.previewLanguages(viewState: self.viewStateController.viewState, name: name)
+    }
+
     func reloadLayout() {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
+        self.inspectorViewController?.updateUIFromViewState()
         self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
         self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
