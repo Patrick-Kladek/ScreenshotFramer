@@ -39,4 +39,20 @@ class ScreenshotFramerTests: XCTestCase {
 
         XCTAssert(self.layerStateHistory.layerStates.count == 3)
     }
+
+    func testCaseSensitiveSubstractingOfArray() {
+        let blacklist = ["backgrounds", "device_frames", "Export"]
+        let folders = ["de-DE", "Export", "Backgrounds"]
+
+        let result = folders.subtracting(blacklist, caseSensitive: true)
+        XCTAssertEqual(result, ["de-DE", "Backgrounds"])
+    }
+
+    func testCaseInsensitiveSubstractingOfArray() {
+        let blacklist = ["backgrounds", "device_frames", "Export"]
+        let folders = ["de-DE", "Export", "Backgrounds"]
+
+        let result = folders.subtracting(blacklist, caseSensitive: false)
+        XCTAssertEqual(result, ["de-DE"])
+    }
 }

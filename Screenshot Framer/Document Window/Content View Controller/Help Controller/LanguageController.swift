@@ -15,28 +15,26 @@ final class LanguageController {
 
     let fileCapsule: FileCapsule
 
-
-    // MARK: Init
+    // MARK: - Lifecycle
 
     init(fileCapsule: FileCapsule) {
         self.fileCapsule = fileCapsule
     }
 
-
-    // MARK: Functions
+    // MARK: - LanguageController
 
     func allLanguages() -> [String] {
         let fileManager = FileManager()
         guard let projectURL = self.fileCapsule.projectURL else { return [] }
-        guard let contents = try? fileManager.contentsOfDirectory(at: projectURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else { return [] }
+        guard let contents = try? fileManager.contentsOfDirectory(at: projectURL, includingPropertiesForKeys: nil, options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles]) else { return [] }
 
-        let allLanguages = Set(contents.filter { file in
+        let allLanguages = contents.filter { file in
             var isDir = ObjCBool(false)
             fileManager.fileExists(atPath: file.path, isDirectory: &isDir)
             return isDir.boolValue
-        }.compactMap { $0.lastPathComponent }) as Set<String>
+        }.compactMap { $0.lastPathComponent }
 
-        let blackList: Set = ["backgrounds", "device_frames", "Export"]
-        return Array(allLanguages.subtracting(blackList))
+        let blackList = ["backgrounds", "device_frames", "export"]
+        return allLanguages.subtracting(blackList, caseSensitive: false)
     }
 }

@@ -42,7 +42,7 @@ class LayoutController {
     private(set) var layoutErrors: [LayoutError] = []
 
 
-    // MARK: Init
+    // MARK: - Init
 
     init(viewStateController: ViewStateController, languageController: LanguageController, fileController: FileController) {
         self.viewStateController = viewStateController
