@@ -348,6 +348,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="13" name=".AppleColorEmojiUI"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="didToggleAspectRatioLock:" target="-2" id="uag-Nd-zP9"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>

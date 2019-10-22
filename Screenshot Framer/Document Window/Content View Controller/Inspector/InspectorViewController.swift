@@ -92,6 +92,8 @@ final class InspectorViewController: NSViewController {
     @IBOutlet private var textFieldHeight: NSTextField!
     @IBOutlet private var stepperHeight: NSStepper!
 
+    @IBOutlet private weak var lockAspectButton: NSButton!
+
     @IBOutlet private var textFieldRotation: NSTextField!
     @IBOutlet private var sliderRotation: NSSlider!
 
@@ -102,7 +104,6 @@ final class InspectorViewController: NSViewController {
     @IBOutlet private var alignmentSegment: NSSegmentedControl!
     @IBOutlet private var verticallyCenteredCheckbox: NSButton!
 
-    @IBOutlet private weak var lockAspectButton: NSButton!
 
     // MARK: - Lifecycle
 
@@ -126,6 +127,7 @@ final class InspectorViewController: NSViewController {
 
         self.textFieldImageNumber.integerValue = fromImageNumber
         self.viewStateController.newViewState(imageNumber: fromImageNumber)
+        self.lockAspectButton.state = UserDefaults.standard.lockAspectRatio ? .on : .off
     }
 
 
@@ -322,6 +324,10 @@ final class InspectorViewController: NSViewController {
         let state = self.verticallyCenteredCheckbox.state == .on ? true : false
         let operation = UpdateVerticallyCenteredTextOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.selectedRow, verticallyCentered: state)
         operation.apply()
+    }
+
+    @IBAction func didToggleAspectRatioLock(_ sender: NSButton) {
+        UserDefaults.standard.lockAspectRatio = sender.state == .on
     }
 }
 
