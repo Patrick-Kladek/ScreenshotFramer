@@ -102,6 +102,7 @@ final class InspectorViewController: NSViewController {
     @IBOutlet private var alignmentSegment: NSSegmentedControl!
     @IBOutlet private var verticallyCenteredCheckbox: NSButton!
 
+    @IBOutlet private weak var lockAspectButton: NSButton!
 
     // MARK: - Lifecycle
 
