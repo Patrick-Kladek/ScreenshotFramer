@@ -434,14 +434,12 @@ private extension NSTextAlignment {
 
 private extension CGRect {
 
-    func aspectScaled(toHeight height: CGFloat) -> CGRect {
-        guard let size = self.size.aspectScaled(toHeight: height) else { return self }
-
-        return CGRect(origin: self.origin, size: size)
+    func aspectScaled(toHeight newValue: CGFloat) -> CGRect {
+        return self.transposed.aspectScaled(toWidth: newValue).transposed
     }
 
     func aspectScaled(toWidth width: CGFloat) -> CGRect {
-        guard let size = self.size.aspectScaled(toHeight: height) else { return self }
+        guard let size = self.size.aspectScaled(toWidth: width) else { return self }
 
         return CGRect(origin: self.origin, size: size)
     }
@@ -456,9 +454,8 @@ private extension CGRect {
         return self.transposed.centeredHorizontally(in: container.transposed).transposed
     }
 
-    var transposed: CGRect {
-        return CGRect(x: self.origin.y, y: self.origin.x, width: self.height, height: self.width)
-    }
+    /// flips the rect for reusing calculations vertically/horizontally
+    var transposed: CGRect { return CGRect(x: self.origin.y, y: self.origin.x, width: self.height, height: self.width) }
 }
 
 private extension CGSize {
@@ -473,11 +470,5 @@ private extension CGSize {
         guard let aspect = self.widthHeightAspect else { return nil }
 
         return CGSize(width: width, height: width / aspect)
-    }
-
-    func aspectScaled(toHeight height: CGFloat) -> CGSize? {
-        guard let aspect = self.widthHeightAspect else { return nil }
-
-        return CGSize(width: height * aspect, height: width)
     }
 }
