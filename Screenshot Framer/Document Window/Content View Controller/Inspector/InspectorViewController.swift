@@ -198,8 +198,17 @@ final class InspectorViewController: NSViewController {
         self.textFieldImageNumber.integerValue = self.stepperImageNumber.integerValue
         self.textFieldX.doubleValue = self.stepperX.doubleValue
         self.textFieldY.doubleValue = self.stepperY.doubleValue
-        self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
-        self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
+
+        switch sender {
+        case self.stepperWidth:
+            self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
+            self.updateLockedRelatedFields(forNewWidth: CGFloat(self.stepperWidth!.doubleValue))
+        case self.stepperHeight:
+            self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
+            self.updateLockedRelatedFields(forNewHeight: CGFloat(self.stepperHeight!.doubleValue))
+        default:
+            break
+        }
         self.textFieldFontSize.doubleValue = self.stepperFontSize.doubleValue
 
         switch sender {
@@ -256,8 +265,34 @@ final class InspectorViewController: NSViewController {
         case self.textFieldRotation:
             self.rotateLayer()
 
+        case self.textFieldWidth:
+            self.updateLockedRelatedFields(forNewWidth: self.frameInInspector.width)
+            self.updateFrame()
+
+        case self.textFieldHeight:
+            self.updateLockedRelatedFields(forNewHeight: self.frameInInspector.height)
+            self.updateFrame()
+
         default:
             self.updateFrame()
+        }
+    }
+
+    func updateLockedRelatedFields(forNewWidth width: CGFloat) {
+        guard self.selectedRow < self.layerStateHistory.currentLayerState.layers.count else { return }
+
+        if self.lockAspectButton.state == .on {
+            let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+            self.textFieldHeight.doubleValue = Double(currentLayer.frame.aspectScaled(toWidth: width).height)
+        }
+    }
+
+    func updateLockedRelatedFields(forNewHeight height: CGFloat) {
+        guard self.selectedRow < self.layerStateHistory.currentLayerState.layers.count else { return }
+
+        if self.lockAspectButton.state == .on {
+            let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+            self.textFieldWidth.doubleValue = Double(currentLayer.frame.aspectScaled(toHeight: height).width)
         }
     }
 
