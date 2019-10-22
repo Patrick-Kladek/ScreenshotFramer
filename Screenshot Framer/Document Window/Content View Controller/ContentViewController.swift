@@ -409,6 +409,11 @@ extension ContentViewController: InspectorViewControllerDelegate {
             return
         }
 
+        guard index < documentView.subviews.count else {
+            // this case (unintented?) can happen when using stepper on document with background and device layer
+            return
+        }
+
         let view = documentView.subviews[index]
         view.frame = newFrame
     }
