@@ -325,7 +325,7 @@
                         <action selector="checkboxDidChangeWithSender:" target="-2" id="MBx-TM-vny"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-8q-svo">
+                <button toolTip="lock aspect ratio" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-8q-svo">
                     <rect key="frame" x="43" y="195" width="41" height="18"/>
                     <buttonCell key="cell" type="check" title="🔒" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Dxx-dC-lyR">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -335,7 +335,7 @@
                         <action selector="didToggleAspectRatioLock:" target="-2" id="uag-Nd-zP9"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y7a-ku-FHE">
+                <button toolTip="center vertically" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y7a-ku-FHE">
                     <rect key="frame" x="89" y="215" width="47" height="32"/>
                     <buttonCell key="cell" type="push" title="x" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="i7D-Zb-YST">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -345,7 +345,7 @@
                         </connections>
                     </buttonCell>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sgn-oK-ZcI">
+                <button toolTip="center horizontally" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sgn-oK-ZcI">
                     <rect key="frame" x="168" y="215" width="47" height="32"/>
                     <buttonCell key="cell" type="push" title="y" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KKB-Jc-WHt">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
