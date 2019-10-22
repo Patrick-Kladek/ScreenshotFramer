@@ -329,6 +329,26 @@ final class InspectorViewController: NSViewController {
     @IBAction func didToggleAspectRatioLock(_ sender: NSButton) {
         UserDefaults.standard.lockAspectRatio = sender.state == .on
     }
+
+    @IBAction func centerFrameHorizontally(_ sender: Any) {
+        let backgroundFrame = self.layerStateHistory.currentLayerState.layers[0].frame
+        let currentFrame = self.layerStateHistory.currentLayerState.layers[self.selectedRow].frame
+        guard backgroundFrame != currentFrame else { return }
+
+        let newFrame = currentFrame.centeredHorizontally(in: backgroundFrame)
+        self.textFieldX.doubleValue = Double(newFrame.origin.x)
+        self.updateFrame()
+    }
+
+    @IBAction func centerFrameVertically(_ sender: Any) {
+        let backgroundFrame = self.layerStateHistory.currentLayerState.layers[0].frame
+        let currentFrame = self.layerStateHistory.currentLayerState.layers[self.selectedRow].frame
+        guard backgroundFrame != currentFrame else { return }
+
+        let newFrame = currentFrame.centeredVertically(in: backgroundFrame)
+        self.textFieldY.doubleValue = Double(newFrame.origin.y)
+        self.updateFrame()
+    }
 }
 
 
@@ -424,6 +444,20 @@ private extension CGRect {
         guard let size = self.size.aspectScaled(toHeight: height) else { return self }
 
         return CGRect(origin: self.origin, size: size)
+    }
+
+    func centeredHorizontally(in container: CGRect) -> CGRect {
+        var rect = self
+        rect.origin.x = container.origin.x + ((container.width - self.width) / 2.0)
+        return rect
+    }
+
+    func centeredVertically(in container: CGRect) -> CGRect {
+        return self.transposed.centeredHorizontally(in: container.transposed).transposed
+    }
+
+    var transposed: CGRect {
+        return CGRect(x: self.origin.y, y: self.origin.x, width: self.height, height: self.width)
     }
 }
 
