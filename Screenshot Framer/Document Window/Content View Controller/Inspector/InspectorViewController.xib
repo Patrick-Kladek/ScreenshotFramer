@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,8 +34,8 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="246" height="389"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="246" height="388"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oUH-Bi-Kod">
                     <rect key="frame" x="18" y="247" width="68" height="16"/>
@@ -325,9 +325,9 @@
                         <action selector="checkboxDidChangeWithSender:" target="-2" id="MBx-TM-vny"/>
                     </connections>
                 </button>
-                <button toolTip="lock aspect ratio" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-8q-svo">
-                    <rect key="frame" x="43" y="195" width="41" height="18"/>
-                    <buttonCell key="cell" type="check" title="🔒" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Dxx-dC-lyR">
+                <button toolTip="lock aspect ratio" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-8q-svo">
+                    <rect key="frame" x="70" y="197" width="14" height="14"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSLockUnlockedTemplate" imagePosition="left" alternateImage="NSLockLockedTemplate" state="on" inset="2" id="Dxx-dC-lyR">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -455,6 +455,8 @@
         </customView>
     </objects>
     <resources>
+        <image name="NSLockLockedTemplate" width="10" height="14"/>
+        <image name="NSLockUnlockedTemplate" width="10" height="14"/>
         <image name="NSTouchBarTextCenterAlignTemplate" width="14" height="30"/>
         <image name="NSTouchBarTextJustifiedAlignTemplate" width="14" height="30"/>
         <image name="NSTouchBarTextLeftAlignTemplate" width="14" height="30"/>

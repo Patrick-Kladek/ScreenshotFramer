@@ -282,26 +282,24 @@ final class InspectorViewController: NSViewController {
 
     func updateLockedRelatedFields(forNewWidth width: CGFloat) {
         guard self.selectedRow < self.layerStateHistory.currentLayerState.layers.count else { return }
+        guard self.lockAspectButton.state == .on else { return }
 
-        if self.lockAspectButton.state == .on {
-            let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
-            self.textFieldHeight.doubleValue = Double(currentLayer.frame.aspectScaled(toWidth: width).height)
-        }
+        let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+        self.textFieldHeight.doubleValue = Double(currentLayer.frame.aspectScaled(toWidth: width).height)
     }
 
     func updateLockedRelatedFields(forNewHeight height: CGFloat) {
         guard self.selectedRow < self.layerStateHistory.currentLayerState.layers.count else { return }
+        guard self.lockAspectButton.state == .on else { return }
 
-        if self.lockAspectButton.state == .on {
-            let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
-            self.textFieldWidth.doubleValue = Double(currentLayer.frame.aspectScaled(toHeight: height).width)
-        }
+        let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+        self.textFieldWidth.doubleValue = Double(currentLayer.frame.aspectScaled(toHeight: height).width)
     }
 
     @IBAction func popupDidChange(sender: NSPopUpButton) {
-        if sender == self.languages {
-            self.viewStateController.newViewState(language: self.languages.titleOfSelectedItem ?? "en-US")
-        }
+        guard sender == self.languages else { return }
+
+        self.viewStateController.newViewState(language: self.languages.titleOfSelectedItem ?? "en-US")
     }
 
     @IBAction func colorWellDidUpdateColor(sender: NSColorWell) {

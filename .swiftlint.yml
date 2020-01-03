@@ -7,6 +7,9 @@ excluded:
   - excluded_dir
 file_length: 
   warning: 500
+type_body_length:
+  warning: 300
+  error: 400
 large_tuple: 
   error: 4
   warning: 3
