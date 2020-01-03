@@ -408,6 +408,7 @@ extension ContentViewController: InspectorViewControllerDelegate {
             documentView.frame = newFrame
             return
         }
+        guard index < documentView.subviews.count else { return }
 
         let view = documentView.subviews[index]
         view.frame = newFrame

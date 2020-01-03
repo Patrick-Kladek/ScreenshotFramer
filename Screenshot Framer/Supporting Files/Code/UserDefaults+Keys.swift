@@ -15,8 +15,14 @@ extension UserDefaults {
         set { self.set(newValue, forKey: UserDefaultKeys.showTimeTravelWindow) }
         get { return self.bool(forKey: UserDefaultKeys.showTimeTravelWindow) }
     }
+
+    var lockAspectRatio: Bool {
+        set { self.set(newValue, forKey: UserDefaultKeys.lockAspectRatio) }
+        get { return self.bool(forKey: UserDefaultKeys.lockAspectRatio) }
+    }
 }
 
 struct UserDefaultKeys {
     static let showTimeTravelWindow = "showTimeTravelWindow"
+    static let lockAspectRatio = "lockAspectRatio"
 }

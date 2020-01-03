@@ -92,6 +92,8 @@ final class InspectorViewController: NSViewController {
     @IBOutlet private var textFieldHeight: NSTextField!
     @IBOutlet private var stepperHeight: NSStepper!
 
+    @IBOutlet private weak var lockAspectButton: NSButton!
+
     @IBOutlet private var textFieldRotation: NSTextField!
     @IBOutlet private var sliderRotation: NSSlider!
 
@@ -125,6 +127,7 @@ final class InspectorViewController: NSViewController {
 
         self.textFieldImageNumber.integerValue = fromImageNumber
         self.viewStateController.newViewState(imageNumber: fromImageNumber)
+        self.lockAspectButton.state = UserDefaults.standard.lockAspectRatio ? .on : .off
     }
 
 
@@ -197,8 +200,17 @@ final class InspectorViewController: NSViewController {
         self.textFieldImageNumber.integerValue = self.stepperImageNumber.integerValue
         self.textFieldX.doubleValue = self.stepperX.doubleValue
         self.textFieldY.doubleValue = self.stepperY.doubleValue
-        self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
-        self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
+
+        switch sender {
+        case self.stepperWidth:
+            self.textFieldWidth.doubleValue = self.stepperWidth.doubleValue
+            self.updateLockedRelatedFields(forNewWidth: CGFloat(self.stepperWidth!.doubleValue))
+        case self.stepperHeight:
+            self.textFieldHeight.doubleValue = self.stepperHeight.doubleValue
+            self.updateLockedRelatedFields(forNewHeight: CGFloat(self.stepperHeight!.doubleValue))
+        default:
+            break
+        }
         self.textFieldFontSize.doubleValue = self.stepperFontSize.doubleValue
 
         switch sender {
@@ -255,15 +267,39 @@ final class InspectorViewController: NSViewController {
         case self.textFieldRotation:
             self.rotateLayer()
 
+        case self.textFieldWidth:
+            self.updateLockedRelatedFields(forNewWidth: self.frameInInspector.width)
+            self.updateFrame()
+
+        case self.textFieldHeight:
+            self.updateLockedRelatedFields(forNewHeight: self.frameInInspector.height)
+            self.updateFrame()
+
         default:
             self.updateFrame()
         }
     }
 
+    func updateLockedRelatedFields(forNewWidth width: CGFloat) {
+        guard self.selectedRow < self.layerStateHistory.currentLayerState.layers.count else { return }
+        guard self.lockAspectButton.state == .on else { return }
+
+        let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+        self.textFieldHeight.doubleValue = Double(currentLayer.frame.aspectScaled(toWidth: width).height)
+    }
+
+    func updateLockedRelatedFields(forNewHeight height: CGFloat) {
+        guard self.selectedRow < self.layerStateHistory.currentLayerState.layers.count else { return }
+        guard self.lockAspectButton.state == .on else { return }
+
+        let currentLayer = self.layerStateHistory.currentLayerState.layers[self.selectedRow]
+        self.textFieldWidth.doubleValue = Double(currentLayer.frame.aspectScaled(toHeight: height).width)
+    }
+
     @IBAction func popupDidChange(sender: NSPopUpButton) {
-        if sender == self.languages {
-            self.viewStateController.newViewState(language: self.languages.titleOfSelectedItem ?? "en-US")
-        }
+        guard sender == self.languages else { return }
+
+        self.viewStateController.newViewState(language: self.languages.titleOfSelectedItem ?? "en-US")
     }
 
     @IBAction func colorWellDidUpdateColor(sender: NSColorWell) {
@@ -286,6 +322,30 @@ final class InspectorViewController: NSViewController {
         let state = self.verticallyCenteredCheckbox.state == .on ? true : false
         let operation = UpdateVerticallyCenteredTextOperation(layerStateHistory: self.layerStateHistory, indexOfLayer: self.selectedRow, verticallyCentered: state)
         operation.apply()
+    }
+
+    @IBAction func didToggleAspectRatioLock(_ sender: NSButton) {
+        UserDefaults.standard.lockAspectRatio = sender.state == .on
+    }
+
+    @IBAction func centerFrameHorizontally(_ sender: Any) {
+        let backgroundFrame = self.layerStateHistory.currentLayerState.layers[0].frame
+        let currentFrame = self.layerStateHistory.currentLayerState.layers[self.selectedRow].frame
+        guard backgroundFrame != currentFrame else { return }
+
+        let newFrame = currentFrame.centeredHorizontally(in: backgroundFrame)
+        self.textFieldX.doubleValue = Double(newFrame.origin.x)
+        self.updateFrame()
+    }
+
+    @IBAction func centerFrameVertically(_ sender: Any) {
+        let backgroundFrame = self.layerStateHistory.currentLayerState.layers[0].frame
+        let currentFrame = self.layerStateHistory.currentLayerState.layers[self.selectedRow].frame
+        guard backgroundFrame != currentFrame else { return }
+
+        let newFrame = currentFrame.centeredVertically(in: backgroundFrame)
+        self.textFieldY.doubleValue = Double(newFrame.origin.y)
+        self.updateFrame()
     }
 }
 
@@ -367,5 +427,46 @@ private extension NSTextAlignment {
         default:
             self = .center
         }
+    }
+}
+
+private extension CGRect {
+
+    func aspectScaled(toHeight newValue: CGFloat) -> CGRect {
+        return self.transposed.aspectScaled(toWidth: newValue).transposed
+    }
+
+    func aspectScaled(toWidth width: CGFloat) -> CGRect {
+        guard let size = self.size.aspectScaled(toWidth: width) else { return self }
+
+        return CGRect(origin: self.origin, size: size)
+    }
+
+    func centeredHorizontally(in container: CGRect) -> CGRect {
+        var rect = self
+        rect.origin.x = container.origin.x + ((container.width - self.width) / 2.0)
+        return rect
+    }
+
+    func centeredVertically(in container: CGRect) -> CGRect {
+        return self.transposed.centeredHorizontally(in: container.transposed).transposed
+    }
+
+    /// flips the rect for reusing calculations vertically/horizontally
+    var transposed: CGRect { return CGRect(x: self.origin.y, y: self.origin.x, width: self.height, height: self.width) }
+}
+
+private extension CGSize {
+
+    var widthHeightAspect: CGFloat? {
+        guard self.height != 0, self.width != 0 else { return nil }
+
+        return self.width / self.height
+    }
+
+    func aspectScaled(toWidth width: CGFloat) -> CGSize? {
+        guard let aspect = self.widthHeightAspect else { return nil }
+
+        return CGSize(width: width, height: width / aspect)
     }
 }
