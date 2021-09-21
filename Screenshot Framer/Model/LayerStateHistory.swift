@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol LayerStateHistoryDelegate: class {
+protocol LayerStateHistoryDelegate: AnyObject {
     func layerStateHistory(_ histroy: LayerStateHistory, didUpdateHistory: LayerState, layerCountDidChange: Bool)
 }
 
