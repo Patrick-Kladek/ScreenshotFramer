@@ -10,7 +10,7 @@ import Cocoa
 
 
 /// These Methods are called frequently and therefore only modify exiting layers
-protocol InspectorViewControllerDelegate: class {
+protocol InspectorViewControllerDelegate: AnyObject {
     func inspector(_ inspector: InspectorViewController, requestRotation newRotation: CGFloat, of index: Int)
     func inspector(_ inspector: InspectorViewController, requestNewFrame newFrame: CGRect, of index: Int)
     func inspector(_ inspector: InspectorViewController, requestNewFont newFont: NSFont?, of index: Int)

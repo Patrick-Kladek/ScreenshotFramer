@@ -9,7 +9,7 @@
 import Cocoa
 
 
-protocol ProgressWindowControllerDelegate: class {
+protocol ProgressWindowControllerDelegate: AnyObject {
     func progressWindowControllerDidRequestCancel(_ windowController: ProgressWindowController)
 }
 

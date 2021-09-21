@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol ExportControllerDelegate: class {
+protocol ExportControllerDelegate: AnyObject {
     func exportController(_ exportController: ExportController, didUpdateProgress progress: Double, file: String, layoutErrors: [LayoutError])
 }
 

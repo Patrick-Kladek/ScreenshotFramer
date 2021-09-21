@@ -16,7 +16,7 @@ struct ViewState {
 }
 
 
-protocol ViewStateControllerDelegate: class {
+protocol ViewStateControllerDelegate: AnyObject {
 
     func viewStateDidChange(_ viewState: ViewState)
 }

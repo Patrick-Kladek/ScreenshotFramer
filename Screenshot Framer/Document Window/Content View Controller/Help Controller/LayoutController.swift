@@ -129,7 +129,6 @@ private extension LayoutController {
         var fontSize = CGFloat(fontSizeObject.floatValue)
         let kMinFontSize = CGFloat(6.0)
         let frame = textField.frame
-        let string = textField.stringValue as NSString
         var limited = false
 
         func calculateStringSize(withFont font: NSFont) -> CGSize {
