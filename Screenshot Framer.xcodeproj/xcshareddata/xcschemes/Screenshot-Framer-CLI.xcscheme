@@ -59,6 +59,12 @@
             ReferencedContainer = "container:Screenshot Framer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "export --input /Users/patrick/Developer/Bikemap-AppStore/Input"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
