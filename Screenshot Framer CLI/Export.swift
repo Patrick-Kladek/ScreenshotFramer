@@ -34,7 +34,9 @@ final class Export: ParsableCommand {
         }
 
         for project in projects {
-            self.export(project: project)
+            autoreleasepool {
+                self.export(project: project)
+            }
         }
     }
 }
