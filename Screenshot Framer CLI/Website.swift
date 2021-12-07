@@ -9,6 +9,7 @@
 import ArgumentParser
 import Foundation
 import SwiftSoup
+import AppKit
 
 final class Website: ParsableCommand {
 
@@ -18,8 +19,11 @@ final class Website: ParsableCommand {
     // MARK: - Export
 
     func run() throws {
-        //try self.makeHTML()
-        try self.makeBody()
+        let doc = try self.makeHTML()
+        let html = try doc.html()
+        let file = exportFolder.appendingPathComponent("index_new").appendingPathExtension("html")
+        try html.write(to: file, atomically: true, encoding: .utf8)
+        NSWorkspace.shared.open(file)
     }
 }
 
@@ -27,23 +31,34 @@ final class Website: ParsableCommand {
 
 private extension Website {
 
-    func makeHTML() throws {
-        let string = WebsiteTemplate.template
-        let doc: Document = try SwiftSoup.parse(string)
+    func makeHTML() throws -> Document {
+        let doc = Document("")
+        try doc.appendChild(DataNode("<!DOCTYPE html>", ""))
 
-        guard let body = doc.body() else { fatalError("Template malformatted") }
+        try doc.appendChild(self.makeHead())
+        try doc.appendChild(self.makeBody())
 
-        let language = try body.select("div")
-        guard let languageTable = try language.select("table").first() else { fatalError("Template malformatted") }
-
-        print(languageTable)
-
-        let languageTable1 = try self.makeLanguageSection()
-        try doc.normalise()
-        print(try languageTable1.html())
+        return doc
     }
 
-    func makeBody() throws {
+    func makeHead() throws -> Element {
+        let head = Element(Tag("head"), "")
+        let title = try head.appendElement("title")
+        try title.text("Screenshots")
+
+        let meta = try head.appendElement("meta")
+        try meta.attr("chatset", "UTF-8")
+
+        let style = try head.appendElement("style")
+        try style.attr("type", "text/css")
+
+        let data = DataNode(WebsiteTemplate.style, "")
+        try style.addChildren(data)
+
+        return head
+    }
+
+    func makeBody() throws -> Element {
         let body = Element(Tag("body"), "")
 
         // Make SortMenu
@@ -57,10 +72,14 @@ private extension Website {
         // Make byScreen
 
         // Make overlay
+        let overlay = try self.makeOverlay()
+        try body.addChildren(overlay)
 
         // Make Script
+        let script = try self.makeScript()
+        try body.addChildren(script)
 
-        print(body)
+        return body
     }
 
     func makeSortMenu() throws -> Element {
@@ -170,5 +189,30 @@ private extension Website {
         }
 
         return (tableRow, index)
+    }
+
+    func makeOverlay() throws -> Element {
+        let div = Element(Tag("div"), "")
+        try div.attr("id", "overlay")
+
+        let img = try div.appendElement("img")
+        try img.attr("id", "imageDisplay")
+        try img.attr("src", "")
+        try img.attr("alt", "")
+
+        let info = try div.appendElement("div")
+        try info.attr("id", "imageInfo")
+
+        return div
+    }
+
+    func makeScript() throws -> Element {
+        let script = Element(Tag("script"), "")
+        try script.attr("type", "text/javascript")
+
+        let data = DataNode(WebsiteTemplate.script, "")
+        try script.addChildren(data)
+
+        return script
     }
 }
