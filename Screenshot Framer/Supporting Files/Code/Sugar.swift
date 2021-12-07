@@ -45,3 +45,57 @@ extension Array where Element == String {
         return newValues
     }
 }
+
+extension URL {
+
+    func relativeURL(from base: URL) -> URL? {
+        guard let path = self.relativePath(from: base) else { return nil }
+
+        return URL(fileURLWithPath: path, relativeTo: base)
+    }
+
+    func relativePath(from base: URL) -> String? {
+        // Ensure that both URLs represent files:
+        guard self.isFileURL && base.isFileURL else {
+            return nil
+        }
+
+        // Remove/replace "." and "..", make paths absolute:
+        let destComponents = self.standardized.pathComponents
+        let baseComponents = base.standardized.pathComponents
+
+        // Find number of common path components:
+        var index = 0
+        while index < destComponents.count && index < baseComponents.count
+                && destComponents[index] == baseComponents[index] {
+            index += 1
+        }
+
+        // Build relative path:
+        var relComponents = Array(repeating: "..", count: baseComponents.count - index)
+        relComponents.append(contentsOf: destComponents[index...])
+        return relComponents.joined(separator: "/")
+    }
+}
+
+extension FileManager {
+
+    func contentsOfDirectory(at url: URL, recursive: Bool) throws -> [URL] {
+        if recursive == false {
+            return try self.contentsOfDirectory(atPath: url.path).map { URL(fileURLWithPath: $0) }
+        }
+
+        var files: [URL] = []
+        if let enumerator = FileManager.default.enumerator(at: url,
+                                                           includingPropertiesForKeys: [.isRegularFileKey],
+                                                           options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+            for case let fileURL as URL in enumerator {
+                let fileAttributes = try fileURL.resourceValues(forKeys: [.isRegularFileKey])
+                if fileAttributes.isRegularFile! {
+                    files.append(fileURL)
+                }
+            }
+        }
+        return files
+    }
+}

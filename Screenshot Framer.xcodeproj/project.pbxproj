@@ -54,6 +54,7 @@
 		CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659101FE3F00000430F20 /* MNCoalescing.swift */; };
 		CDB659131FE4268200430F20 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
 		CDB926A0275F1BA4003D7A6F /* ImagesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9269F275F1BA4003D7A6F /* ImagesParser.swift */; };
+		CDB926A2275F53D7003D7A6F /* WebsiteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB926A1275F53D7003D7A6F /* WebsiteBuilder.swift */; };
 		CDD14C73274F9C3900D06720 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = CDD14C72274F9C3900D06720 /* ArgumentParser */; };
 		CDD14C75274F9C9300D06720 /* Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD14C74274F9C9300D06720 /* Export.swift */; };
 		CDD14C77274FA9CE00D06720 /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD14C76274FA9CE00D06720 /* Website.swift */; };
@@ -134,6 +135,7 @@
 		CDB659101FE3F00000430F20 /* MNCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCoalescing.swift; sourceTree = "<group>"; };
 		CDB659121FE4268200430F20 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		CDB9269F275F1BA4003D7A6F /* ImagesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesParser.swift; sourceTree = "<group>"; };
+		CDB926A1275F53D7003D7A6F /* WebsiteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteBuilder.swift; sourceTree = "<group>"; };
 		CDD14C74274F9C9300D06720 /* Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Export.swift; sourceTree = "<group>"; };
 		CDD14C76274FA9CE00D06720 /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
 		CDD14C78274FAA3F00D06720 /* WebsiteTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTemplate.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				CD9395581FF6AC6D00D3D831 /* main.swift */,
 				CDD14C74274F9C9300D06720 /* Export.swift */,
 				CDD14C76274FA9CE00D06720 /* Website.swift */,
+				CDB926A1275F53D7003D7A6F /* WebsiteBuilder.swift */,
 				CDB9269F275F1BA4003D7A6F /* ImagesParser.swift */,
 				CDD14C78274FAA3F00D06720 /* WebsiteTemplate.swift */,
 				CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */,
@@ -566,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */,
+				CDB926A2275F53D7003D7A6F /* WebsiteBuilder.swift in Sources */,
 				CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				CD372B331FF843C000D57586 /* ExportController.swift in Sources */,
 				CDB926A0275F1BA4003D7A6F /* ImagesParser.swift in Sources */,

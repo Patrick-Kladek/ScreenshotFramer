@@ -9,19 +9,29 @@
 import Foundation
 
 final class ImagesParser {
-    struct Language {
-        struct Group {
-            struct Image {
-                let url: URL
-                var filename: String {
-                    return self.url.lastPathComponent
-                }
+
+    struct Group {
+        struct Image {
+            let url: URL
+            var filename: String {
+                return self.url.lastPathComponent
             }
-            let images: [Image]
-            let name: String
+            var caption: String {
+                return self.url.deletingLastPathComponent().lastPathComponent
+            }
         }
+        let images: [Image]
+        let name: String
+    }
+
+    struct Language {
         let groups: [Group]
         let language: String
+    }
+
+    struct Screen {
+        let groups: [Group]
+        let name: String
     }
 
     private let fileManager = FileManager()
@@ -38,33 +48,55 @@ final class ImagesParser {
         let languages = try languageFolders.map { try self.contents(in: $0) }
         return languages
     }
+
+    func screens(in folder: URL) throws -> [Screen] {
+        let files = try FileManager.default.contentsOfDirectory(at: folder, recursive: true)
+        let filtered = files.filter { $0.pathExtension == "png" || $0.pathExtension == "jpg" }
+        let relative = filtered.compactMap { $0.relativeURL(from: folder) }
+        let screenshots = relative.compactMap { Screenshot(url: $0) }
+        let numbers = Set(screenshots.map { $0.number }).sorted()
+
+        var screens: [Screen] = []
+        for number in numbers {
+            let imagesInScreen = screenshots.filter { $0.number == number }
+            let devices = Set(imagesInScreen.map { $0.device }).sorted()
+            var groups: [Group] = []
+            for device in devices {
+                let images = imagesInScreen.filter { $0.device == device }.map { Group.Image(url: $0.url) }
+                groups.append(Group(images: images, name: device))
+            }
+            screens.append(Screen(groups: groups, name: number))
+        }
+
+        return screens
+    }
 }
 
 // MARK: - Private
 
-extension ImagesParser {
+private extension ImagesParser {
 
-    func contents(in folder: URL) throws -> Language {
-        struct Screenshot: CustomDebugStringConvertible {
-            let url: URL
-            let device: String
-            let number: String
+    struct Screenshot: CustomDebugStringConvertible {
+        let url: URL
+        let device: String
+        let number: String
 
-            init?(url: URL) {
-                self.url = url
+        init?(url: URL) {
+            self.url = url
 
-                let elements = url.lastPathComponent.components(separatedBy: CharacterSet(charactersIn: " -")).filter { $0 != "" }
-                guard elements.count >= 2 else { return nil }
+            let elements = url.lastPathComponent.components(separatedBy: CharacterSet(charactersIn: " -")).filter { $0 != "" }
+            guard elements.count >= 2 else { return nil }
 
-                self.device = elements[0...elements.count - 2].joined(separator: " ")
-                self.number = elements.last!
-            }
-
-            var debugDescription: String {
-                return "\(self.device) \(self.number)"
-            }
+            self.device = elements[0...elements.count - 2].joined(separator: " ")
+            self.number = elements.last!
         }
 
+        var debugDescription: String {
+            return "\(self.device) \(self.number)"
+        }
+    }
+
+    func contents(in folder: URL) throws -> Language {
         let contents = try self.fileManager.contentsOfDirectory(at: folder,
                                                                 includingPropertiesForKeys: [.isRegularFileKey],
                                                                 options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
@@ -72,47 +104,14 @@ extension ImagesParser {
         let relative = contents.compactMap { $0.relativeURL(from: folder.deletingLastPathComponent()) }
         let sorted = relative.sorted(by: { $0.lastPathComponent < $1.lastPathComponent })
         let screenshots = sorted.compactMap { Screenshot(url: $0) }
-        let devices = Set(screenshots.map { $0.device })
+        let devices = Set(screenshots.map { $0.device }).sorted()
 
-
-        var groups: [Language.Group] = []
+        var groups: [Group] = []
         for device in devices {
-            let images = screenshots.filter { $0.device == device }.map { Language.Group.Image(url: $0.url) }
-            groups.append(Language.Group(images: images, name: device))
+            let images = screenshots.filter { $0.device == device }.map { Group.Image(url: $0.url) }
+            groups.append(Group(images: images, name: device))
         }
 
         return Language(groups: groups, language: folder.lastPathComponent)
-    }
-}
-
-extension URL {
-
-    func relativeURL(from base: URL) -> URL? {
-        guard let path = self.relativePath(from: base) else { return nil }
-
-        return URL(fileURLWithPath: path, relativeTo: base)
-    }
-
-    func relativePath(from base: URL) -> String? {
-        // Ensure that both URLs represent files:
-        guard self.isFileURL && base.isFileURL else {
-            return nil
-        }
-
-        // Remove/replace "." and "..", make paths absolute:
-        let destComponents = self.standardized.pathComponents
-        let baseComponents = base.standardized.pathComponents
-
-        // Find number of common path components:
-        var index = 0
-        while index < destComponents.count && index < baseComponents.count
-                && destComponents[index] == baseComponents[index] {
-            index += 1
-        }
-
-        // Build relative path:
-        var relComponents = Array(repeating: "..", count: baseComponents.count - index)
-        relComponents.append(contentsOf: destComponents[index...])
-        return relComponents.joined(separator: "/")
     }
 }

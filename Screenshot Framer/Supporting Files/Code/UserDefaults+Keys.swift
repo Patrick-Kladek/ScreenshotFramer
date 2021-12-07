@@ -12,13 +12,13 @@ import Foundation
 extension UserDefaults {
 
     var showTimeTravelWindow: Bool {
-        set { self.set(newValue, forKey: UserDefaultKeys.showTimeTravelWindow) }
         get { return self.bool(forKey: UserDefaultKeys.showTimeTravelWindow) }
+        set { self.set(newValue, forKey: UserDefaultKeys.showTimeTravelWindow) }
     }
 
     var lockAspectRatio: Bool {
-        set { self.set(newValue, forKey: UserDefaultKeys.lockAspectRatio) }
         get { return self.bool(forKey: UserDefaultKeys.lockAspectRatio) }
+        set { self.set(newValue, forKey: UserDefaultKeys.lockAspectRatio) }
     }
 }
 
