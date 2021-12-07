@@ -46,7 +46,7 @@ final class ImagesParser {
             .filter { $0.hasDirectoryPath }
 
         let languages = try languageFolders.map { try self.contents(in: $0) }
-        return languages
+        return languages.sorted(by: { $0.language < $1.language })
     }
 
     func screens(in folder: URL) throws -> [Screen] {
@@ -62,7 +62,9 @@ final class ImagesParser {
             let devices = Set(imagesInScreen.map { $0.device }).sorted()
             var groups: [Group] = []
             for device in devices {
-                let images = imagesInScreen.filter { $0.device == device }.map { Group.Image(url: $0.url) }
+                let images = imagesInScreen.filter { $0.device == device }
+                    .sorted(by: { $0.language < $1.language })
+                    .map { Group.Image(url: $0.url) }
                 groups.append(Group(images: images, name: device))
             }
             screens.append(Screen(groups: groups, name: number))
@@ -80,6 +82,7 @@ private extension ImagesParser {
         let url: URL
         let device: String
         let number: String
+        let language: String
 
         init?(url: URL) {
             self.url = url
@@ -89,6 +92,8 @@ private extension ImagesParser {
 
             self.device = elements[0...elements.count - 2].joined(separator: " ")
             self.number = elements.last!
+
+            self.language = url.pathComponents.dropLast().last!
         }
 
         var debugDescription: String {

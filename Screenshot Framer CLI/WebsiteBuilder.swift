@@ -24,7 +24,7 @@ final class WebsiteBuilder {
         let doc = try self.makeHTML()
         let html = try doc.html()
 
-        let file = self.baseURL.appendingPathComponent("index_new").appendingPathExtension("html")
+        let file = self.baseURL.appendingPathComponent("index").appendingPathExtension("html")
         try html.write(to: file, atomically: true, encoding: .utf8)
         return file
     }
@@ -38,8 +38,9 @@ private extension WebsiteBuilder {
         let doc = Document("")
         try doc.appendChild(DataNode("<!DOCTYPE html>", ""))
 
-        try doc.appendChild(self.makeHead())
-        try doc.appendChild(self.makeBody())
+        let html = try doc.appendElement("html")
+        try html.appendChild(self.makeHead())
+        try html.appendChild(self.makeBody())
 
         return doc
     }

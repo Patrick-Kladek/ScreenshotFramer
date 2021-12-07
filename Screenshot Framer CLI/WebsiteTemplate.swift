@@ -90,7 +90,7 @@ final class WebsiteTemplate {
       position: absolute;
       right: 0;
       top: 0;
-      width: 250px;
+      width: 350px;
       z-index: -1;
     }
     #imageInfo:hover {
@@ -99,6 +99,7 @@ final class WebsiteTemplate {
     """
 
     static let script: String = """
+
     var overlay        = document.getElementById('overlay');
     var imageDisplay   = document.getElementById('imageDisplay');
     var imageInfo      = document.getElementById('imageInfo');
@@ -184,9 +185,10 @@ final class WebsiteTemplate {
         imageDisplay.alt             = img.alt;
         imageDisplay.dataset.counter = img.dataset.counter;
 
-        imageInfo.innerHTML          = '<h3>'+img.alt+'</h3>';
-        imageInfo.innerHTML         += decodeURI(img.src.split("/").pop());
-        imageInfo.innerHTML         += '<br />'+tmpImg.height+'&times;'+tmpImg.width+'px';
+        var path = img.src.split("/")
+        imageInfo.innerHTML          = '<h3>'+decodeURI(path[path.length - 2])+'</h3>';
+        imageInfo.innerHTML         += '<h3>'+decodeURI(path[path.length - 1])+'</h3>';
+        imageInfo.innerHTML         += '<h4>'+tmpImg.height+'&times;'+tmpImg.width+'px</h4>';
 
         overlay.style.display        = "block";
       });
