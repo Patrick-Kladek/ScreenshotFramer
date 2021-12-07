@@ -62,6 +62,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "export --input /Users/patrick/Developer/Bikemap-AppStore/Input"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "website --export-folder /Users/patrick/Developer/Bikemap-AppStore/export"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
