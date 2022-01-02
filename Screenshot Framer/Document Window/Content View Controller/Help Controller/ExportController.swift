@@ -44,13 +44,14 @@ final class ExportController {
         let fileManager = FileManager()
         let viewStateController = ViewStateController(viewState: viewState)
         let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
-        guard let view = layoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { return [.noLayers] }
 
-        let data = view.pngData()
+        guard let view = layoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { return [.noLayers] }
         guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return [.noOutputFile] }
 
         try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-        try? data?.write(to: url, options: .atomic)
+        if let data = view.pngData() {
+            try? data.write(to: url, options: .atomic)
+        }
 
         return layoutController.layoutErrors
     }
@@ -74,12 +75,12 @@ final class ExportController {
             for index in lower...upper {
                 viewStateController.newViewState(imageNumber: index)
                 guard let view = layoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { continue }           // TODO: is called from a background thread
-
-                let data = view.pngData()
                 guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return [.noOutputFile] }
 
                 try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-                try? data?.write(to: url, options: .atomic)
+                if let data = view.pngData() {
+                    try? data.write(to: url, options: .atomic)
+                }
 
                 currentStep += 1
                 let progress = Double(currentStep) / Double(totalSteps)

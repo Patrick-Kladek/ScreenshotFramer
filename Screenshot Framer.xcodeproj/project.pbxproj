@@ -438,6 +438,7 @@
 					};
 					CD9395551FF6AC6D00D3D831 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1310;
 						ProvisioningStyle = Automatic;
 					};
 					CDFF69941FD827B800E652EE = {
@@ -802,7 +803,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -815,7 +816,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
