@@ -17,11 +17,11 @@ extension NSColor {
      *  - returns: NSColor with rgba value
      */
     convenience init?(hex: String) {
-        var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        cString.cleanHexPrefix()
+        var trimmed = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        trimmed.cleanHexPrefix()
 
-        var hexNumber: UInt32 = 0
-        Scanner(string: cString).scanHexInt32(&hexNumber)
+        var hexNumber: UInt64 = 0
+        Scanner(string: trimmed).scanHexInt64(&hexNumber)
 
 		self.init(red: CGFloat( (hexNumber & 0xFF000000) >> 24) / 255.0,
                   green: CGFloat( (hexNumber & 0x00FF0000) >> 16) / 255.0,
@@ -31,6 +31,7 @@ extension NSColor {
 
     func hexString() -> String {
         guard let standardizedColor = self.usingColorSpace(.sRGB) else { return "" }
+
         let red = Int(standardizedColor.redComponent * 255.0)
         let green = Int(standardizedColor.greenComponent * 255.0)
         let blue = Int(standardizedColor.blueComponent * 255.0)
