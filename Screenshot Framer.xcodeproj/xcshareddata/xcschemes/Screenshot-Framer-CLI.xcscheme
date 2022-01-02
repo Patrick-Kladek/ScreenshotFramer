@@ -61,12 +61,12 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "export --input /Users/patrick/Developer/Bikemap-AppStore/Input"
-            isEnabled = "NO">
+            argument = "export --input /Users/patrick/Developer/Bikemap-AppStore/Input --language de-DE --image 7 --ignore-warnings"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "website --export-folder /Users/patrick/Developer/Bikemap-AppStore/export"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

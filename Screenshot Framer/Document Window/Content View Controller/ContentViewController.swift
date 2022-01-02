@@ -300,7 +300,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
         self.inspectorViewController?.updateUIFromViewState()
-        self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
+        self.scrollView.documentView = self.layoutController.layoutHierarchy(layers: self.lastLayerState.layers)
         self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output

@@ -53,7 +53,7 @@ class LayoutController {
 
     // MARK: - Public Functions
 
-    func layouthierarchy(layers: [LayoutableObject]) -> NSView? {
+    func layoutHierarchy(layers: [LayoutableObject]) -> NSView? {
         self.layoutErrors = []
         guard layers.hasElements else { self.layoutErrors = [.noLayers]; return nil }
 
