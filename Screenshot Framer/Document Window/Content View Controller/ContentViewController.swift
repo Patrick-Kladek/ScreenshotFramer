@@ -104,7 +104,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.zoomToFit(nil)
     }
 
-    //swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         self.updateMenuItem(menuItem)
         guard let action = menuItem.action else { return false }

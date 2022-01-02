@@ -18,13 +18,13 @@ class ProgressWindowController: NSWindowController {
     // MARK: - Properties
     weak var delegate: ProgressWindowControllerDelegate?
     var maxProgress: Double {
-        set { self.progressBar.maxValue = newValue }
         get { return self.progressBar.maxValue }
+        set { self.progressBar.maxValue = newValue }
     }
 
     var progress: Double {
-        set { self.progressBar.doubleValue = newValue }
         get { return self.progressBar.doubleValue }
+        set { self.progressBar.doubleValue = newValue }
     }
 
 

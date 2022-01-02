@@ -512,7 +512,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
+			shellScript = "# Swift Lint\nexec swiftlint\n";
 		};
 		CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -526,7 +526,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
+			shellScript = "# Swift Lint\nexec swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
