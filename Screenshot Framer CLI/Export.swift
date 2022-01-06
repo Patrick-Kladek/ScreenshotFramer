@@ -97,7 +97,7 @@ extension Export {
         var exportErrors = errors
 
         if self.ignoreWarnings {
-            exportErrors.remove(object: .fontToBig)
+            exportErrors.remove(object: .fontTooBig)
         }
 
         return exportErrors

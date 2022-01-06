@@ -53,7 +53,7 @@ final class ImagesParser {
                                                             options: [.skipsHiddenFiles, .skipsPackageDescendants, .producesRelativePathURLs])
             .filter { $0.hasDirectoryPath }
 
-        let languages = try languageFolders.map { try self.contents(in: $0) }
+        let languages = try languageFolders.map { try self.language(in: $0) }
         return languages.sorted(by: { $0.language < $1.language })
     }
 
@@ -126,7 +126,7 @@ private extension ImagesParser {
         }
     }
 
-    func contents(in folder: URL) throws -> Language {
+    func language(in folder: URL) throws -> Language {
         let contents = try self.fileManager.contentsOfDirectory(at: folder,
                                                                 includingPropertiesForKeys: [.isRegularFileKey],
                                                                 options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
