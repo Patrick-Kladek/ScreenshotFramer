@@ -41,7 +41,7 @@ enum OutputType {
 class ConsoleIO {
 
     // swiftlint:disable:next identifier_name
-    func writeMessage(_ message: String, to: OutputType = .standard) {
+    static func writeMessage(_ message: String, to: OutputType = .standard) {
         if self.isDebuggerAttached() {
             print(message)
             return
@@ -57,7 +57,7 @@ class ConsoleIO {
         }
     }
 
-    func printUsage() {
+    static func printUsage() {
         let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
 
         self.writeMessage("usage:  \(executableName) -project <file>")
@@ -77,7 +77,7 @@ private extension ConsoleIO {
      *
      *  - returns: true if a debugger is attacted or false if not
      */
-    func isDebuggerAttached() -> Bool {
+    static func isDebuggerAttached() -> Bool {
         var info = kinfo_proc()
         var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
         var size = MemoryLayout<kinfo_proc>.stride

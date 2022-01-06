@@ -17,7 +17,7 @@ enum LayoutError: String {
                     - No layers present.
                       Check your project file and make sure it contains at least one layer
                     """
-    case fontToBig = """
+    case fontTooBig = """
                      - The font of one label is too big. This often happens in a different language than you design.
                        Check all languages in your project and decrease the font size or increase the frame of the label
                        The font is decresed on affected labels so the contents fit on screen.
@@ -115,7 +115,7 @@ private extension LayoutController {
         }
 
         if self.limitFontSize(for: textField) {
-            self.layoutErrors.append(.fontToBig)
+            self.layoutErrors.append(.fontTooBig)
         }
 
         return textField

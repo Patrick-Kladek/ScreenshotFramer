@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -42,7 +42,6 @@
 		CD75DDA71FE916E80035952D /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
 		CD9395591FF6AC6D00D3D831 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9395581FF6AC6D00D3D831 /* main.swift */; };
 		CD93955E1FF6AE1A00D3D831 /* ConsoleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */; };
-		CD9395601FF6AEAB00D3D831 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD93955F1FF6AEAB00D3D831 /* Controller.swift */; };
 		CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83A1FCEE01800449B4A /* LayerState.swift */; };
 		CD9395621FF6B1ED00D3D831 /* LayerStateHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD26F83C1FCEEB1C00449B4A /* LayerStateHistory.swift */; };
 		CD9395631FF6B26B00D3D831 /* OutputConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD75DDA61FE916E80035952D /* OutputConfig.swift */; };
@@ -54,6 +53,13 @@
 		CDB6590F1FE3DAF800430F20 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */; };
 		CDB659111FE3F00000430F20 /* MNCoalescing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659101FE3F00000430F20 /* MNCoalescing.swift */; };
 		CDB659131FE4268200430F20 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB659121FE4268200430F20 /* FileController.swift */; };
+		CDB926A0275F1BA4003D7A6F /* ImagesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9269F275F1BA4003D7A6F /* ImagesParser.swift */; };
+		CDB926A2275F53D7003D7A6F /* WebsiteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB926A1275F53D7003D7A6F /* WebsiteBuilder.swift */; };
+		CDD14C73274F9C3900D06720 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = CDD14C72274F9C3900D06720 /* ArgumentParser */; };
+		CDD14C75274F9C9300D06720 /* Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD14C74274F9C9300D06720 /* Export.swift */; };
+		CDD14C77274FA9CE00D06720 /* Website.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD14C76274FA9CE00D06720 /* Website.swift */; };
+		CDD14C79274FAA3F00D06720 /* WebsiteTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD14C78274FAA3F00D06720 /* WebsiteTemplate.swift */; };
+		CDD14C7F274FB60400D06720 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CDD14C7E274FB60400D06720 /* SwiftSoup */; };
 		CDD324602266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */; };
 		CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */; };
 		CDE9C3541FEBDBD100168B40 /* Document Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CDE9C3531FEBDBD100168B40 /* Document Icon.icns */; };
@@ -123,12 +129,16 @@
 		CD9395561FF6AC6D00D3D831 /* Screenshot-Framer-CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Screenshot-Framer-CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9395581FF6AC6D00D3D831 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
-		CD93955F1FF6AEAB00D3D831 /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		CDAEE1FE1FED484500F4B1BA /* Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sugar.swift; sourceTree = "<group>"; };
 		CDB6590A1FE16EE800430F20 /* UserDefaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Keys.swift"; sourceTree = "<group>"; };
 		CDB6590E1FE3DAF800430F20 /* NSColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		CDB659101FE3F00000430F20 /* MNCoalescing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNCoalescing.swift; sourceTree = "<group>"; };
 		CDB659121FE4268200430F20 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
+		CDB9269F275F1BA4003D7A6F /* ImagesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesParser.swift; sourceTree = "<group>"; };
+		CDB926A1275F53D7003D7A6F /* WebsiteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteBuilder.swift; sourceTree = "<group>"; };
+		CDD14C74274F9C9300D06720 /* Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Export.swift; sourceTree = "<group>"; };
+		CDD14C76274FA9CE00D06720 /* Website.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Website.swift; sourceTree = "<group>"; };
+		CDD14C78274FAA3F00D06720 /* WebsiteTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTemplate.swift; sourceTree = "<group>"; };
 		CDD3245F2266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextFieldCell.swift; sourceTree = "<group>"; };
 		CDE9C3531FEBDBD100168B40 /* Document Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Document Icon.icns"; sourceTree = "<group>"; };
 		CDFF69951FD827B800E652EE /* Screenshot FramerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Screenshot FramerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +162,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDD14C73274F9C3900D06720 /* ArgumentParser in Frameworks */,
+				CDD14C7F274FB60400D06720 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +226,7 @@
 				CDFF69961FD827B800E652EE /* Screenshot Framer Tests */,
 				CD9395571FF6AC6D00D3D831 /* Screenshot Framer CLI */,
 				CD5EE03D1FCD557200AD2ED7 /* Products */,
+				CDD14C71274F9C3900D06720 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -289,10 +302,21 @@
 			isa = PBXGroup;
 			children = (
 				CD9395581FF6AC6D00D3D831 /* main.swift */,
-				CD93955F1FF6AEAB00D3D831 /* Controller.swift */,
+				CDD14C74274F9C9300D06720 /* Export.swift */,
+				CDD14C76274FA9CE00D06720 /* Website.swift */,
+				CDB926A1275F53D7003D7A6F /* WebsiteBuilder.swift */,
+				CDB9269F275F1BA4003D7A6F /* ImagesParser.swift */,
+				CDD14C78274FAA3F00D06720 /* WebsiteTemplate.swift */,
 				CD93955D1FF6AE1900D3D831 /* ConsoleIO.swift */,
 			);
 			path = "Screenshot Framer CLI";
+			sourceTree = "<group>";
+		};
+		CDD14C71274F9C3900D06720 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CDFA12EF200E149700E99BC6 /* Code */ = {
@@ -346,6 +370,8 @@
 			dependencies = (
 			);
 			name = "Screenshot Framer";
+			packageProductDependencies = (
+			);
 			productName = Framer;
 			productReference = CD5EE03C1FCD557200AD2ED7 /* Screenshot Framer.app */;
 			productType = "com.apple.product-type.application";
@@ -364,6 +390,10 @@
 			dependencies = (
 			);
 			name = "Screenshot-Framer-CLI";
+			packageProductDependencies = (
+				CDD14C72274F9C3900D06720 /* ArgumentParser */,
+				CDD14C7E274FB60400D06720 /* SwiftSoup */,
+			);
 			productName = "Screenshot Framer CLI";
 			productReference = CD9395561FF6AC6D00D3D831 /* Screenshot-Framer-CLI */;
 			productType = "com.apple.product-type.tool";
@@ -427,6 +457,10 @@
 				Base,
 			);
 			mainGroup = CD5EE0331FCD557200AD2ED7;
+			packageReferences = (
+				CDD14C6E274F9C2C00D06720 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				CDD14C7D274FB60400D06720 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = CD5EE03D1FCD557200AD2ED7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -477,7 +511,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)";
+			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
 		};
 		CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -534,15 +568,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD9395601FF6AEAB00D3D831 /* Controller.swift in Sources */,
 				CD9395611FF6B1BF00D3D831 /* LayerState.swift in Sources */,
+				CDB926A2275F53D7003D7A6F /* WebsiteBuilder.swift in Sources */,
 				CDD324612266E73100D0D6CF /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				CD372B331FF843C000D57586 /* ExportController.swift in Sources */,
+				CDB926A0275F1BA4003D7A6F /* ImagesParser.swift in Sources */,
 				CD372B341FF843CF00D57586 /* FileController.swift in Sources */,
 				CD9395641FF6B26B00D3D831 /* LayoutableObject.swift in Sources */,
 				CD372B351FF843F900D57586 /* LayoutController.swift in Sources */,
 				CD9395591FF6AC6D00D3D831 /* main.swift in Sources */,
 				CD9395651FF6B27A00D3D831 /* NSColor+Hex.swift in Sources */,
+				CDD14C75274F9C9300D06720 /* Export.swift in Sources */,
 				CD9395661FF6B28600D3D831 /* Sugar.swift in Sources */,
 				CD93955E1FF6AE1A00D3D831 /* ConsoleIO.swift in Sources */,
 				CD9395631FF6B26B00D3D831 /* OutputConfig.swift in Sources */,
@@ -550,6 +586,8 @@
 				CD9395621FF6B1ED00D3D831 /* LayerStateHistory.swift in Sources */,
 				CD372B321FF8433B00D57586 /* LanguageController.swift in Sources */,
 				CD372B361FF8440B00D57586 /* SSFView.swift in Sources */,
+				CDD14C77274FA9CE00D06720 /* Website.swift in Sources */,
+				CDD14C79274FAA3F00D06720 /* WebsiteTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,7 +688,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -705,10 +743,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
@@ -716,13 +755,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Screenshot Framer/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -734,13 +776,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "Screenshot Framer/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.ScreenshotFramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -751,9 +796,9 @@
 		CD93955A1FF6AC6D00D3D831 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -764,9 +809,9 @@
 		CD93955B1FF6AC6D00D3D831 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -778,11 +823,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Screenshot Framer Tests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.FrameMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -794,11 +844,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W6L39UYL6Z;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Screenshot Framer Tests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ideasoncanvas.FrameMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -846,6 +901,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CDD14C6E274F9C2C00D06720 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		CDD14C7D274FB60400D06720 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CDD14C72274F9C3900D06720 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CDD14C6E274F9C2C00D06720 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+		CDD14C7E274FB60400D06720 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CDD14C7D274FB60400D06720 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CD5EE0341FCD557200AD2ED7 /* Project object */;
 }

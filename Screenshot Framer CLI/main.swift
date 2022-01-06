@@ -6,8 +6,15 @@
 //  Copyright © 2017 Patrick Kladek. All rights reserved.
 //
 
-import Foundation
+import ArgumentParser
 
+struct ScreenshotFramer: ParsableCommand {
 
-let controller = Controller(arguments: CommandLine.arguments)
-_ = controller.run()
+    static let configuration = CommandConfiguration(
+        abstract: "A Swift command-line tool to frame localised screenshots for the AppStore",
+        subcommands: [Export.self, Website.self])
+
+    init() { }
+}
+
+ScreenshotFramer.main()
