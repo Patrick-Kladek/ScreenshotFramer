@@ -48,6 +48,15 @@ extension Array where Element == String {
 
 extension URL {
 
+    var isDirectory: Bool {
+        if let resource = try? self.resourceValues(forKeys: [.isDirectoryKey]) {
+            if resource.isDirectory! {
+                return true
+            }
+        }
+        return false
+    }
+
     func relativeURL(from base: URL) -> URL? {
         guard let path = self.relativePath(from: base) else { return nil }
 

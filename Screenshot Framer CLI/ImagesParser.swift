@@ -38,6 +38,14 @@ final class ImagesParser {
 
     // MARK: - ImagesParser
 
+    // We expect the folling folder structure:
+    // ./export
+    //     |- de-DE
+    //     |- en-US
+    //     |- fr-FR
+    //
+    // Each folder represents a language usually named with the ISO Code https://www.andiamo.co.uk/resources/iso-language-codes/
+    // This function looks for folders which fit that criteria and returns their names.
     func languages(in folder: URL) throws -> [Language] {
         let fileManager = FileManager()
         let languageFolders = try fileManager.contentsOfDirectory(at: folder,
@@ -45,10 +53,27 @@ final class ImagesParser {
                                                             options: [.skipsHiddenFiles, .skipsPackageDescendants, .producesRelativePathURLs])
             .filter { $0.hasDirectoryPath }
 
-        let languages = try languageFolders.map { try self.contents(in: $0) }
+        let languages = try languageFolders.map { try self.language(in: $0) }
         return languages.sorted(by: { $0.language < $1.language })
     }
 
+    // We expect the folling folder structure:
+    // ./export
+    //     |- de-DE
+    //          |- iPhone 1.png
+    //          |- iPhone 2.png
+    //     |- en-US
+    //          |- iPhone 1.png
+    //          |- iPhone 2.png
+    //
+    // This function groups all screens/images together by their name but still includes the language code
+    // |- iPhone 1.png
+    //      |- de-DE
+    //      |- en-US
+    // |- iPhone 2.png
+    //      |- de-DE
+    //      |- en-US
+    //
     func screens(in folder: URL) throws -> [Screen] {
         let files = try FileManager.default.contentsOfDirectory(at: folder, recursive: true)
         let filtered = files.filter { $0.pathExtension == "png" || $0.pathExtension == "jpg" }
@@ -101,7 +126,7 @@ private extension ImagesParser {
         }
     }
 
-    func contents(in folder: URL) throws -> Language {
+    func language(in folder: URL) throws -> Language {
         let contents = try self.fileManager.contentsOfDirectory(at: folder,
                                                                 includingPropertiesForKeys: [.isRegularFileKey],
                                                                 options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
