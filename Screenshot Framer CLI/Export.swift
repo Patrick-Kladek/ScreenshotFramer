@@ -19,14 +19,22 @@ final class Export: ParsableCommand {
 
     // MARK: - Export
 
+    func validate() throws {
+        guard FileManager.default.fileExists(atPath: self.input.path) else {
+            throw ValidationError("'input' does not exist")
+        }
+
+        if self.input.isDirectory { return }
+
+        if self.input.pathExtension != "frame" {
+            throw ValidationError("'input' must either be a folder or .frame file")
+        }
+    }
+
     func run() throws {
-        let fileManager = FileManager()
-
-        var isDir: ObjCBool = false
-        fileManager.fileExists(atPath: self.input.path, isDirectory: &isDir)
-
         let projects: [URL]
-        if isDir.boolValue {
+        if self.input.isDirectory {
+            let fileManager = FileManager()
             let contentOfDirectory = try fileManager.contentsOfDirectory(at: self.input, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants])
             projects = contentOfDirectory.filter { $0.pathExtension == "frame" }
         } else {
