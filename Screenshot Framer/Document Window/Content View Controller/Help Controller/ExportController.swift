@@ -15,16 +15,18 @@ protocol ExportControllerDelegate: AnyObject {
 
 final class ExportController {
 
+    private var shouldCancel: Bool = false
+
     // MARK: - Properties
 
-    private var shouldCancel: Bool = false
     let fileController: FileController
     let languageController: LanguageController
     let layerStateHistory: LayerStateHistory
     weak var delegate: ExportControllerDelegate?
 
-    var lastLayerState: LayerState { return self.layerStateHistory.currentLayerState }
-
+    var lastLayerState: LayerState {
+        return self.layerStateHistory.currentLayerState
+    }
 
     // MARK: - Lifecycle
 
@@ -49,7 +51,7 @@ final class ExportController {
         guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return [.noOutputFile] }
 
         try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-        if let data = view.pngData() {
+        if let data = view.pngData(transparent: self.lastLayerState.outputConfig.transparent) {
             try? data.write(to: url, options: .atomic)
         }
 
@@ -69,8 +71,25 @@ final class ExportController {
 
         for language in self.languageController.allLanguages(prefered: language) {
             viewStateController.newViewState(language: language)
-            guard let lower = self.lastLayerState.outputConfig.prefered(from: start) else { continue }
-            guard let upper = self.lastLayerState.outputConfig.prefered(end: end) else { continue }
+
+            var lower: Int
+            var upper: Int
+
+            if let start = start {
+                guard let _lower = self.lastLayerState.outputConfig.prefered(from: start) else { continue } // swiftlint:disable:this identifier_name
+
+                lower = _lower
+            } else {
+                lower = self.lastLayerState.outputConfig.fromImageNumber
+            }
+
+            if let end = end {
+                guard let _upper = self.lastLayerState.outputConfig.prefered(end: end) else { continue } // swiftlint:disable:this identifier_name
+
+                upper = _upper
+            } else {
+                upper = self.lastLayerState.outputConfig.toImageNumber
+            }
 
             for index in lower...upper {
                 viewStateController.newViewState(imageNumber: index)
@@ -78,7 +97,7 @@ final class ExportController {
                 guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return [.noOutputFile] }
 
                 try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-                if let data = view.pngData() {
+                if let data = view.pngData(transparent: self.lastLayerState.outputConfig.transparent) {
                     try? data.write(to: url, options: .atomic)
                 }
 
@@ -119,7 +138,7 @@ final class ExportController {
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Preview \(name).png")
 
         do {
-            try view.pngData()?.write(to: tempURL)
+            try view.pngData(transparent: self.lastLayerState.outputConfig.transparent)?.write(to: tempURL)
         } catch {
             let alert = NSAlert(error: error)
             alert.runModal()
@@ -156,7 +175,7 @@ final class ExportController {
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Preview Languages of \(name).png")
 
         do {
-            try view.pngData()?.write(to: tempURL)
+            try view.pngData(transparent: self.lastLayerState.outputConfig.transparent)?.write(to: tempURL)
         } catch {
             let alert = NSAlert(error: error)
             alert.runModal()

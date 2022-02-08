@@ -81,7 +81,10 @@ extension Export {
         let fileCapsule = FileCapsule()
         fileCapsule.projectURL = project.deletingLastPathComponent()
 
-        guard let layerStateHistory = self.layerStateHistory(for: project) else { return }
+        guard let layerStateHistory = self.layerStateHistory(for: project) else {
+            ConsoleIO.writeMessage("Could not open file: \(project.lastPathComponent)", to: .error)
+            return
+        }
 
         let fileController = FileController(fileCapsule: fileCapsule)
         let languageController = LanguageController(fileCapsule: fileCapsule)

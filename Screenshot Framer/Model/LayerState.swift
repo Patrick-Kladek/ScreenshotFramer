@@ -127,18 +127,23 @@ struct LayerState: Codable {
     // MARK: - Output Config
 
     func updating(output: String) -> LayerState {
-        let newConfig = OutputConfig(output: output, fromImageNumber: self.outputConfig.fromImageNumber, toImageNumber: self.outputConfig.toImageNumber)
+        let newConfig = OutputConfig(transparent: self.outputConfig.transparent, output: output, fromImageNumber: self.outputConfig.fromImageNumber, toImageNumber: self.outputConfig.toImageNumber)
         return LayerState(title: "Updating Export Output", layers: self.layers, outputConfig: newConfig)
     }
 
     func updating(fromImageNumber: Int) -> LayerState {
-        let newConfig = OutputConfig(output: self.outputConfig.output, fromImageNumber: fromImageNumber, toImageNumber: self.outputConfig.toImageNumber)
+        let newConfig = OutputConfig(transparent: self.outputConfig.transparent, output: self.outputConfig.output, fromImageNumber: fromImageNumber, toImageNumber: self.outputConfig.toImageNumber)
         return LayerState(title: "Updating Export From Image Number", layers: self.layers, outputConfig: newConfig)
     }
 
     func updating(toImageNumber: Int) -> LayerState {
-        let newConfig = OutputConfig(output: self.outputConfig.output, fromImageNumber: self.outputConfig.fromImageNumber, toImageNumber: toImageNumber)
+        let newConfig = OutputConfig(transparent: self.outputConfig.transparent, output: self.outputConfig.output, fromImageNumber: self.outputConfig.fromImageNumber, toImageNumber: toImageNumber)
         return LayerState(title: "Updating Export To Image Number", layers: self.layers, outputConfig: newConfig)
+    }
+
+    func updating(transparency: Bool) -> LayerState {
+        let newConfig = OutputConfig(transparent: transparency, output: self.outputConfig.output, fromImageNumber: self.outputConfig.fromImageNumber, toImageNumber: self.outputConfig.toImageNumber)
+        return LayerState(title: "Updating Export Transparency", layers: self.layers, outputConfig: newConfig)
     }
 
 

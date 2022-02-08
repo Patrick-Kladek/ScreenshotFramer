@@ -46,29 +46,15 @@ final class SSFView: NSView {
 
 extension NSView {
 
-    func pngData() -> Data? {
+    func pngData(transparent: Bool) -> Data? {
         let imageSize = self.bounds.size
         guard let rep = self.bitmapImageRepForCachingDisplay(in: self.bounds) else { return nil }
 
         rep.size = imageSize
         rep.pixelsHigh = Int(imageSize.height)
         rep.pixelsWide = Int(imageSize.width)
+        rep.hasAlpha = transparent
         self.cacheDisplay(in: self.bounds, to: rep)
         return rep.representation(using: .png, properties: [:])
-    }
-}
-
-extension NSView {
-    var snapshot: NSImage {
-        guard let bitmapRep = self.bitmapImageRepForCachingDisplay(in: bounds) else { return NSImage() }
-        bitmapRep.size = self.frame.size
-        self.cacheDisplay(in: bounds, to: bitmapRep)
-        let image = NSImage(size: bounds.size)
-        image.addRepresentation(bitmapRep)
-        return image
-    }
-
-    func imageData() -> Data? {
-        return self.snapshot.tiffRepresentation
     }
 }
