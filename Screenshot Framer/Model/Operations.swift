@@ -111,6 +111,24 @@ final class UpdateToImageNuberOperation: OperationProtocol {
 }
 
 
+final class UpdateTransparencyOperation: OperationProtocol {
+
+    let layerStateHistory: LayerStateHistory
+    let transparent: Bool
+
+    init(layerStateHistory: LayerStateHistory, transparent: Bool) {
+        self.layerStateHistory = layerStateHistory
+        self.transparent = transparent
+    }
+
+    func apply() {
+        let lastLayerState = self.layerStateHistory.currentLayerState
+        let newLayerState = lastLayerState.updating(transparency: self.transparent)
+        self.layerStateHistory.append(newLayerState)
+    }
+}
+
+
 final class UpdateFrameOperation: OperationProtocol {
 
     let layerStateHistory: LayerStateHistory

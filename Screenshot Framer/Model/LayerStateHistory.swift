@@ -33,7 +33,8 @@ final class LayerStateHistory {
     // MARK: - Lifecycle
 
     init() {
-        let initialState = LayerState(title: "Initial Operation", layers: [], outputConfig: OutputConfig(output: "", fromImageNumber: 1, toImageNumber: 5))
+        let config = OutputConfig(transparent: false, output: "", fromImageNumber: 1, toImageNumber: 5)
+        let initialState = LayerState(title: "Initial Operation", layers: [], outputConfig: config)
         self.append(initialState)
     }
 

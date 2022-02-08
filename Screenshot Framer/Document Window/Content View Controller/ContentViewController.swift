@@ -37,6 +37,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
     @IBOutlet private var tableView: SSFTableView!
     @IBOutlet private var addMenu: NSMenu!
     @IBOutlet private var layoutWarningButton: NSButton!
+    @IBOutlet private var transparencyCheckbox: NSButton!
     @IBOutlet private var textFieldOutput: NSTextField!
     @IBOutlet private var textFieldFromImageNumber: NSTextField!
     @IBOutlet private var textFieldToImageNumber: NSTextField!
@@ -183,7 +184,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
     }
 
     @IBAction func outputConfigDidChange(_ sender: AnyObject?) {
-        guard let sender = sender as? NSTextField else { return }
+        guard let sender = sender as? NSView else { return }
 
         switch sender {
         case self.textFieldOutput:
@@ -207,6 +208,11 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
             }
             self.updateEnabledStateOfControls()
             let operation = UpdateToImageNuberOperation(layerStateHistory: self.layerStateHistory, toImageNumber: self.textFieldToImageNumber.integerValue)
+            operation.apply()
+
+        case self.transparencyCheckbox:
+            let transparent = self.transparencyCheckbox.state == .on ? true : false
+            let operation = UpdateTransparencyOperation(layerStateHistory: self.layerStateHistory, transparent: transparent)
             operation.apply()
 
         default:
@@ -303,6 +309,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.scrollView.documentView = self.layoutController.layoutHierarchy(layers: self.lastLayerState.layers)
         self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
+        self.transparencyCheckbox.state = self.lastLayerState.outputConfig.transparent ? .on : .off
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
         self.textFieldFromImageNumber.integerValue = self.lastLayerState.outputConfig.fromImageNumber
         self.textFieldToImageNumber.integerValue = self.lastLayerState.outputConfig.toImageNumber
