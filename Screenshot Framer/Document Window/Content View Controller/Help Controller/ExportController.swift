@@ -69,8 +69,25 @@ final class ExportController {
 
         for language in self.languageController.allLanguages(prefered: language) {
             viewStateController.newViewState(language: language)
-            guard let lower = self.lastLayerState.outputConfig.prefered(from: start) else { continue }
-            guard let upper = self.lastLayerState.outputConfig.prefered(end: end) else { continue }
+
+            var lower: Int
+            var upper: Int
+
+            if let start = start {
+                guard let _lower = self.lastLayerState.outputConfig.prefered(from: start) else { continue } // swiftlint:disable:this identifier_name
+
+                lower = _lower
+            } else {
+                lower = self.lastLayerState.outputConfig.fromImageNumber
+            }
+
+            if let end = end {
+                guard let _upper = self.lastLayerState.outputConfig.prefered(end: end) else { continue } // swiftlint:disable:this identifier_name
+
+                upper = _upper
+            } else {
+                upper = self.lastLayerState.outputConfig.toImageNumber
+            }
 
             for index in lower...upper {
                 viewStateController.newViewState(imageNumber: index)
