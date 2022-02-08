@@ -17,6 +17,12 @@ final class Export: ParsableCommand {
     @Flag(help: "Ignore Warnings about potential issues like clipped text")
     var ignoreWarnings: Bool = false
 
+    @Option(help: "Export only image with given number")
+    var image: Int?
+
+    @Option(help: "Export only the given language")
+    var language: String?
+
     // MARK: - Export
 
     func validate() throws {
@@ -84,7 +90,7 @@ extension Export {
         exportController.delegate = self
 
         ConsoleIO.writeMessage("Project: \(project.lastPathComponent)")
-        let exportErrors = exportController.saveAllImages()
+        let exportErrors = exportController.saveAllImages(language: self.language, start: self.image, end: self.image)
 
         if self.checkedErrors(exportErrors).hasElements {
             ConsoleIO.writeMessage("Something went wrong while exporting. Please check the projects for detailed information", to: .error)

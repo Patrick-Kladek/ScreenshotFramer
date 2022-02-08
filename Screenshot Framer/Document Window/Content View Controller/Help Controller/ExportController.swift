@@ -44,39 +44,43 @@ final class ExportController {
         let fileManager = FileManager()
         let viewStateController = ViewStateController(viewState: viewState)
         let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
-        guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { return [.noLayers] }
 
-        let data = view.pngData()
+        guard let view = layoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { return [.noLayers] }
         guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return [.noOutputFile] }
 
         try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-        try? data?.write(to: url, options: .atomic)
+        if let data = view.pngData() {
+            try? data.write(to: url, options: .atomic)
+        }
 
         return layoutController.layoutErrors
     }
 
     @discardableResult
-    func saveAllImages() -> [LayoutError] {
+    func saveAllImages(language: String? = nil, start: Int? = nil, end: Int? = nil) -> [LayoutError] {
         self.shouldCancel = false
 
         let viewStateController = ViewStateController()
         let layoutController = LayoutController(viewStateController: viewStateController, languageController: self.languageController, fileController: self.fileController)
         let fileManager = FileManager()
 
-        let totalSteps = self.calculatePossibleComabinations(languageController: self.languageController)
+        let totalSteps = self.calculatePossibleComabinations(languageController: self.languageController, langauge: language, start: start, end: end)
         var currentStep = 0
 
-        for language in self.languageController.allLanguages() {
+        for language in self.languageController.allLanguages(prefered: language) {
             viewStateController.newViewState(language: language)
-            for index in self.lastLayerState.outputConfig.fromImageNumber...self.lastLayerState.outputConfig.toImageNumber {
-                viewStateController.newViewState(imageNumber: index)
-                guard let view = layoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }           // TODO: is called from a background thread
+            guard let lower = self.lastLayerState.outputConfig.prefered(from: start) else { continue }
+            guard let upper = self.lastLayerState.outputConfig.prefered(end: end) else { continue }
 
-                let data = view.pngData()
+            for index in lower...upper {
+                viewStateController.newViewState(imageNumber: index)
+                guard let view = layoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { continue }           // TODO: is called from a background thread
                 guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return [.noOutputFile] }
 
                 try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-                try? data?.write(to: url, options: .atomic)
+                if let data = view.pngData() {
+                    try? data.write(to: url, options: .atomic)
+                }
 
                 currentStep += 1
                 let progress = Double(currentStep) / Double(totalSteps)
@@ -105,7 +109,7 @@ final class ExportController {
         for currentImageNumber in 0...numberOfImages {
             tempViewStateController.newViewState(imageNumber: currentImageNumber + firstImageNumber)
 
-            guard let image = tempLayoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }
+            guard let image = tempLayoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { continue }
 
             let offsetX = image.frame.width * CGFloat(currentImageNumber)
             image.frame = image.frame.offsetBy(dx: offsetX, dy: 0)
@@ -142,7 +146,7 @@ final class ExportController {
             let language = allLanguages[currentImageNumber]
             tempViewStateController.newViewState(language: language)
 
-            guard let image = tempLayoutController.layouthierarchy(layers: self.lastLayerState.layers) else { continue }
+            guard let image = tempLayoutController.layoutHierarchy(layers: self.lastLayerState.layers) else { continue }
 
             let offsetX = image.frame.width * CGFloat(currentImageNumber)
             image.frame = image.frame.offsetBy(dx: offsetX, dy: 0)
@@ -170,14 +174,19 @@ final class ExportController {
 
 private extension ExportController {
 
-    func calculatePossibleComabinations(languageController: LanguageController) -> Int {
+    func calculatePossibleComabinations(languageController: LanguageController, langauge: String? = nil, start: Int? = nil, end: Int? = nil) -> Int {
         let outputConfig = self.lastLayerState.outputConfig
+
+        if let lower = outputConfig.prefered(from: start), let upper = outputConfig.prefered(end: end) {
+            let totalSteps = upper - lower + 1
+            return languageController.allLanguages(prefered: langauge).count * totalSteps
+        }
 
         // because we use a for-loop and `for n in 1...1` would
         // mean 1 execution but (1 - 1 = 0) we handle this special case
         // by adding +1 so the progressBar is still updated correctly
         let totalSteps = outputConfig.toImageNumber - outputConfig.fromImageNumber + 1
 
-        return languageController.allLanguages().count * totalSteps
+        return languageController.allLanguages(prefered: langauge).count * totalSteps
     }
 }

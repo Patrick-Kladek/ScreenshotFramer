@@ -23,7 +23,7 @@ final class LanguageController {
 
     // MARK: - LanguageController
 
-    func allLanguages() -> [String] {
+    func allLanguages(prefered: String? = nil) -> [String] {
         let fileManager = FileManager()
         guard let projectURL = self.fileCapsule.projectURL else { return [] }
         guard let contents = try? fileManager.contentsOfDirectory(at: projectURL, includingPropertiesForKeys: nil, options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles]) else { return [] }
@@ -35,6 +35,12 @@ final class LanguageController {
         }.compactMap { $0.lastPathComponent }
 
         let blackList = ["backgrounds", "device_frames", "export"]
-        return allLanguages.subtracting(blackList, caseSensitive: false)
+        let filteredLanguages = allLanguages.subtracting(blackList, caseSensitive: false)
+        if let prefered = prefered {
+            if filteredLanguages.contains(where: { $0.caseInsensitiveCompare(prefered) == .orderedSame }) {
+                return [prefered]
+            }
+        }
+        return filteredLanguages
     }
 }

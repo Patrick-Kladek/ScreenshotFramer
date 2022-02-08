@@ -438,6 +438,7 @@
 					};
 					CD9395551FF6AC6D00D3D831 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1310;
 						ProvisioningStyle = Automatic;
 					};
 					CDFF69941FD827B800E652EE = {
@@ -511,7 +512,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
+			shellScript = "# Swift Lint\nexec swiftlint\n";
 		};
 		CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -525,7 +526,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\n(exec ./.tools/SwiftLint/swiftlint)\n";
+			shellScript = "# Swift Lint\nexec swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -802,7 +803,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -815,7 +816,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

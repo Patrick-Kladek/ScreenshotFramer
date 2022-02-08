@@ -104,7 +104,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.zoomToFit(nil)
     }
 
-    //swiftlint:disable:next cyclomatic_complexity
+    // swiftlint:disable:next cyclomatic_complexity
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         self.updateMenuItem(menuItem)
         guard let action = menuItem.action else { return false }
@@ -300,7 +300,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.layoutController.highlightLayer = self.tableView.selectedRow
         self.inspectorViewController?.updateUI()
         self.inspectorViewController?.updateUIFromViewState()
-        self.scrollView.documentView = self.layoutController.layouthierarchy(layers: self.lastLayerState.layers)
+        self.scrollView.documentView = self.layoutController.layoutHierarchy(layers: self.lastLayerState.layers)
         self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
