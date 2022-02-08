@@ -53,6 +53,7 @@ extension NSView {
         rep.size = imageSize
         rep.pixelsHigh = Int(imageSize.height)
         rep.pixelsWide = Int(imageSize.width)
+        rep.hasAlpha = false
         self.cacheDisplay(in: self.bounds, to: rep)
         return rep.representation(using: .png, properties: [:])
     }
