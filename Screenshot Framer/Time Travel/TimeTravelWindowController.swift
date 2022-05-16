@@ -24,7 +24,7 @@ final class TimeTravelWindowController: NSWindowController {
 
     override var document: AnyObject? {
         get { return nil }
-        set {}  // swiftlint:disable:this unused_setter_value
+        set {}
     }
 
 

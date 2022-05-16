@@ -199,7 +199,7 @@ private extension WebsiteBuilder {
         let tableRow = Element(Tag("tr"), "")
 
         let tableHeader = Element(Tag("th"), "")
-        try tableHeader.attr("colspan", "1")
+        try tableHeader.attr("colspan", "100%")
 
         let content = Element(Tag("a"), "")
         try content.attr("id", device)
