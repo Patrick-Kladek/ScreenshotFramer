@@ -15,7 +15,7 @@ It's super simple: Screenshot Framer simply puts pictures on top of each other (
 ![](Documentation/How%20it%20works.gif)
 
 ### Preparation
-- First check out the repository and build the app. Alternatively you can download the precompiled app [here](https://github.com/IdeasOnCanvas/ScreenshotFramer/releases).
+- First check out the repository and build the app. Alternatively you can download the precompiled app [here](https://github.com/IdeasOnCanvas/ScreenshotFramer/releases). If downloaded ensure that you run `chmod +x /usr/local/bin/Screenshot-Framer-CLI` to make it executable.
 - Next open the Sample Project or create your own project structure. When you are using [fastlane](https://fastlane.tools)'s snapshot tool you can reuse that folder structure and only add missing files.
 
 ![](Documentation/File%20Structure.png)
