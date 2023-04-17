@@ -20,7 +20,7 @@ class ScreenshotFramerTests: XCTestCase {
 
         let layerState = LayerState(title: "First Operation",
                                     layers: [LayoutableObject(type: .background, title: "Background", frame: CGRect(x: 0, y: 0, width: 800, height: 1200), file: "")],
-                                    outputConfig: OutputConfig(output: "", fromImageNumber: 1, toImageNumber: 5))
+                                    outputConfig: OutputConfig(transparent: false, output: "", fromImageNumber: 1, toImageNumber: 5))
         self.layerStateHistory.append(layerState)
     }
 

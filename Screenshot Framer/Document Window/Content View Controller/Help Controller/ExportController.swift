@@ -51,7 +51,7 @@ final class ExportController {
         guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewState) else { return [.noOutputFile] }
 
         try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-        if let data = view.pngData(transparent: self.lastLayerState.outputConfig.transparent) {
+        if let data = view.pngData(transparent: self.lastLayerState.outputConfig.transparent ?? false) {
             try? data.write(to: url, options: .atomic)
         }
 
@@ -97,7 +97,7 @@ final class ExportController {
                 guard let url = self.fileController.outputURL(for: self.lastLayerState, viewState: viewStateController.viewState) else { return [.noOutputFile] }
 
                 try? fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-                if let data = view.pngData(transparent: self.lastLayerState.outputConfig.transparent) {
+                if let data = view.pngData(transparent: self.lastLayerState.outputConfig.transparent ?? false) {
                     try? data.write(to: url, options: .atomic)
                 }
 
@@ -138,7 +138,7 @@ final class ExportController {
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Preview \(name).png")
 
         do {
-            try view.pngData(transparent: self.lastLayerState.outputConfig.transparent)?.write(to: tempURL)
+            try view.pngData(transparent: self.lastLayerState.outputConfig.transparent ?? false)?.write(to: tempURL)
         } catch {
             let alert = NSAlert(error: error)
             alert.runModal()
@@ -175,7 +175,7 @@ final class ExportController {
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Preview Languages of \(name).png")
 
         do {
-            try view.pngData(transparent: self.lastLayerState.outputConfig.transparent)?.write(to: tempURL)
+            try view.pngData(transparent: self.lastLayerState.outputConfig.transparent ?? false)?.write(to: tempURL)
         } catch {
             let alert = NSAlert(error: error)
             alert.runModal()

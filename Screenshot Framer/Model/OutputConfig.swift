@@ -13,7 +13,7 @@ struct OutputConfig: Codable {
 
     // MARK: - Properties
 
-    let transparent: Bool
+    let transparent: Bool?
     let output: String
     let fromImageNumber: Int
     let toImageNumber: Int
