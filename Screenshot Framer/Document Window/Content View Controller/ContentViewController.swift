@@ -309,7 +309,7 @@ final class ContentViewController: NSViewController, NSMenuItemValidation {
         self.scrollView.documentView = self.layoutController.layoutHierarchy(layers: self.lastLayerState.layers)
         self.layoutWarningButton.isHidden = self.layoutController.layoutErrors.isEmpty
 
-        self.transparencyCheckbox.state = self.lastLayerState.outputConfig.transparent ? .on : .off
+        self.transparencyCheckbox.state = (self.lastLayerState.outputConfig.transparent ?? false) ? .on : .off
         self.textFieldOutput.stringValue = self.lastLayerState.outputConfig.output
         self.textFieldFromImageNumber.integerValue = self.lastLayerState.outputConfig.fromImageNumber
         self.textFieldToImageNumber.integerValue = self.lastLayerState.outputConfig.toImageNumber
