@@ -48,8 +48,9 @@ The main difference to your favorite image editor is that you can specify variab
 
 Possible Variables:
 
-* `$image` can contain only numbers (typically 1-5)
-* `$language` contains every sub-folder name in your project folder (in this case `Sample Project`) excluding `backgrounds, device_frames and Export`
+* `$image` can contain only numbers (typically 1-5).
+* `$language` contains every sub-folder name in your project folder (in this case `Sample Project`) excluding `backgrounds, device_frames and Export`.
+*  `$filename` contains the current document name.
 
 In the screenshot below the file is: `$language/iPhone SE-$image.png`. This is automatically translated to `en-US/iPhone SE-1.png` and this file is then rendered. For German this would for example be translated to `de-DE/iPhone SE-1.png`.
 
@@ -87,3 +88,4 @@ Please keep in mind that this tool was made to automate screenshots for a very s
 * For better overview output is set to `Export/$language/iPhone SE-$image framed.png` 
 
 Screenshot Framer is brought to you by [IdeasOnCanvas GmbH](https://ideasoncanvas.com), the creator of [MindNode for iOS, macOS & watchOS](https://mindnode.com).
+®
