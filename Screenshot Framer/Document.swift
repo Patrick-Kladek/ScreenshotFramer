@@ -71,7 +71,8 @@ final class Document: NSDocument {
     func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
         switch didSave {
         case true:
-            self.fileCapsule.projectURL = self.projectURL
+            self.fileCapsule.projectRoot = self.projectURL
+            self.fileCapsule.projectFile = self.fileURL
         case false:
             self.close()
         }
@@ -123,7 +124,8 @@ final class Document: NSDocument {
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
-        self.fileCapsule.projectURL = self.projectURL
+        self.fileCapsule.projectRoot = self.projectURL
+        self.fileCapsule.projectFile = self.fileURL
 
         let decoder = JSONDecoder()
         let layers = try decoder.decode([LayerState].self, from: data)

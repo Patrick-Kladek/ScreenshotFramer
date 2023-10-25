@@ -10,13 +10,14 @@ import Foundation
 
 /**
  * This class stores properties that are not known on init
- * projectURL ist only set after a new document is saved
- * most classes need the projectURL property but not directly
+ * projectRoot ist only set after a new document is saved
+ * most classes need the projectRoot property but not directly
  * on init but later eg export
  */
 final class FileCapsule {
 
-    var projectURL: URL?
+    var projectRoot: URL?
+    var projectFile: URL?
 }
 
 
@@ -42,7 +43,11 @@ final class FileController {
         var file = object.file.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)
 
-        let absoluteURL = self.fileCapsule.projectURL?.appendingPathComponent(file)
+        if let projectURL = fileCapsule.projectRoot {
+            file = file.replacingOccurrences(of: "$filename", with: projectURL.deletingPathExtension().lastPathComponent)
+        }
+
+        let absoluteURL = self.fileCapsule.projectRoot?.appendingPathComponent(file)
         return absoluteURL
     }
 
@@ -55,9 +60,13 @@ final class FileController {
     }
 
     func outputURL(for layerState: LayerState, viewState: ViewState) -> URL? {
-        guard let base = self.fileCapsule.projectURL else { return nil }
+        guard let base = self.fileCapsule.projectRoot else { return nil }
         var file = layerState.outputConfig.output.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)
+
+        if let projectFile = fileCapsule.projectFile {
+            file = file.replacingOccurrences(of: "$filename", with: projectFile.deletingPathExtension().lastPathComponent)
+        }
 
         return base.appendingPathComponent(file)
     }
