@@ -50,14 +50,21 @@ final class Document: NSDocument {
     }
 
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
-        let accessoryView = NSView(frame: CGRect(x: 0, y: 0, width: savePanel.frame.width, height: 60))
-        let detailLabel = NSTextField(labelWithString: "Screenshot Framer needs a project directory to start.\nYou will be able to access all files in this directory but no files outside of this directory")
+        let accessoryView = NSView(frame: .zero)
+        accessoryView.translatesAutoresizingMaskIntoConstraints = false
+        let detailLabel = NSTextField(labelWithString: "Screenshot Framer needs a project directory to start.\nYou will be able to access all files in this directory but no files outside of this directory.")
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        detailLabel.frame = CGRect(x: 0, y: 15, width: savePanel.frame.width, height: detailLabel.frame.height)
         detailLabel.alignment = .center
         detailLabel.maximumNumberOfLines = 2
 
         accessoryView.addSubview(detailLabel)
+        NSLayoutConstraint.activate([
+            detailLabel.topAnchor.constraint(equalTo: accessoryView.topAnchor, constant: 15),
+            detailLabel.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
+            detailLabel.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
+            detailLabel.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor, constant: -15)
+        ])
         savePanel.accessoryView = accessoryView
 
         return true
@@ -69,11 +76,10 @@ final class Document: NSDocument {
 
     @objc
     func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
-        switch didSave {
-        case true:
+        if didSave {
             self.fileCapsule.projectRoot = self.projectURL
             self.fileCapsule.projectFile = self.fileURL
-        case false:
+        } else {
             self.close()
         }
     }
