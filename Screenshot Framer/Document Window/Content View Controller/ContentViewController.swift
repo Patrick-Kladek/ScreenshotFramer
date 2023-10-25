@@ -371,14 +371,15 @@ extension ContentViewController: ExportControllerDelegate {
 
         DispatchQueue.main.async {
             progressWindowController.progress = progress
-        }
 
-        if progress == 1.0 {
-            guard let mainWindow = self.windowController?.window else { return }
-            guard let progressWindow = self.progressWindowController?.window else { return }
+            if progress == 1.0 {
+                guard let mainWindow = self.windowController?.window else { return }
+                guard let progressWindow = self.progressWindowController?.window else { return }
 
-            DispatchQueue.main.async {
-                mainWindow.endSheet(progressWindow, returnCode: .OK)
+                DispatchQueue.main.async {
+                    mainWindow.endSheet(progressWindow, returnCode: .OK)
+                    self.progressWindowController = nil
+                }
             }
         }
     }
