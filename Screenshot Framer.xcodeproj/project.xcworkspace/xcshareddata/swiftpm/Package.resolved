@@ -1,25 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
-        "state": {
-          "branch": null,
-          "revision": "e1465042f195f374b94f915ba8ca49de24300a0d",
-          "version": "1.0.2"
-        }
-      },
-      {
-        "package": "SwiftSoup",
-        "repositoryURL": "https://github.com/scinfu/SwiftSoup.git",
-        "state": {
-          "branch": null,
-          "revision": "02c63b7be50bda384f22c56c64d347231754a07e",
-          "version": "2.3.3"
-        }
+  "pins" : [
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "e1465042f195f374b94f915ba8ca49de24300a0d",
+        "version" : "1.0.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftlintplugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukepistrol/SwiftLintPlugin.git",
+      "state" : {
+        "revision" : "ea918d6d5988407b24c2efad7722560752b1638a",
+        "version" : "0.53.0"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup.git",
+      "state" : {
+        "revision" : "02c63b7be50bda384f22c56c64d347231754a07e",
+        "version" : "2.3.3"
+      }
+    }
+  ],
+  "version" : 2
 }
