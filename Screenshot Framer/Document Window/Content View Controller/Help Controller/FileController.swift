@@ -43,7 +43,7 @@ final class FileController {
         var file = object.file.replacingOccurrences(of: "$image", with: "\(viewState.imageNumber)")
         file = file.replacingOccurrences(of: "$language", with: viewState.language)
 
-        if let projectURL = fileCapsule.projectRoot {
+        if let projectURL = fileCapsule.projectFile {
             file = file.replacingOccurrences(of: "$filename", with: projectURL.deletingPathExtension().lastPathComponent)
         }
 
