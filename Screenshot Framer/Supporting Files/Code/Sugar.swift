@@ -36,7 +36,7 @@ extension Array where Element == String {
         var newValues: [String] = []
 
         for element in self {
-            if blacklist.contains(where: { (caseSensitive ? $0 : $0.lowercased()) == (caseSensitive ? element : element.lowercased()) }) == false {
+            if blacklist.contains(where: { (caseSensitive ? $0 : $0.lowercased()) == (caseSensitive ? element : element.lowercased()) }) == false { // swiftlint:disable:this for_where
                 // No match in blacklist -> add item
                 newValues.append(element)
             }

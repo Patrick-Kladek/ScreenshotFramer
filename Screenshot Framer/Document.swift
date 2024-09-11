@@ -74,38 +74,11 @@ final class Document: NSDocument {
         self.save(withDelegate: self, didSave: #selector(Document.document(_:didSave:contextInfo:)), contextInfo: nil)
     }
 
-    @objc
-    func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
-        if didSave {
-            self.fileCapsule.projectRoot = self.projectURL
-            self.fileCapsule.projectFile = self.fileURL
-        } else {
-            self.close()
-        }
-    }
-
-
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         self.layerStateHistory.discardRedoHistory()
         self.save(nil)
         self.close()
         self.timeTravelWindowController.close()
-    }
-
-
-    // Responder Chain
-
-    @IBAction func showTimeTravelWindow(_ sender: AnyObject?) {
-        self.timeTravelWindowController.window?.orderFront(self)
-
-        if sender != nil {
-            UserDefaults.standard.showTimeTravelWindow = true
-        }
-    }
-
-    @IBAction func discardRedoHistory(_ sender: AnyObject?) {
-        // Discussion: show warning
-        self.layerStateHistory.discardRedoHistory()
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -120,6 +93,22 @@ final class Document: NSDocument {
         return super.validateMenuItem(menuItem)
     }
 
+    // MARK: - Responder Chain
+
+    @IBAction
+    func showTimeTravelWindow(_ sender: AnyObject?) {
+        self.timeTravelWindowController.window?.orderFront(self)
+
+        if sender != nil {
+            UserDefaults.standard.showTimeTravelWindow = true
+        }
+    }
+
+    @IBAction
+    func discardRedoHistory(_ sender: AnyObject?) {
+        // Discussion: show warning
+        self.layerStateHistory.discardRedoHistory()
+    }
 
     // MARK: - Read/Write
 
@@ -151,5 +140,20 @@ extension Document: LayerStateHistoryDelegate {
         guard let contentViewController = windowController.contentViewController as? ContentViewController else { return }
 
         contentViewController.reloadLayout()
+    }
+}
+
+// MARK: - Private
+
+private extension Document {
+
+    @objc
+    func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
+        if didSave {
+            self.fileCapsule.projectRoot = self.projectURL
+            self.fileCapsule.projectFile = self.fileURL
+        } else {
+            self.close()
+        }
     }
 }
