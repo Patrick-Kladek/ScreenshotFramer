@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -360,7 +360,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD5EE04F1FCD557200AD2ED7 /* Build configuration list for PBXNativeTarget "Screenshot Framer" */;
 			buildPhases = (
-				CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */,
 				CD5EE0381FCD557200AD2ED7 /* Sources */,
 				CD5EE0391FCD557200AD2ED7 /* Frameworks */,
 				CD5EE03A1FCD557200AD2ED7 /* Resources */,
@@ -368,6 +367,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD61A6712AE8DEF1001F2DD8 /* PBXTargetDependency */,
 			);
 			name = "Screenshot Framer";
 			packageProductDependencies = (
@@ -461,6 +461,7 @@
 			packageReferences = (
 				CDD14C6E274F9C2C00D06720 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				CDD14C7D274FB60400D06720 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				CD61A66F2AE8DEE7001F2DD8 /* XCRemoteSwiftPackageReference "SwiftLintPlugin" */,
 			);
 			productRefGroup = CD5EE03D1FCD557200AD2ED7 /* Products */;
 			projectDirPath = "";
@@ -501,20 +502,6 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		CD71C0AE2000D270002A2550 /* Swift Lint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Swift Lint";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Swift Lint\nexec swiftlint\n";
-		};
-		CDAEE1FC1FED46EE00F4B1BA /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -610,6 +597,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CD61A6712AE8DEF1001F2DD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = CD61A6702AE8DEF1001F2DD8 /* SwiftLint */;
+		};
 		CDFF699B1FD827B800E652EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CD5EE03B1FCD557200AD2ED7 /* Screenshot Framer */;
@@ -906,6 +897,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CD61A66F2AE8DEE7001F2DD8 /* XCRemoteSwiftPackageReference "SwiftLintPlugin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukepistrol/SwiftLintPlugin.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.53.0;
+			};
+		};
 		CDD14C6E274F9C2C00D06720 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
@@ -925,6 +924,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CD61A6702AE8DEF1001F2DD8 /* SwiftLint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CD61A66F2AE8DEE7001F2DD8 /* XCRemoteSwiftPackageReference "SwiftLintPlugin" */;
+			productName = "plugin:SwiftLint";
+		};
 		CDD14C72274F9C3900D06720 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CDD14C6E274F9C2C00D06720 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;

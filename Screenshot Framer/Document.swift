@@ -50,14 +50,21 @@ final class Document: NSDocument {
     }
 
     override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
-        let accessoryView = NSView(frame: CGRect(x: 0, y: 0, width: savePanel.frame.width, height: 60))
-        let detailLabel = NSTextField(labelWithString: "Screenshot Framer needs a project directory to start.\nYou will be able to access all files in this directory but no files outside of this directory")
+        let accessoryView = NSView(frame: .zero)
+        accessoryView.translatesAutoresizingMaskIntoConstraints = false
+        let detailLabel = NSTextField(labelWithString: "Screenshot Framer needs a project directory to start.\nYou will be able to access all files in this directory but no files outside of this directory.")
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        detailLabel.frame = CGRect(x: 0, y: 15, width: savePanel.frame.width, height: detailLabel.frame.height)
         detailLabel.alignment = .center
         detailLabel.maximumNumberOfLines = 2
 
         accessoryView.addSubview(detailLabel)
+        NSLayoutConstraint.activate([
+            detailLabel.topAnchor.constraint(equalTo: accessoryView.topAnchor, constant: 15),
+            detailLabel.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
+            detailLabel.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
+            detailLabel.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor, constant: -15)
+        ])
         savePanel.accessoryView = accessoryView
 
         return true
@@ -67,38 +74,11 @@ final class Document: NSDocument {
         self.save(withDelegate: self, didSave: #selector(Document.document(_:didSave:contextInfo:)), contextInfo: nil)
     }
 
-    @objc
-    func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
-        switch didSave {
-        case true:
-            self.fileCapsule.projectURL = self.projectURL
-        case false:
-            self.close()
-        }
-    }
-
-
     override func canClose(withDelegate delegate: Any, shouldClose shouldCloseSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
         self.layerStateHistory.discardRedoHistory()
         self.save(nil)
         self.close()
         self.timeTravelWindowController.close()
-    }
-
-
-    // Responder Chain
-
-    @IBAction func showTimeTravelWindow(_ sender: AnyObject?) {
-        self.timeTravelWindowController.window?.orderFront(self)
-
-        if sender != nil {
-            UserDefaults.standard.showTimeTravelWindow = true
-        }
-    }
-
-    @IBAction func discardRedoHistory(_ sender: AnyObject?) {
-        // Discussion: show warning
-        self.layerStateHistory.discardRedoHistory()
     }
 
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -113,6 +93,22 @@ final class Document: NSDocument {
         return super.validateMenuItem(menuItem)
     }
 
+    // MARK: - Responder Chain
+
+    @IBAction
+    func showTimeTravelWindow(_ sender: AnyObject?) {
+        self.timeTravelWindowController.window?.orderFront(self)
+
+        if sender != nil {
+            UserDefaults.standard.showTimeTravelWindow = true
+        }
+    }
+
+    @IBAction
+    func discardRedoHistory(_ sender: AnyObject?) {
+        // Discussion: show warning
+        self.layerStateHistory.discardRedoHistory()
+    }
 
     // MARK: - Read/Write
 
@@ -123,7 +119,8 @@ final class Document: NSDocument {
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
-        self.fileCapsule.projectURL = self.projectURL
+        self.fileCapsule.projectRoot = self.projectURL
+        self.fileCapsule.projectFile = self.fileURL
 
         let decoder = JSONDecoder()
         let layers = try decoder.decode([LayerState].self, from: data)
@@ -143,5 +140,20 @@ extension Document: LayerStateHistoryDelegate {
         guard let contentViewController = windowController.contentViewController as? ContentViewController else { return }
 
         contentViewController.reloadLayout()
+    }
+}
+
+// MARK: - Private
+
+private extension Document {
+
+    @objc
+    func document(_ document: NSDocument, didSave: Bool, contextInfo: UnsafeRawPointer) {
+        if didSave {
+            self.fileCapsule.projectRoot = self.projectURL
+            self.fileCapsule.projectFile = self.fileURL
+        } else {
+            self.close()
+        }
     }
 }

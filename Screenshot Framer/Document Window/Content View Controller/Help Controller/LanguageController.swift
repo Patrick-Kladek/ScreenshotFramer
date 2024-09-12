@@ -25,7 +25,7 @@ final class LanguageController {
 
     func allLanguages(prefered: String? = nil) -> [String] {
         let fileManager = FileManager()
-        guard let projectURL = self.fileCapsule.projectURL else { return [] }
+        guard let projectURL = self.fileCapsule.projectRoot else { return [] }
         guard let contents = try? fileManager.contentsOfDirectory(at: projectURL, includingPropertiesForKeys: nil, options: [.skipsSubdirectoryDescendants, .skipsHiddenFiles]) else { return [] }
 
         let allLanguages = contents.filter { file in

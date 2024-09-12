@@ -14,8 +14,6 @@ struct ScreenshotFramer: ParsableCommand {
         abstract: "A Swift command-line tool to frame localised screenshots for the AppStore",
         version: "2.0.1",
         subcommands: [Export.self, Website.self])
-
-    init() { }
 }
 
 ScreenshotFramer.main()
